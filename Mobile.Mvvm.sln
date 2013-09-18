@@ -1,0 +1,43 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{6ACB17DB-AB8C-48F0-B3AB-1F9407F7FA17}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mobile.Mvvm.Core.Portable", "Core\Mobile.Mvvm.Core.Portable.csproj", "{0E78EB4F-B89D-485C-88A0-3B69B232BD36}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mobile.Mvvm.Droid", "Mobile.Mvvm.Droid\Mobile.Mvvm.Droid.csproj", "{ED321F55-0F25-4BF6-BCD1-C61245DEFBAD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mobile.Mvvm.iOS", "Mobile.Mvvm.iOS\Mobile.Mvvm.iOS.csproj", "{493A68F4-2B44-474C-B40E-7D59669019F2}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{0E78EB4F-B89D-485C-88A0-3B69B232BD36}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0E78EB4F-B89D-485C-88A0-3B69B232BD36}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0E78EB4F-B89D-485C-88A0-3B69B232BD36}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0E78EB4F-B89D-485C-88A0-3B69B232BD36}.Release|Any CPU.Build.0 = Release|Any CPU
+		{493A68F4-2B44-474C-B40E-7D59669019F2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{493A68F4-2B44-474C-B40E-7D59669019F2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{493A68F4-2B44-474C-B40E-7D59669019F2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{493A68F4-2B44-474C-B40E-7D59669019F2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ED321F55-0F25-4BF6-BCD1-C61245DEFBAD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ED321F55-0F25-4BF6-BCD1-C61245DEFBAD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ED321F55-0F25-4BF6-BCD1-C61245DEFBAD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ED321F55-0F25-4BF6-BCD1-C61245DEFBAD}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{0E78EB4F-B89D-485C-88A0-3B69B232BD36} = {6ACB17DB-AB8C-48F0-B3AB-1F9407F7FA17}
+		{ED321F55-0F25-4BF6-BCD1-C61245DEFBAD} = {6ACB17DB-AB8C-48F0-B3AB-1F9407F7FA17}
+		{493A68F4-2B44-474C-B40E-7D59669019F2} = {6ACB17DB-AB8C-48F0-B3AB-1F9407F7FA17}
+	EndGlobalSection
+	GlobalSection(MonoDevelopProperties) = preSolution
+		StartupItem = Core\Mobile.Mvvm.Core.Portable.csproj
+		Policies = $0
+		$0.DotNetNamingPolicy = $1
+		$1.DirectoryNamespaceAssociation = PrefixedHierarchical
+		$1.ResourceNamePolicy = FileFormatDefault
+	EndGlobalSection
+EndGlobal
