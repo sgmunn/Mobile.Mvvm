@@ -22,10 +22,11 @@ namespace Mobile.Mvvm.ViewModel
 {
     using System;
     using System.ComponentModel;
+    using System.Runtime.CompilerServices;
     using Mobile.Mvvm.Disposables;
     using Mobile.Mvvm.Diagnostics;
 
-    public abstract class ViewModelBase : IViewModel, ILifetime//, ICommand
+    public abstract class ViewModelBase : IViewModel, ILoadable, IPersistentState, ILifetime//, ICommand
     {
         private readonly CompositeDisposable lifetimeScope;
 
@@ -68,7 +69,24 @@ namespace Mobile.Mvvm.ViewModel
                 GC.SuppressFinalize(this);
             }
         }
-        
+
+        public virtual void Load(IStateBundle parameters)
+        {
+        }
+
+        public virtual void Load()
+        {
+            throw new NotImplementedException();
+        }
+
+        public virtual void RestoreState(IStateBundle state)
+        {
+        }
+
+        public virtual void SaveState(IStateBundle state)
+        {
+        }
+
 //        public virtual void Execute()
 //        {
 //            if (this.Command != null)
@@ -94,7 +112,8 @@ namespace Mobile.Mvvm.ViewModel
                 this.lifetimeScope.Dispose();
             }
         }
-        
+
+        // TODO: CallerMemberName
         protected void NotifyPropertyChanged(string propertyName)
         {
             var changed = this.PropertyChanged;

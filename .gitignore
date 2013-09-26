@@ -2,3 +2,10 @@ Core/bin
 Core/obj
 Mobile.Mvvm.Droid/bin
 Mobile.Mvvm.Droid/obj
+Platform/Mobile.Mvvm.Droid/bin/Debug
+Platform/Mobile.Mvvm.Droid/obj/Debug
+Playground/Sample.Touch/bin
+Playground/Sample.Touch/obj
+UnitTests/Mobile.Mvvm.UnitTests.iOS/bin
+UnitTests/TestRunner.iOS/bin
+UnitTests/TestRunner.iOS/obj

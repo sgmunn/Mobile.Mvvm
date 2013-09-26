@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>10.0.0</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{8B49C0E8-21FA-498A-8262-3805D1A4962E}</ProjectGuid>
+    <ProjectTypeGuids>{6BC8ED88-2882-458C-8E55-DFD12B67127B};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <RootNamespace>Mobile.Mvvm.UnitTests</RootNamespace>
+    <IPhoneResourcePrefix>Resources</IPhoneResourcePrefix>
+    <AssemblyName>MonoKit.Core.UnitTests</AssemblyName>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>True</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>False</Optimize>
+    <OutputPath>bin\Debug</OutputPath>
+    <DefineConstants>DEBUG;</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>False</ConsolePause>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>none</DebugType>
+    <Optimize>True</Optimize>
+    <OutputPath>bin\Release</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>False</ConsolePause>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Core" />
+    <Reference Include="MonoTouch.NUnitLite" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <ItemGroup>
+    <Compile Include="DataBinding\InjectedProperties\DisposableObject.cs" />
+    <Compile Include="DataBinding\InjectedProperties\Test2Property.cs" />
+    <Compile Include="DataBinding\InjectedProperties\TestProperty.cs" />
+    <Compile Include="DataBinding\InjectedProperties\GivenAnInjectablePropertyStoreWithADisposableValue.cs" />
+    <Compile Include="DataBinding\InjectedProperties\GivenAnInjectablePropertyStoreWithAValueSet.cs" />
+    <Compile Include="DataBinding\InjectedProperties\GivenAnEmptyInjectablePropertyStore.cs" />
+    <Compile Include="DataBinding\Bindings\GivenABinding.cs" />
+    <Compile Include="DataBinding\Bindings\SimpleSourceObject.cs" />
+    <Compile Include="DataBinding\Bindings\SimpleTargetObject.cs" />
+    <Compile Include="DataBinding\Bindings\BindingPerformance.cs" />
+    <Compile Include="DataBinding\Bindings\GivenABindingThatIsOneWayToSource.cs" />
+    <Compile Include="DataBinding\Bindings\GivenABindingThatIsOneWay.cs" />
+    <Compile Include="DataBinding\Bindings\GivenADisposedExpression.cs" />
+    <Compile Include="DataBinding\Bindings\GivenABindingThatIsTwoWay.cs" />
+    <Compile Include="DataBinding\Bindings\GivenASourceAndTargetWithSetProperties.cs" />
+    <Compile Include="DataBinding\Bindings\GivenABindingExpression.cs" />
+    <Compile Include="DataBinding\Bindings\GivenASourceAndTarget.cs" />
+    <Compile Include="DataBinding\Bindings\GivenAValueConverter.cs" />
+    <Compile Include="DataBinding\Bindings\WeakBindingPerformance.cs" />
+    <Compile Include="DataBinding\InjectedProperties\GivenAnInjectableObject.cs" />
+    <Compile Include="Reactive\Given.cs" />
+    <Compile Include="Bootstrap.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="DataBinding\" />
+    <Folder Include="DataBinding\InjectedProperties\" />
+    <Folder Include="DataBinding\Bindings\" />
+    <Folder Include="Runtime\" />
+    <Folder Include="Reactive\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Core\Mobile.Mvvm.Core.Portable.csproj">
+      <Project>{0E78EB4F-B89D-485C-88A0-3B69B232BD36}</Project>
+      <Name>Mobile.Mvvm.Core.Portable</Name>
+    </ProjectReference>
+  </ItemGroup>
+</Project>
