@@ -1,5 +1,5 @@
 // --------------------------------------------------------------------------------------------------------------------
-// <copyright file="ViewModelBindingScope.cs" company="sgmunn">
+// <copyright file="IViewModelContext.cs" company="sgmunn">
 //   (c) sgmunn 2013  
 //
 //   Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated 
@@ -22,40 +22,14 @@ namespace Mobile.Mvvm.ViewModel
 {
     using System;
     using System.ComponentModel;
-    using System.Runtime.CompilerServices;
-    using Mobile.Mvvm.Disposables;
-    using Mobile.Mvvm.Diagnostics;
+    using Mobile.Mvvm.DataBinding;
 
-    public class ViewModelBindingScope : IViewModelBindingScope
+    public interface IViewModelContext : IDisposable
     {
-        private IViewModel viewModel;
+        IViewModel ViewModel { get; }
 
-        public ViewModelBindingScope(IViewModel viewModel)
-        {
-            
-        }
+        IBindingScope Bindings { get; }
 
-        public IViewModel ViewModel
-        {
-            get
-            {
-                return this.viewModel;
-            }
-
-            set
-            {
-                if (value != this.viewModel)
-                {
-                    this.viewModel = value;
-                    this.ViewModelChanged(value);
-                }
-            }
-        }
-
-        protected virtual void ViewModelChanged(IViewModel viewModel)
-        {
-
-        }
+        IInjectionScope InjectedProperties { get; }
     }
-    
 }

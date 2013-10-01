@@ -17,12 +17,14 @@
 //    IN THE SOFTWARE.
 //  </copyright>
 //  --------------------------------------------------------------------------------------------------------------------
+using System.Reflection;
 
-namespace Mobile.Mvvm.DataBinding
+namespace Mobile.Mvvm
 {
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using Mobile.Mvvm.DataBinding;
 
     public static class BindingScopeExtensions
     {
@@ -56,6 +58,7 @@ namespace Mobile.Mvvm.DataBinding
         public static IBindingExpression AddBinding(this IBindingScope scope, object target, string propertyName, object source, Binding binding)
         {
             var expression = new WeakBindingExpression(target, propertyName, source, binding);
+            expression.Bind();
             scope.AddBinding(expression);
             return expression;
         }
@@ -80,9 +83,10 @@ namespace Mobile.Mvvm.DataBinding
             foreach (var expression in bindingExpressions.Where(x => string.IsNullOrEmpty(targetPropertyName) || x.TargetProperty.Equals(targetPropertyName)))
             {
                 var newExpression = new WeakBindingExpression(expression.Target, expression.TargetProperty, source, expression.Binding);
+                newExpression.Bind();
                 newExpressions.Add(newExpression);
             }
-            
+
             scope.ClearBindings();
             foreach (var expression in newExpressions)
             {
@@ -110,6 +114,15 @@ namespace Mobile.Mvvm.DataBinding
             {
                 expression.UpdateSource();
             }
+        }
+
+        public static IBindingExpression AddEventTriggeredBinding<TTarget, TEventArgs>(this IBindingScope scope, TTarget target, string targetPropertyName, string eventName, object source, string sourcePropertyName)
+            where TTarget : class where TEventArgs : EventArgs
+        {
+            var expression = new EventTriggeredBindingExpression<TTarget, TEventArgs>(target, targetPropertyName, eventName, source, new Binding(sourcePropertyName));
+            expression.Bind();
+            scope.AddBinding(expression);
+            return expression;
         }
     }
 }

@@ -18,7 +18,7 @@ namespace Mobile.Mvvm.UnitTests.Bindings
         [Test]
         public void WhenBindingTheSourceAndTarget_ThenTheTargetPropertyIsUpdated()
         {
-            new WeakBindingExpression(this.Target, "PropertyA", this.Source, this.Binding);
+            new WeakBindingExpression(this.Target, "PropertyA", this.Source, this.Binding).Bind();
             Assert.AreEqual(this.Source.Property1, this.Target.PropertyA);
         }
     }

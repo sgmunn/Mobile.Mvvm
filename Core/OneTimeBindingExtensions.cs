@@ -18,9 +18,10 @@
 //  </copyright>
 //  --------------------------------------------------------------------------------------------------------------------
 
-namespace Mobile.Mvvm.DataBinding
+namespace Mobile.Mvvm
 {
     using System;
+    using Mobile.Mvvm.DataBinding;
 
     public static class OneTimeBindingExtensions
     {

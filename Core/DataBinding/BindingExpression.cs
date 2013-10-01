@@ -134,6 +134,20 @@ namespace Mobile.Mvvm.DataBinding
         /// Gets or sets the property accessor for getting and setting property values
         /// </summary>
         public IPropertyAccessor PropertyAccessor { get; set; }
+
+        /// <summary>
+        /// Sets up the binding and updates target
+        /// </summary>
+        public IBindingExpression Bind()
+        {
+            var s = this.Source;
+
+            this.RegisterForPropertyChangesOnSource();
+            this.RegisterForPropertyChangesOnTarget();
+
+            this.UpdateTarget(s);
+            return this;
+        }
         
         /// <summary>
         /// Updates the target object from the source object.
@@ -241,12 +255,7 @@ namespace Mobile.Mvvm.DataBinding
             this.TargetProperty = targetProperty;
             this.Binding = binding;
 
-            this.RegisterForPropertyChangesOnSource();
-            this.RegisterForPropertyChangesOnTarget();
-            
             this.targetPropertyType = target.GetPropertyInfo(this.TargetProperty).PropertyType;
-            
-            this.UpdateTarget(source);
         }
   
         /// <summary>

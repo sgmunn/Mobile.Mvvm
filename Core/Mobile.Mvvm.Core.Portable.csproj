@@ -48,14 +48,11 @@
     <Compile Include="IStateBundle.cs" />
     <Compile Include="IPersistentState.cs" />
     <Compile Include="ILoadable.cs" />
-    <Compile Include="ViewModel\IViewModelBindingScope.cs" />
-    <Compile Include="ViewModel\ViewModelBindingScope.cs" />
     <Compile Include="DataBinding\Behaviour.cs" />
     <Compile Include="DataBinding\Binding.cs" />
     <Compile Include="DataBinding\BindingExpression.cs" />
     <Compile Include="DataBinding\BindingMode.cs" />
     <Compile Include="DataBinding\BindingScope.cs" />
-    <Compile Include="DataBinding\BindingScopeExtensions.cs" />
     <Compile Include="DataBinding\BindingScopeInjectedProperty.cs" />
     <Compile Include="DataBinding\BooleanToStringConverter.cs" />
     <Compile Include="DataBinding\CurrencyToStringConverter.cs" />
@@ -67,17 +64,26 @@
     <Compile Include="DataBinding\IBindingScope.cs" />
     <Compile Include="DataBinding\IInjectedPropertyStore.cs" />
     <Compile Include="DataBinding\InjectedProperty.cs" />
-    <Compile Include="DataBinding\InjectedPropertyBindingExtensions.cs" />
     <Compile Include="DataBinding\InjectedPropertyChangedEventArgs.cs" />
     <Compile Include="DataBinding\InjectedPropertyMetadata.cs" />
     <Compile Include="DataBinding\InjectedPropertyStore.cs" />
     <Compile Include="DataBinding\IPropertyAccessor.cs" />
     <Compile Include="DataBinding\IPropertyInjection.cs" />
     <Compile Include="DataBinding\IValueConverter.cs" />
-    <Compile Include="DataBinding\OneTimeBindingExtensions.cs" />
     <Compile Include="DataBinding\PropertyChangedCallback.cs" />
     <Compile Include="DataBinding\ReflectionPropertyAccessor.cs" />
     <Compile Include="DataBinding\WeakBindingExpression.cs" />
+    <Compile Include="BindingScopeExtensions.cs" />
+    <Compile Include="InjectedPropertyBindingExtensions.cs" />
+    <Compile Include="OneTimeBindingExtensions.cs" />
+    <Compile Include="ViewModel\IViewModelContext.cs" />
+    <Compile Include="ViewModel\ViewModelContext.cs" />
+    <Compile Include="DataBinding\IInjectionScope.cs" />
+    <Compile Include="DataBinding\InjectionScope.cs" />
+    <Compile Include="DataBinding\A.cs" />
+    <Compile Include="Reflection\ReflectionUtils.cs" />
+    <Compile Include="DataBinding\EventTriggeredBindingExpression.cs" />
+    <Compile Include="Disposables\AnonymousDisposable.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <ItemGroup>
@@ -85,5 +91,9 @@
     <Folder Include="Diagnostics\" />
     <Folder Include="ViewModel\" />
     <Folder Include="DataBinding\" />
+    <Folder Include="Reflection\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Notes.txt" />
   </ItemGroup>
 </Project>

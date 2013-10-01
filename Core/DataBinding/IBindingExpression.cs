@@ -22,33 +22,50 @@ namespace Mobile.Mvvm.DataBinding
 {
     using System;
 
+//    public interface IPropertyBindingExpression : IBindingExpression
+//    {
+//    }
+    
+//    public interface IEventBindingExpression : IBindingExpression
+//    {
+//        /// <summary>
+//        /// Gets the name of the target property.
+//        /// </summary>
+//        string TargetEventName { get; }
+//    }
+
     public interface IBindingExpression : IDisposable
     {
         /// <summary>
         /// Gets the target of the binding
         /// </summary>
         object Target { get; }
-        
-        /// <summary>
-        /// Gets the name of the target property.
-        /// </summary>
-        string TargetProperty { get; }
-        
+
         /// <summary>
         /// Gets the source of the binding.
         /// </summary>
         object Source { get; }
-        
+
         /// <summary>
-        /// Gets the binding for Source.
+        /// Gets the name of the target property.
         /// </summary>
-        Binding Binding { get; }
-        
+        string TargetProperty { get; }
+
         /// <summary>
         /// Gets or sets the property accessor for getting and setting property values
         /// </summary>
         IPropertyAccessor PropertyAccessor { get; set; }
-        
+
+        /// <summary>
+        /// Gets the binding for Source.
+        /// </summary>
+        Binding Binding { get; }
+
+        /// <summary>
+        /// Sets up the binding and updates target
+        /// </summary>
+        IBindingExpression Bind();
+
         /// <summary>
         /// Updates the target object from the source object.
         /// </summary>

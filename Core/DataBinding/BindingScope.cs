@@ -23,7 +23,7 @@ namespace Mobile.Mvvm.DataBinding
     using System;
     using System.Collections.Generic;
 
-    public class BindingScope : IBindingScope
+    public sealed class BindingScope : IBindingScope
     {
         private readonly List<IBindingExpression> exresssions;
 

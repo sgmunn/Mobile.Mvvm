@@ -54,7 +54,7 @@ namespace Mobile.Mvvm.UnitTests.Bindings
         
         protected override IBindingExpression GetExpression()
         {
-            return new BindingExpression(this.Target, "PropertyA", this.Source, this.Binding);
+            return new BindingExpression(this.Target, "PropertyA", this.Source, this.Binding).Bind();
         }
 
     }

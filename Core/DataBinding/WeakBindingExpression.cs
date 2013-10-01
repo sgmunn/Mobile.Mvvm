@@ -26,7 +26,7 @@ namespace Mobile.Mvvm.DataBinding
     /// <summary>
     /// An instance of a Binding between two objects that uses weak references between target and source
     /// </summary>
-    public sealed class WeakBindingExpression : IBindingExpression
+    public class WeakBindingExpression : IBindingExpression
     {
         /// <summary>
         /// The target object that is bound
@@ -156,6 +156,21 @@ namespace Mobile.Mvvm.DataBinding
         /// Gets or sets the property accessor for getting and setting property values
         /// </summary>
         public IPropertyAccessor PropertyAccessor { get; set; }
+
+        /// <summary>
+        /// Sets up the binding and updates target
+        /// </summary>
+        public IBindingExpression Bind()
+        {
+            var t = this.Target;
+            var s = this.Source;
+
+            this.RegisterForPropertyChangesOnSource(s);
+            this.RegisterForPropertyChangesOnTarget(t);
+
+            this.UpdateTarget(s);
+            return this;
+        }
         
         /// <summary>
         /// Updates the target object from the source object.
@@ -167,11 +182,11 @@ namespace Mobile.Mvvm.DataBinding
                 return;
             }
             
-            var target = this.Target;
-            if (target != null)
+            var obj = this.Target;
+            if (obj != null)
             {
                 var sourceValue = this.Binding.GetSourceValue(sourceObject, this.targetPropertyType);
-                this.PropertyAccessor.SetValue(target, sourceValue);
+                this.PropertyAccessor.SetValue(obj, sourceValue);
             }
         }
         
@@ -198,10 +213,10 @@ namespace Mobile.Mvvm.DataBinding
                 return;
             }
             
-            var target = this.Target;
-            if (target != null)
+            var obj = this.Target;
+            if (obj != null)
             {
-                this.Binding.UpdateSourceValue(this.Source, this.PropertyAccessor.GetValue(target));
+                this.Binding.UpdateSourceValue(this.Source, this.PropertyAccessor.GetValue(obj));
             }            
         }
 
@@ -217,7 +232,7 @@ namespace Mobile.Mvvm.DataBinding
         /// <summary>
         /// Disposes the resources used by this object.
         /// </summary>
-        private void Dispose(bool disposing)
+        protected virtual void Dispose(bool disposing)
         {
             if (!this.disposed)
             {
@@ -234,7 +249,7 @@ namespace Mobile.Mvvm.DataBinding
         /// <summary>
         /// Unregisters for changes in the source and target objects.
         /// </summary>
-        private void UnregisterForChanges()
+        protected virtual void UnregisterForChanges()
         {
             var s = this.Source;
             var inpc = s as INotifyPropertyChanged;
@@ -261,21 +276,15 @@ namespace Mobile.Mvvm.DataBinding
             this.TargetProperty = targetProperty;
             this.Binding = binding;
 
-            this.RegisterForPropertyChangesOnSource();
-            this.RegisterForPropertyChangesOnTarget();
-            
             this.targetPropertyType = target.GetPropertyInfo(this.TargetProperty).PropertyType;
-            
-            this.UpdateTarget(source);
         }
   
         /// <summary>
         /// Registers for property changes on the source object.  The source object must implement INotifyPropertyChanged.
         /// </summary>
-        private void RegisterForPropertyChangesOnSource()
+        protected virtual void RegisterForPropertyChangesOnSource(object obj)
         {
-            var s = this.Source;
-            var inpc = s as INotifyPropertyChanged;
+            var inpc = obj as INotifyPropertyChanged;
             
             if (inpc != null)
             {
@@ -287,10 +296,9 @@ namespace Mobile.Mvvm.DataBinding
         /// <summary>
         /// Registers for property changes on the target object.  The target object must implement INotifyPropertyChanged.
         /// </summary>
-        private void RegisterForPropertyChangesOnTarget()
+        protected virtual void RegisterForPropertyChangesOnTarget(object obj)
         {
-            var t = this.Target;
-            var inpc = t as INotifyPropertyChanged;
+            var inpc = obj as INotifyPropertyChanged;
             if (inpc != null)
             {
                 inpc.PropertyChanged -= HandleTargetPropertyChanged;

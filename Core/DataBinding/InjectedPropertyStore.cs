@@ -24,6 +24,9 @@ namespace Mobile.Mvvm.DataBinding
     using System.Collections.Generic;
     using System.Linq;
 
+    /// <summary>
+    /// Stores a collection of injected properties for a single "owing" object
+    /// </summary>
     public sealed class InjectedPropertyStore : IInjectedPropertyStore
     {
         private readonly object owner;

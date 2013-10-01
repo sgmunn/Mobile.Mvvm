@@ -60,6 +60,8 @@
     <Compile Include="DataBinding\InjectedProperties\GivenAnInjectableObject.cs" />
     <Compile Include="Reactive\Given.cs" />
     <Compile Include="Bootstrap.cs" />
+    <Compile Include="DataBinding\Bindings\GivenATargetWithAnEvent.cs" />
+    <Compile Include="DataBinding\Bindings\EventTargetObject.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="DataBinding\" />

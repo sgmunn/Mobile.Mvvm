@@ -8,7 +8,7 @@
     <ProjectGuid>{ED321F55-0F25-4BF6-BCD1-C61245DEFBAD}</ProjectGuid>
     <ProjectTypeGuids>{EFBA0AD7-5A72-4C68-AF49-83D382785DCF};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
-    <RootNamespace>Mobile.Mvvm.Droid</RootNamespace>
+    <RootNamespace>Mobile.Mvvm</RootNamespace>
     <AndroidResgenFile>Resources\Resource.designer.cs</AndroidResgenFile>
     <AndroidResgenClass>Resource</AndroidResgenClass>
     <MonoAndroidResourcePrefix>Resources</MonoAndroidResourcePrefix>
@@ -43,6 +43,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Resources\Resource.designer.cs" />
+    <Compile Include="ViewModel\AndroidViewModelContext.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\AboutResources.txt" />
@@ -51,4 +52,13 @@
     <AndroidResource Include="Resources\values\Strings.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Novell\Novell.MonoDroid.CSharp.targets" />
+  <ItemGroup>
+    <Folder Include="ViewModel\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Core\Mobile.Mvvm.Core.Portable.csproj">
+      <Project>{0E78EB4F-B89D-485C-88A0-3B69B232BD36}</Project>
+      <Name>Mobile.Mvvm.Core.Portable</Name>
+    </ProjectReference>
+  </ItemGroup>
 </Project>
