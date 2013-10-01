@@ -20,12 +20,12 @@
 // Taken in part from:
 // http://rx.codeplex.com/SourceControl/latest#Rx.NET/Source/System.Reactive.Linq/Reactive/Internal/ReflectionUtils.cs
 
-using System;
-using System.Reflection;
-using System.Globalization;
-
 namespace Mobile.Mvvm.DataBinding
 {
+    using System;
+    using System.Reflection;
+    using System.Globalization;
+
     public static class ReflectionUtils
     {
         public static Delegate CreateDelegate(Type delegateType, object o, MethodInfo method)
@@ -130,7 +130,7 @@ namespace Mobile.Mvvm.DataBinding
         {
             return type.GetEvent(name, isStatic ? BindingFlags.Public | BindingFlags.Static : BindingFlags.Public | BindingFlags.Instance);
         }
-//
+
 //        #if CRIPPLED_REFLECTION
 //        public static MethodInfo GetMethod(this Type type, string name)
 //        {

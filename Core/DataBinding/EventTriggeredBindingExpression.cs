@@ -17,13 +17,12 @@
 //   IN THE SOFTWARE.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
-using Mobile.Mvvm.Disposables;
 
 namespace Mobile.Mvvm.DataBinding
 {
     using System;
     using System.Reflection;
-    using System.ComponentModel;
+    using Mobile.Mvvm.Disposables;
 
     public sealed class EventTriggeredBindingExpression<TTargetType, TEventArgs> : WeakBindingExpression
         where TTargetType : class where TEventArgs : EventArgs

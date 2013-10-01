@@ -17,7 +17,6 @@
 //    IN THE SOFTWARE.
 //  </copyright>
 //  --------------------------------------------------------------------------------------------------------------------
-using System.Reflection;
 
 namespace Mobile.Mvvm
 {
@@ -25,6 +24,7 @@ namespace Mobile.Mvvm
     using System.Collections.Generic;
     using System.Linq;
     using Mobile.Mvvm.DataBinding;
+    using System.Reflection;
 
     public static class BindingScopeExtensions
     {

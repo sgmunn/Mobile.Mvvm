@@ -30,34 +30,34 @@ namespace Mobile.Mvvm
     /// </summary>
     public static class ReflectionExtensions
     {
-        /// <summary>
-        /// Gets all Types that have the given attribute defined
-        /// </summary>        
-        public static IQueryable<Type> GetTypesWith<TAttribute>(Assembly[] assemblies, bool inherit) where TAttribute: System.Attribute
-        {
-            // assemblies = AppDomain.CurrentDomain.GetAssemblies()
-            return from a in assemblies.AsQueryable()
-                from t in a.GetTypes()
-                    where t.IsDefined(typeof(TAttribute),inherit)
-                    select t;
-        }
-        
-        /// <summary>
-        /// Gets the attributes for a given Type as a Queryable
-        /// </summary>
-        public static IQueryable<Attribute> GetAttributes(Type objectType)
-        {
-            return System.Attribute.GetCustomAttributes(objectType).AsQueryable();
-        }
-
-        public static IEnumerable<T> GetAttributes<T>(this MemberInfo member, bool inherit)
-        {
-            return Attribute.GetCustomAttributes(member, inherit).OfType<T>();
-        }
-        
+//        /// <summary>
+//        /// Gets all Types that have the given attribute defined
+//        /// </summary>        
+//        public static IQueryable<Type> GetTypesWith<TAttribute>(Assembly[] assemblies, bool inherit) where TAttribute: System.Attribute
+//        {
+//            // assemblies = AppDomain.CurrentDomain.GetAssemblies()
+//            return from a in assemblies.AsQueryable()
+//                from t in a.GetTypes()
+//                    where t.IsDefined(typeof(TAttribute),inherit)
+//                    select t;
+//        }
+//        
+//        /// <summary>
+//        /// Gets the attributes for a given Type as a Queryable
+//        /// </summary>
+//        public static IQueryable<Attribute> GetAttributes(Type objectType)
+//        {
+//            return System.Attribute.GetCustomAttributes(objectType).AsQueryable();
+//        }
+//
+//        public static IEnumerable<T> GetAttributes<T>(this MemberInfo member, bool inherit)
+//        {
+//            return Attribute.GetCustomAttributes(member, inherit).OfType<T>();
+//        }
+//        
         public static PropertyInfo GetPropertyInfo(this object instance, string propertyName)
         {
-            return instance.GetType().GetProperty(propertyName);
+           return instance.GetType().GetProperty(propertyName);
         }
     }
 }

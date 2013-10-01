@@ -22,10 +22,7 @@ using System.Collections.Generic;
 using System.Linq;
 using MonoTouch.Foundation;
 using MonoTouch.UIKit;
-using Mobile.Mvvm.Disposables;
 using Mobile.Mvvm.DataBinding;
-using System.Reflection;
-using Mobile.Mvvm;
 
 namespace Sample.Touch
 {
@@ -55,46 +52,7 @@ namespace Sample.Touch
             // make the window visible
             window.MakeKeyAndVisible();
 
-            this.Test();
-            
             return true;
-        }
-
-        private void Test()
-        {
-            var x = new TestMe();
-            var z = BindingScopeExtensions.AddEventBinding<TestMe, EventArgs>(null, x, "SomethingChanged");
-            x.Fire();
-
-
-//            var addMethod = default(MethodInfo);
-//            var removeMethod = default(MethodInfo);
-//            var delegateType = default(Type);
-//            var isWinRT = default(bool);
-//            ReflectionUtils.GetEventMethods<TestMe, EventArgs>(x, "SomethingChanged", out addMethod, out removeMethod, out delegateType, out isWinRT);
-//
-//            if (addMethod != null)
-//            {
-//
-//            }
-
-
-
-           // var parser = new MvxPropertyExpressionParser();
-          //  parser.Parse()
-        }
-    }
-
-    public class TestMe
-    {
-        public string Field1 { get; set; }
-
-        public event EventHandler SomethingChanged;
-
-        public void Fire()
-        {
-            if (this.SomethingChanged != null)
-                this.SomethingChanged(this, new EventArgs());
         }
     }
 }

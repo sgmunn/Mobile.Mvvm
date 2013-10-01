@@ -17,7 +17,6 @@
 //   IN THE SOFTWARE.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
-using Mobile.Mvvm.DataBinding;
 
 namespace Mobile.Mvvm.ViewModel
 {
@@ -26,6 +25,7 @@ namespace Mobile.Mvvm.ViewModel
     using System.Runtime.CompilerServices;
     using Mobile.Mvvm.Disposables;
     using Mobile.Mvvm.Diagnostics;
+    using Mobile.Mvvm.DataBinding;
 
     /// <summary>
     /// Defines a context for a view model, bindings and injected properties.
