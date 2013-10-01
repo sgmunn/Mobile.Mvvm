@@ -71,7 +71,8 @@ namespace Mobile.Mvvm.ViewModel
         {
             if (disposing)
             {
-                this.Bindings.ClearBindings();
+                this.Bindings.Dispose();
+                this.InjectedProperties.Dispose();
             }
         }
     }
