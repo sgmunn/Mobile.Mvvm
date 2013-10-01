@@ -9,6 +9,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Playground", "Playground", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sample.Touch", "Playground\Sample.Touch\Sample.Touch.csproj", "{C6CD1759-1039-4D9E-9DB4-8ED2A13EF579}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SampleViewModels", "Playground\SampleViewModels\SampleViewModels.csproj", "{006A5EBF-B149-405D-B866-05426D08AFFF}"
+EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Platform", "Platform", "{9CF32E19-3442-4E5F-91FC-9733C9ECE0CA}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mobile.Mvvm.Droid", "Platform\Mobile.Mvvm.Droid\Mobile.Mvvm.Droid.csproj", "{ED321F55-0F25-4BF6-BCD1-C61245DEFBAD}"
@@ -35,6 +37,22 @@ Global
 		AppStore|iPhone = AppStore|iPhone
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{006A5EBF-B149-405D-B866-05426D08AFFF}.Ad-Hoc|iPhone.ActiveCfg = Release|Any CPU
+		{006A5EBF-B149-405D-B866-05426D08AFFF}.Ad-Hoc|iPhone.Build.0 = Release|Any CPU
+		{006A5EBF-B149-405D-B866-05426D08AFFF}.AppStore|iPhone.ActiveCfg = Release|Any CPU
+		{006A5EBF-B149-405D-B866-05426D08AFFF}.AppStore|iPhone.Build.0 = Release|Any CPU
+		{006A5EBF-B149-405D-B866-05426D08AFFF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{006A5EBF-B149-405D-B866-05426D08AFFF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{006A5EBF-B149-405D-B866-05426D08AFFF}.Debug|iPhone.ActiveCfg = Debug|Any CPU
+		{006A5EBF-B149-405D-B866-05426D08AFFF}.Debug|iPhone.Build.0 = Debug|Any CPU
+		{006A5EBF-B149-405D-B866-05426D08AFFF}.Debug|iPhoneSimulator.ActiveCfg = Debug|Any CPU
+		{006A5EBF-B149-405D-B866-05426D08AFFF}.Debug|iPhoneSimulator.Build.0 = Debug|Any CPU
+		{006A5EBF-B149-405D-B866-05426D08AFFF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{006A5EBF-B149-405D-B866-05426D08AFFF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{006A5EBF-B149-405D-B866-05426D08AFFF}.Release|iPhone.ActiveCfg = Release|Any CPU
+		{006A5EBF-B149-405D-B866-05426D08AFFF}.Release|iPhone.Build.0 = Release|Any CPU
+		{006A5EBF-B149-405D-B866-05426D08AFFF}.Release|iPhoneSimulator.ActiveCfg = Release|Any CPU
+		{006A5EBF-B149-405D-B866-05426D08AFFF}.Release|iPhoneSimulator.Build.0 = Release|Any CPU
 		{0E78EB4F-B89D-485C-88A0-3B69B232BD36}.Ad-Hoc|iPhone.ActiveCfg = Debug|Any CPU
 		{0E78EB4F-B89D-485C-88A0-3B69B232BD36}.Ad-Hoc|iPhone.Build.0 = Debug|Any CPU
 		{0E78EB4F-B89D-485C-88A0-3B69B232BD36}.AppStore|iPhone.ActiveCfg = Debug|Any CPU
@@ -135,6 +153,7 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{0E78EB4F-B89D-485C-88A0-3B69B232BD36} = {6ACB17DB-AB8C-48F0-B3AB-1F9407F7FA17}
 		{C6CD1759-1039-4D9E-9DB4-8ED2A13EF579} = {CE09234A-08BD-439C-B03F-E4C3DEDCDFBA}
+		{006A5EBF-B149-405D-B866-05426D08AFFF} = {CE09234A-08BD-439C-B03F-E4C3DEDCDFBA}
 		{ED321F55-0F25-4BF6-BCD1-C61245DEFBAD} = {9CF32E19-3442-4E5F-91FC-9733C9ECE0CA}
 		{493A68F4-2B44-474C-B40E-7D59669019F2} = {9CF32E19-3442-4E5F-91FC-9733C9ECE0CA}
 		{8B49C0E8-21FA-498A-8262-3805D1A4962E} = {2FB605DF-4E51-42FB-9F75-227B1B2C1D79}
@@ -142,7 +161,7 @@ Global
 		{371D6E44-E499-4136-A871-A5EA5260A209} = {31EF5695-E6D3-4E6D-A681-60F712501372}
 	EndGlobalSection
 	GlobalSection(MonoDevelopProperties) = preSolution
-		StartupItem = UnitTests\TestRunner.iOS\TestRunner.iOS.csproj
+		StartupItem = Playground\Sample.Touch\Sample.Touch.csproj
 		Policies = $0
 		$0.DotNetNamingPolicy = $1
 		$1.DirectoryNamespaceAssociation = PrefixedHierarchical

@@ -9,3 +9,6 @@ Playground/Sample.Touch/obj
 UnitTests/Mobile.Mvvm.UnitTests.iOS/bin
 UnitTests/TestRunner.iOS/bin
 UnitTests/TestRunner.iOS/obj
+Platform/Mobile.Mvvm.iOS/bin
+Playground/SampleViewModels/bin
+Playground/SampleViewModels/obj

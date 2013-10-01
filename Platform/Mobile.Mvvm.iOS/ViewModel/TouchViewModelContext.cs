@@ -1,5 +1,5 @@
 // --------------------------------------------------------------------------------------------------------------------
-// <copyright file="AndroidViewModelContext.cs" company="sgmunn">
+// <copyright file="TouchViewModelContext.cs" company="sgmunn">
 //   (c) sgmunn 2013  
 //
 //   Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated 
@@ -21,20 +21,17 @@
 namespace Mobile.Mvvm.ViewModel
 {
     using System;
-    using Android.Content;
-    using Android.Views;
+    using MonoTouch.UIKit;
 
-    public class AndroidViewModelContext : ViewModelContext
+    public class TouchViewModelContext : ViewModelContext
     {
-        public AndroidViewModelContext(Context context, IViewModel viewModel) 
+        public TouchViewModelContext(UIViewController context, IViewModel viewModel) 
             : base(viewModel)
         {
             this.Context = context;
         }
 
-        public Context Context { get; private set; }
-
-        // custom inflater like MvxAndroidBindingContext
+        public UIViewController Context { get; private set; }
     }
 }
 

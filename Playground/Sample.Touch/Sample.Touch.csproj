@@ -83,6 +83,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Resources\" />
+    <Folder Include="SampleControllers\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Info.plist" />
@@ -90,6 +91,10 @@
   <ItemGroup>
     <Compile Include="Main.cs" />
     <Compile Include="AppDelegate.cs" />
+    <Compile Include="SampleControllers\PlainViewController.cs" />
+    <Compile Include="SampleControllers\PlainViewController.designer.cs">
+      <DependentUpon>PlainViewController.cs</DependentUpon>
+    </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
@@ -97,5 +102,16 @@
       <Project>{0E78EB4F-B89D-485C-88A0-3B69B232BD36}</Project>
       <Name>Mobile.Mvvm.Core.Portable</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\Platform\Mobile.Mvvm.iOS\Mobile.Mvvm.iOS.csproj">
+      <Project>{493A68F4-2B44-474C-B40E-7D59669019F2}</Project>
+      <Name>Mobile.Mvvm.iOS</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SampleViewModels\SampleViewModels.csproj">
+      <Project>{006A5EBF-B149-405D-B866-05426D08AFFF}</Project>
+      <Name>SampleViewModels</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <InterfaceDefinition Include="SampleControllers\PlainViewController.xib" />
   </ItemGroup>
 </Project>

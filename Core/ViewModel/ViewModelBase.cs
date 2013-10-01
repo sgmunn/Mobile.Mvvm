@@ -114,7 +114,7 @@ namespace Mobile.Mvvm.ViewModel
         }
 
         // TODO: CallerMemberName
-        protected void NotifyPropertyChanged(string propertyName)
+        protected virtual void NotifyPropertyChanged(string propertyName)
         {
             var changed = this.PropertyChanged;
             if (changed != null)
