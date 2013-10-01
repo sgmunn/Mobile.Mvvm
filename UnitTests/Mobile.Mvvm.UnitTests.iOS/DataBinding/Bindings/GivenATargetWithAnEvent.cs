@@ -27,5 +27,17 @@ namespace Mobile.Mvvm.UnitTests.Bindings
 
             Assert.AreEqual(this.Target.PropertyA, this.Source.Property1);
         }
+        
+        [Test]
+        public void WhenDisposingTheExpression_ThenTargetObjectEventIsNull()
+        {
+            this.SetUp();
+            var binding = new Binding("Property1");
+            var expression = new EventTriggeredBindingExpression<EventTargetObject, EventArgs>(this.Target, "PropertyA", "PropertyChanged", this.Source, binding).Bind();
+
+            expression.Dispose();
+
+            Assert.AreEqual(this.Target.HasEventHandler, false);
+        }
     }
 }

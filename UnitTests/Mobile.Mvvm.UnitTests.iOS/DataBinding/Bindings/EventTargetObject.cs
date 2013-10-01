@@ -26,6 +26,14 @@ namespace Mobile.Mvvm.UnitTests.Bindings
             }
         }
 
+        public bool HasEventHandler
+        {
+            get
+            {
+                return this.PropertyChanged != null;
+            }
+        }
+
         private void NotifyPropertyChanged()
         {
             var handler = this.PropertyChanged;
