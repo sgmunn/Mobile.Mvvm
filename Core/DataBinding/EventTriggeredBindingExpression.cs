@@ -53,7 +53,7 @@ namespace Mobile.Mvvm.DataBinding
 
         protected override void RegisterForPropertyChangesOnTarget(object obj)
         {
-            base.RegisterForPropertyChangesOnTarget(obj);
+            //// Do not register for INPC as well. base.RegisterForPropertyChangesOnTarget(obj);
 
             var t = (TTargetType)obj;
 
@@ -75,12 +75,14 @@ namespace Mobile.Mvvm.DataBinding
             var unSubscribe = new AnonymousDisposable(() => {
                 removeMethod.Invoke(t, new object[] { d });
             });
+
+            this.subscriptions.Add(eventWrapper);
             this.subscriptions.Add(unSubscribe);
         }
 
         protected override void UnregisterForChanges()
         {
-            base.UnregisterForChanges();
+            //// base.UnregisterForChanges();
             this.subscriptions.Dispose();
         }
     }
