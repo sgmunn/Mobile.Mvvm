@@ -116,10 +116,9 @@ namespace Mobile.Mvvm
             }
         }
 
-        public static IBindingExpression AddEventTriggeredBinding<TTarget, TEventArgs>(this IBindingScope scope, TTarget target, string targetPropertyName, string eventName, object source, string sourcePropertyName)
-            where TTarget : class where TEventArgs : EventArgs
+        public static IBindingExpression AddEventTriggeredBinding(this IBindingScope scope, object target, string targetPropertyName, string eventName, object source, string sourcePropertyName)
         {
-            var expression = new EventTriggeredBindingExpression<TTarget, TEventArgs>(target, targetPropertyName, eventName, source, new Binding(sourcePropertyName));
+            var expression = new EventTriggeredBindingExpression(target, targetPropertyName, eventName, source, new Binding(sourcePropertyName));
             expression.Bind();
             scope.AddBinding(expression);
             return expression;

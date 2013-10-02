@@ -36,6 +36,80 @@ namespace Mobile.Mvvm.DataBinding
             return Delegate.CreateDelegate(delegateType, o, method);
             #endif
         }
+        
+        /// <summary>
+        /// Gets the event methods for a named event
+        /// </summary>
+        public static void GetEventMethods(Type type, string eventName, out MethodInfo addMethod, out MethodInfo removeMethod, out Type delegateType, out bool isWinRT)
+        {
+            var e = type.GetEventEx(eventName, false);
+            if (e == null)
+            {
+                throw new InvalidOperationException(string.Format(CultureInfo.CurrentCulture, "COULD_NOT_FIND_INSTANCE_EVENT", eventName, type.FullName));
+            }
+
+            addMethod = e.GetAddMethod();
+            removeMethod = e.GetRemoveMethod();
+
+            if (addMethod == null)
+            {
+                throw new InvalidOperationException("EVENT_MISSING_ADD_METHOD");
+            }
+
+            if (removeMethod == null)
+            {
+                throw new InvalidOperationException("EVENT_MISSING_REMOVE_METHOD");
+            }
+
+            var psa = addMethod.GetParameters();
+            if (psa.Length != 1)
+            {
+                throw new InvalidOperationException("EVENT_ADD_METHOD_SHOULD_TAKE_ONE_PARAMETER");
+            }
+
+            var psr = removeMethod.GetParameters();
+            if (psr.Length != 1)
+            {
+                throw new InvalidOperationException("EVENT_REMOVE_METHOD_SHOULD_TAKE_ONE_PARAMETER");
+            }
+
+            isWinRT = false;
+
+            #if HAS_WINRT
+            if (addMethod.ReturnType == typeof(EventRegistrationToken))
+            {
+                isWinRT = true;
+
+                var pet = psr[0];
+                if (pet.ParameterType != typeof(EventRegistrationToken))
+                    throw new InvalidOperationException(Strings_Linq.EVENT_WINRT_REMOVE_METHOD_SHOULD_TAKE_ERT);
+            }
+            #endif
+
+            delegateType = psa[0].ParameterType;
+
+            var invokeMethod = delegateType.GetMethod("Invoke");
+
+            var parameters = invokeMethod.GetParameters();
+
+            if (parameters.Length != 2)
+            {
+                throw new InvalidOperationException("EVENT_PATTERN_REQUIRES_TWO_PARAMETERS");
+            }
+
+            ////if (!typeof(TSender).IsAssignableFrom(parameters[0].ParameterType))
+            ////    throw new InvalidOperationException(string.Format(CultureInfo.CurrentCulture, "EVENT_SENDER_NOT_ASSIGNABLE", typeof(TSender).FullName));
+
+            ////if (!typeof(TEventArgs).IsAssignableFrom(parameters[1].ParameterType))
+            ////{
+            ////    throw new InvalidOperationException(string.Format(CultureInfo.CurrentCulture, "EVENT_ARGS_NOT_ASSIGNABLE", typeof(TEventArgs).FullName));
+            ////}
+
+            if (invokeMethod.ReturnType != typeof(void))
+            {
+                throw new InvalidOperationException("EVENT_MUST_RETURN_VOID");
+            }
+        }
 
         /// <summary>
         /// Gets the event methods for a named event. if target is null, looks for a static event member

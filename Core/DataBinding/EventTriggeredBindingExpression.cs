@@ -24,7 +24,15 @@ namespace Mobile.Mvvm.DataBinding
     using System.Reflection;
     using Mobile.Mvvm.Disposables;
 
-    public sealed class EventTriggeredBindingExpression<TTargetType, TEventArgs> : WeakBindingExpression
+    public sealed class EventTriggeredBindingExpression : EventTriggeredBindingExpression<object, EventArgs>
+    {
+        public EventTriggeredBindingExpression(object target, string targetProperty, string targetEventName, object source, Binding binding)
+            : base(target, targetProperty, targetEventName, source, binding)
+        {
+        }
+    }
+
+    public class EventTriggeredBindingExpression<TTargetType, TEventArgs> : WeakBindingExpression
         where TTargetType : class where TEventArgs : EventArgs
     {
         private CompositeDisposable subscriptions;
@@ -62,9 +70,9 @@ namespace Mobile.Mvvm.DataBinding
             var removeMethod = default(MethodInfo);
             var delegateType = default(Type);
             var isWinRT = default(bool);
-            ReflectionUtils.GetEventMethods<TTargetType, TEventArgs>(t, this.TargetEventName, out addMethod, out removeMethod, out delegateType, out isWinRT);
+            ReflectionUtils.GetEventMethods(t.GetType(), this.TargetEventName, out addMethod, out removeMethod, out delegateType, out isWinRT);
 
-            var eventWrapper = new WeakEventWrapper<IBindingExpression, TEventArgs>(this, (t1, s1, e1) => {
+            var eventWrapper = new WeakEventWrapper<IBindingExpression, EventArgs>(this, (t1, s1, e1) => {
                 // update who we are bound to
                 t1.UpdateSource();
             });

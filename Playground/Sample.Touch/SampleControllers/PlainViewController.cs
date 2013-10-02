@@ -35,9 +35,12 @@ namespace Sample.Touch.SampleControllers
 
             this.viewModelContext.Bindings.AddBinding(this.label1, "Text", this.viewModelContext.ViewModel, "Property1");
 
-            this.viewModelContext.Bindings.AddEventTriggeredBinding<UITextField, EventArgs>(this.field1, "Text", "Ended", this.viewModelContext.ViewModel, "Property1");
+            this.viewModelContext.Bindings.AddEventTriggeredBinding(this.field1, "Text", "Ended", this.viewModelContext.ViewModel, "Property1");
+        }
 
-            // Perform any additional setup after loading the view, typically from a nib.
+        private void Test(object sender, System.ComponentModel.PropertyChangedEventArgs e )
+        {
+
         }
     }
 }
