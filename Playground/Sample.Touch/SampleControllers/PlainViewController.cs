@@ -37,11 +37,5 @@ namespace Sample.Touch.SampleControllers
 
             this.viewModelContext.Bindings.AddEventTriggeredBinding(this.field1, "Text", "Ended", this.viewModelContext.ViewModel, "Property1");
         }
-
-        private void Test(object sender, System.ComponentModel.PropertyChangedEventArgs e )
-        {
-
-        }
     }
 }
-
