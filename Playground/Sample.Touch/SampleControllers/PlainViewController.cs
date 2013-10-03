@@ -10,7 +10,7 @@ namespace Sample.Touch.SampleControllers
 {
     public partial class PlainViewController : UIViewController
     {
-        private IViewModelContext viewModelContext;
+        private IRootViewModelContext viewModelContext;
 
         public PlainViewController() : base ("PlainViewController", null)
         {
@@ -29,7 +29,7 @@ namespace Sample.Touch.SampleControllers
             base.ViewDidLoad();
 
             var vm = new SimpleViewModel();
-            this.viewModelContext = new TouchViewModelContext(this, vm);
+            this.viewModelContext = new RootViewModelContext(this, vm);
 
             vm.Property1 = "Hello";
 

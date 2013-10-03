@@ -1,5 +1,5 @@
 // --------------------------------------------------------------------------------------------------------------------
-// <copyright file="TouchViewModelContext.cs" company="sgmunn">
+// <copyright file="RootViewModelContext.cs" company="sgmunn">
 //   (c) sgmunn 2013  
 //
 //   Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated 
@@ -23,9 +23,9 @@ namespace Mobile.Mvvm.ViewModel
     using System;
     using MonoTouch.UIKit;
 
-    public class TouchViewModelContext : ViewModelContext
+    public class RootViewModelContext : RootViewModelContextBase
     {
-        public TouchViewModelContext(UIViewController context, IViewModel viewModel) 
+        public RootViewModelContext(UIViewController context, IViewModel viewModel) 
             : base(viewModel)
         {
             this.Context = context;
@@ -33,5 +33,5 @@ namespace Mobile.Mvvm.ViewModel
 
         public UIViewController Context { get; private set; }
     }
+    
 }
-

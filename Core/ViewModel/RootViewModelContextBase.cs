@@ -1,5 +1,5 @@
 // --------------------------------------------------------------------------------------------------------------------
-// <copyright file="ViewModelContext.cs" company="sgmunn">
+// <copyright file="RootViewModelContextBase.cs" company="sgmunn">
 //   (c) sgmunn 2013  
 //
 //   Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated 
@@ -21,27 +21,23 @@
 namespace Mobile.Mvvm.ViewModel
 {
     using System;
-    using System.ComponentModel;
-    using System.Runtime.CompilerServices;
-    using Mobile.Mvvm.Disposables;
-    using Mobile.Mvvm.Diagnostics;
     using Mobile.Mvvm.DataBinding;
 
     /// <summary>
     /// Defines a context for a view model, bindings and injected properties.
     /// </summary>
-    public abstract class ViewModelContext : IViewModelContext
+    public abstract class RootViewModelContextBase : IRootViewModelContext, IDisposable
     {
         private bool disposed;
 
-        protected ViewModelContext(IViewModel viewModel)
+        protected RootViewModelContextBase(IViewModel viewModel)
         {
             this.ViewModel = viewModel;
             this.Bindings = new BindingScope();
             this.InjectedProperties = new InjectionScope(this.CreateInjectedPropertyStore);
         }
         
-        ~ViewModelContext()
+        ~RootViewModelContextBase()
         {
             this.Dispose(false);
         }

@@ -1,5 +1,5 @@
 // --------------------------------------------------------------------------------------------------------------------
-// <copyright file="AndroidViewModelContext.cs" company="sgmunn">
+// <copyright file="IRootViewModelContext.cs" company="sgmunn">
 //   (c) sgmunn 2013  
 //
 //   Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated 
@@ -21,20 +21,15 @@
 namespace Mobile.Mvvm.ViewModel
 {
     using System;
-    using Android.Content;
-    using Android.Views;
+    using System.ComponentModel;
+    using Mobile.Mvvm.DataBinding;
 
-    public class AndroidViewModelContext : ViewModelContext
+    public interface IRootViewModelContext
     {
-        public AndroidViewModelContext(Context context, IViewModel viewModel) 
-            : base(viewModel)
-        {
-            this.Context = context;
-        }
+        IViewModel ViewModel { get; }
 
-        public Context Context { get; private set; }
+        IBindingScope Bindings { get; }
 
-        // custom inflater like MvxAndroidBindingContext
+        IInjectionScope InjectedProperties { get; }
     }
 }
-

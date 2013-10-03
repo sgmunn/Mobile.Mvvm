@@ -42,7 +42,8 @@
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
-    <Compile Include="ViewModel\TouchViewModelContext.cs" />
+    <Compile Include="ViewModel\ListSource.cs" />
+    <Compile Include="ViewModel\RootViewModelContext.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Core\Mobile.Mvvm.Core.Portable.csproj">

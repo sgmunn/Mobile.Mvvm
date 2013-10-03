@@ -76,14 +76,15 @@
     <Compile Include="BindingScopeExtensions.cs" />
     <Compile Include="InjectedPropertyBindingExtensions.cs" />
     <Compile Include="OneTimeBindingExtensions.cs" />
-    <Compile Include="ViewModel\IViewModelContext.cs" />
-    <Compile Include="ViewModel\ViewModelContext.cs" />
     <Compile Include="DataBinding\IInjectionScope.cs" />
     <Compile Include="DataBinding\InjectionScope.cs" />
     <Compile Include="DataBinding\A.cs" />
     <Compile Include="Reflection\ReflectionUtils.cs" />
     <Compile Include="DataBinding\EventTriggeredBindingExpression.cs" />
     <Compile Include="Disposables\AnonymousDisposable.cs" />
+    <Compile Include="ViewModel\ISection.cs" />
+    <Compile Include="ViewModel\IRootViewModelContext.cs" />
+    <Compile Include="ViewModel\RootViewModelContextBase.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <ItemGroup>
