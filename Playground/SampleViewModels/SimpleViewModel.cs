@@ -3,7 +3,7 @@ using Mobile.Mvvm.ViewModel;
 
 namespace SampleViewModels
 {
-    // TODO: helper for property change
+    // TODO: helper for property change and storage of values, drop in component
 
 
     public class SimpleViewModel : ViewModelBase

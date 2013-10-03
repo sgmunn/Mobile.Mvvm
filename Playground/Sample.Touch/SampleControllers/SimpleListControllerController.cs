@@ -21,6 +21,11 @@ namespace Sample.Touch.SampleControllers
             this.sections[0].Rows.Add(new RowViewModel());
             this.sections[0].Rows.Add(new RowViewModel());
 
+            this.sections.Add(new SectionViewModel());
+            this.sections[1].Rows.Add(new RowViewModel());
+            this.sections[1].Rows.Add(new RowViewModel());
+            this.sections[1].Rows.Add(new RowViewModel());
+
             this.NavigationItem.RightBarButtonItem = new UIBarButtonItem(UIBarButtonSystemItem.Add, (s,e) => {
                 this.sections[0].Rows.Add(new RowViewModel());
             });

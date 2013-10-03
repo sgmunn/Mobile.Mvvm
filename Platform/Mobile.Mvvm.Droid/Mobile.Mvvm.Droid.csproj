@@ -43,8 +43,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Resources\Resource.designer.cs" />
-    <Compile Include="ViewModel\ListSource.cs" />
     <Compile Include="ViewModel\RootViewModelContext.cs" />
+    <Compile Include="ViewModel\SectionSource.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\AboutResources.txt" />

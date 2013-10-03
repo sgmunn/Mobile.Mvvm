@@ -1,5 +1,5 @@
 // --------------------------------------------------------------------------------------------------------------------
-// <copyright file="ListSource.cs" company="sgmunn">
+// <copyright file="SectionSource.cs" company="sgmunn">
 //   (c) sgmunn 2013  
 //
 //   Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated 
@@ -26,11 +26,6 @@ namespace Mobile.Mvvm.ViewModel
 {
     using System;
     using MonoTouch.UIKit;
-
-
-
-
-
 
     public class SectionSource: UITableViewSource, ISectionSource, IBindingContext
     {
@@ -88,6 +83,11 @@ namespace Mobile.Mvvm.ViewModel
         {
             this.sync.Bind(source);
         }
+        
+        public void Unbind()
+        {
+            this.sync.Unbind();
+        }
 
         public void Clear()
         {
@@ -102,7 +102,11 @@ namespace Mobile.Mvvm.ViewModel
             this.Bindings.ClearBindings();
             this.InjectedProperties.Clear();
             this.sections.Clear();
-            this.sections.AddRange(sourceList);
+            if (sourceList != null)
+            {
+                this.sections.AddRange(sourceList);
+            }
+
             this.ReloadView();
         }
 

@@ -17,13 +17,13 @@
 //   IN THE SOFTWARE.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
-using System.Linq;
 
 namespace Mobile.Mvvm.ViewModel
 {
     using System;
     using System.Collections.Generic;
     using System.Collections.Specialized;
+    using System.Linq;
 
     /// <summary>
     /// Helper class to keep a collection of ISections in sync with a ISectionSource
@@ -78,7 +78,7 @@ namespace Mobile.Mvvm.ViewModel
             this.targetSource.Load(sourceList);
         }
 
-        public void UnBind()
+        public void Unbind()
         {
             if (this.sourceList != null)
             {
@@ -95,11 +95,12 @@ namespace Mobile.Mvvm.ViewModel
             }
 
             this.sourceList = null;
+            this.targetSource.Load(null);
         }
 
         public void Clear()
         {
-            this.UnBind();
+            this.Unbind();
             this.targetSource.Clear();
         }
 
