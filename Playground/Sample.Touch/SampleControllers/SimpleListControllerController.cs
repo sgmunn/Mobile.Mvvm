@@ -20,6 +20,10 @@ namespace Sample.Touch.SampleControllers
             this.sections[0].Rows.Add(new RowViewModel());
             this.sections[0].Rows.Add(new RowViewModel());
             this.sections[0].Rows.Add(new RowViewModel());
+
+            this.NavigationItem.RightBarButtonItem = new UIBarButtonItem(UIBarButtonSystemItem.Add, (s,e) => {
+                this.sections[0].Rows.Add(new RowViewModel());
+            });
         }
 
         public override void DidReceiveMemoryWarning()

@@ -17,6 +17,7 @@
 //   IN THE SOFTWARE.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
+using System.Linq;
 
 namespace Mobile.Mvvm.ViewModel
 {
@@ -126,7 +127,7 @@ namespace Mobile.Mvvm.ViewModel
             switch (e.Action) 
             {
                 case NotifyCollectionChangedAction.Add:
-                    this.targetSource.Insert(e.NewStartingIndex, (IList<ISection>)e.NewItems);
+                    this.targetSource.Insert(e.NewStartingIndex, e.NewItems.OfType<ISection>().ToList());
                     break;
                     case NotifyCollectionChangedAction.Remove:
                     this.targetSource.Remove(e.OldStartingIndex, e.OldItems.Count);
@@ -144,11 +145,16 @@ namespace Mobile.Mvvm.ViewModel
 
         private void HandleSectionRowsChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
-            var section = (ISection)sender;
+            var section = this.FindSectionFromRows(sender);
+            if (section == null)
+            {
+                return;
+            }
+
             switch (e.Action) 
             {
                 case NotifyCollectionChangedAction.Add:
-                    this.targetSource.Insert(section, e.NewStartingIndex, (IList<IViewModel>)e.NewItems);
+                    this.targetSource.Insert(section, e.NewStartingIndex, e.NewItems.OfType<IViewModel>().ToList());
                     break;
                     case NotifyCollectionChangedAction.Remove:
                     this.targetSource.Remove(section, e.OldStartingIndex, e.OldItems.Count);
@@ -159,6 +165,11 @@ namespace Mobile.Mvvm.ViewModel
                     default:
                     break;
             }           
+        }
+
+        private ISection FindSectionFromRows(object rows)
+        {
+            return this.sourceList.FirstOrDefault(x => x.Rows == rows);
         }
     }
 }
