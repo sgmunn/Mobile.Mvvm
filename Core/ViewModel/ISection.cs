@@ -32,6 +32,9 @@ namespace Mobile.Mvvm.ViewModel
 
         IList<IViewModel> Rows { get; }
     }
+    
+
+
 
     public class RowViewModel : ViewModelBase
     {

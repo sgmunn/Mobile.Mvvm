@@ -28,7 +28,7 @@ namespace Sample.Touch
             this.window = new UIWindow(UIScreen.MainScreen.Bounds);
             
             // If you have defined a root view controller, set it here:
-            this.window.RootViewController = new PlainViewController();
+            this.window.RootViewController = new SimpleListControllerController();
             
             // make the window visible
             this.window.MakeKeyAndVisible();

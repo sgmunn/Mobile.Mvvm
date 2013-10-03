@@ -24,6 +24,7 @@ namespace Mobile.Mvvm.DataBinding
 
     public interface IInjectionScope : IDisposable
     {
+        void Clear();
         void SetInjectedProperty(object owner, InjectedProperty property, object value);
         object GetInjectedProperty(object owner, InjectedProperty property);
         void RemoveInjectedProperty(object owner, InjectedProperty property);

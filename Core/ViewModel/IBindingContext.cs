@@ -1,5 +1,5 @@
 // --------------------------------------------------------------------------------------------------------------------
-// <copyright file="IRootViewModelContext.cs" company="sgmunn">
+// <copyright file="IBindingContext.cs" company="sgmunn">
 //   (c) sgmunn 2013  
 //
 //   Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated 
@@ -21,9 +21,12 @@
 namespace Mobile.Mvvm.ViewModel
 {
     using System;
+    using Mobile.Mvvm.DataBinding;
 
-    public interface IRootViewModelContext : IBindingContext
+    public interface IBindingContext
     {
-        IViewModel ViewModel { get; }
+        IBindingScope Bindings { get; }
+
+        IInjectionScope InjectedProperties { get; }
     }
 }

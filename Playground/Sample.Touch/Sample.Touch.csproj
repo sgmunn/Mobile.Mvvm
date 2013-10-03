@@ -95,6 +95,9 @@
     <Compile Include="SampleControllers\PlainViewController.designer.cs">
       <DependentUpon>PlainViewController.cs</DependentUpon>
     </Compile>
+    <Compile Include="SampleControllers\SimpleListControllerController.cs" />
+    <Compile Include="SampleControllers\SimpleListControllerCell.cs" />
+    <Compile Include="SampleControllers\SimpleListControllerSource.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

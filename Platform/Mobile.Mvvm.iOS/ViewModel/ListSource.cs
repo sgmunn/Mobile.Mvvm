@@ -20,166 +20,19 @@
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using MonoTouch.Foundation;
+using Mobile.Mvvm.DataBinding;
 
 namespace Mobile.Mvvm.ViewModel
 {
     using System;
     using MonoTouch.UIKit;
 
-    public interface ISectionSource
-    {
-        // clears all sections and unbinds the UI
-        void Clear();
-
-        // performs a clear and reload with the given source
-        void Load(IList<ISection> sourceList);
-
-        void Insert(int index, IList<ISection> sections);
-
-        void Remove(int index, int count);
-        
-        void Insert(ISection section, int index, IList<IViewModel> rows);
-
-        void Remove(ISection section, int index, int count);
-    }
-
-
-    /// <summary>
-    /// Helper class to keep a collection of ISections in sync with a ISectionSource
-    /// </summary>
-    public sealed class SectionSynchroniser
-    {
-        private readonly ISectionSource targetSource;
-
-        private IList<ISection> sourceList;
-
-        public SectionSynchroniser(ISectionSource source)
-        {
-            this.targetSource = source;
-            /*
-             * we want to bind to a collection of sections
-             * we will watch that collection for changes and add / remove items to our internal list
-             * we will provide virtual methods to override to be able to alter the add / remove behaviour
-             * each section must also provide a notification of items within itself being added or removed
-             * if we fail to provide either notification, then the table becomes a static list and we won't
-             * dynamically add or remove items
-             */ 
-        }
-
-        public void Bind(IList<ISection> sourceList)
-        {
-            if (sourceList == null)
-            {
-                throw new ArgumentNullException("sourceList");
-            }
-
-            this.Clear();
-
-            this.sourceList = sourceList;
-
-            var notifyingCollection = this.sourceList as INotifyCollectionChanged;
-            if (notifyingCollection != null)
-            {
-                notifyingCollection.CollectionChanged -= this.HandleSectionsChanged;
-                notifyingCollection.CollectionChanged += this.HandleSectionsChanged;
-            }
-
-            foreach (var section in this.sourceList)
-            {
-                this.RegisterSection(section);
-            }
-            
-            this.targetSource.Load(sourceList);
-        }
-
-        public void UnBind()
-        {
-            var notifyingCollection = this.sourceList as INotifyCollectionChanged;
-            if (notifyingCollection != null)
-            {
-                notifyingCollection.CollectionChanged -= this.HandleSectionsChanged;
-            }
-
-            foreach (var section in this.sourceList)
-            {
-                this.UnregisterSection(section);
-            }
-
-            this.sourceList = null;
-        }
-
-        public void Clear()
-        {
-            this.UnBind();
-            this.targetSource.Clear();
-        }
-
-        private void RegisterSection(ISection section)
-        {
-            var notifyingCollection = section.Rows as INotifyCollectionChanged;
-            if (notifyingCollection != null)
-            {
-                notifyingCollection.CollectionChanged -= this.HandleSectionRowsChanged;
-                notifyingCollection.CollectionChanged += this.HandleSectionRowsChanged;
-            }
-        }
-
-        private void UnregisterSection(ISection section)
-        {
-            var notifyingCollection = section.Rows as INotifyCollectionChanged;
-            if (notifyingCollection != null)
-            {
-                notifyingCollection.CollectionChanged -= this.HandleSectionRowsChanged;
-            }
-        }
-
-        private void HandleSectionsChanged(object sender, NotifyCollectionChangedEventArgs e)
-        {
-            switch (e.Action) 
-            {
-                case NotifyCollectionChangedAction.Add:
-                    this.targetSource.Insert(e.NewStartingIndex, (IList<ISection>)e.NewItems);
-                    break;
-                case NotifyCollectionChangedAction.Remove:
-                    this.targetSource.Remove(e.OldStartingIndex, e.OldItems.Count);
-                    break;
-                case NotifyCollectionChangedAction.Reset:
-                    // clear current list, unregister all sections, unbind all view models
-                    // iterate over all items, register each section and full reload (binding as we go)
-                    //this.ReloadSection(sectionIndex);
-                    this.targetSource.Load(this.sourceList);
-                    break;
-                default:
-                    break;
-            }           
-        }
-
-        private void HandleSectionRowsChanged(object sender, NotifyCollectionChangedEventArgs e)
-        {
-            var section = (ISection)sender;
-            switch (e.Action) 
-            {
-                case NotifyCollectionChangedAction.Add:
-                    this.targetSource.Insert(section, e.NewStartingIndex, (IList<IViewModel>)e.NewItems);
-                    break;
-                case NotifyCollectionChangedAction.Remove:
-                    this.targetSource.Remove(section, e.OldStartingIndex, e.OldItems.Count);
-                    break;
-                case NotifyCollectionChangedAction.Reset:
-                    this.targetSource.Load(this.sourceList);
-                    break;
-                default:
-                    break;
-            }           
-        }
-    }
 
 
 
 
 
-
-    public class SectionSource: UITableViewSource, ISectionSource
+    public class SectionSource: UITableViewSource, ISectionSource, IBindingContext
     {
         private readonly List<ISection> sections;
 
@@ -191,6 +44,8 @@ namespace Mobile.Mvvm.ViewModel
         {
             this.sections = new List<ISection>();
             this.sync = new SectionSynchroniser(this);
+            this.Bindings = new BindingScope();
+            this.InjectedProperties = new InjectionScope();
             this.AddAnimation = UITableViewRowAnimation.Automatic;
             this.RemoveAnimation = UITableViewRowAnimation.Automatic;
         }
@@ -225,6 +80,10 @@ namespace Mobile.Mvvm.ViewModel
         
         public UITableViewRowAnimation RemoveAnimation { get; set; }
 
+        public IBindingScope Bindings { get; private set; }
+
+        public IInjectionScope InjectedProperties { get; private set; }
+
         public void Bind(IList<ISection> source)
         {
             this.sync.Bind(source);
@@ -232,13 +91,16 @@ namespace Mobile.Mvvm.ViewModel
 
         public void Clear()
         {
-            // unbind ..
+            this.Bindings.ClearBindings();
+            this.InjectedProperties.Clear();
             this.sections.Clear();
             this.ReloadView();
         }
 
         public void Load(IList<ISection> sourceList)
         {
+            this.Bindings.ClearBindings();
+            this.InjectedProperties.Clear();
             this.sections.Clear();
             this.sections.AddRange(sourceList);
             this.ReloadView();
@@ -316,6 +178,11 @@ namespace Mobile.Mvvm.ViewModel
             cell.TextLabel.Text = row.ToString();
 
             return cell;
+        }
+        
+        public override void RowSelected(UITableView tableView, NSIndexPath indexPath)
+        {
+            tableView.DeselectRow(indexPath, true);
         }
 
         protected virtual void ReloadView()

@@ -1,5 +1,5 @@
 // --------------------------------------------------------------------------------------------------------------------
-// <copyright file="IRootViewModelContext.cs" company="sgmunn">
+// <copyright file="ISectionSource.cs" company="sgmunn">
 //   (c) sgmunn 2013  
 //
 //   Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated 
@@ -21,9 +21,22 @@
 namespace Mobile.Mvvm.ViewModel
 {
     using System;
-
-    public interface IRootViewModelContext : IBindingContext
+    using System.Collections.Generic;
+    
+    public interface ISectionSource
     {
-        IViewModel ViewModel { get; }
+        // clears all sections and unbinds the UI
+        void Clear();
+
+        // performs a clear and reload with the given source
+        void Load(IList<ISection> sourceList);
+
+        void Insert(int index, IList<ISection> sections);
+
+        void Remove(int index, int count);
+
+        void Insert(ISection section, int index, IList<IViewModel> rows);
+
+        void Remove(ISection section, int index, int count);
     }
 }
