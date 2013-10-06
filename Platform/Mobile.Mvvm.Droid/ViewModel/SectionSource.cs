@@ -17,6 +17,7 @@
 //   IN THE SOFTWARE.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
+using Android.App;
 
 namespace Mobile.Mvvm.ViewModel
 {

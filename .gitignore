@@ -12,3 +12,5 @@ UnitTests/TestRunner.iOS/obj
 Platform/Mobile.Mvvm.iOS/bin
 Playground/SampleViewModels/bin
 Playground/SampleViewModels/obj
+Playground/Sample.Droid/bin
+Playground/Sample.Droid/obj
