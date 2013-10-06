@@ -73,6 +73,7 @@ namespace Mobile.Mvvm.DataBinding
                 throw new ArgumentNullException("binding");
             }
 
+            this.SafelyUpdateTarget = true;
             this.PropertyAccessor = new ReflectionPropertyAccessor(targetProperty);
             this.Initialize(target, targetProperty, source, binding);
         }
@@ -107,6 +108,7 @@ namespace Mobile.Mvvm.DataBinding
                 throw new ArgumentNullException("binding");
             }
             
+            this.SafelyUpdateTarget = true;
             this.PropertyAccessor = accessor;
             this.Initialize(target, targetProperty, source, binding);
         }
@@ -157,6 +159,8 @@ namespace Mobile.Mvvm.DataBinding
         /// </summary>
         public IPropertyAccessor PropertyAccessor { get; set; }
 
+        public bool SafelyUpdateTarget { get; set; }
+
         /// <summary>
         /// Sets up the binding and updates target
         /// </summary>
@@ -186,7 +190,26 @@ namespace Mobile.Mvvm.DataBinding
             if (obj != null)
             {
                 var sourceValue = this.Binding.GetSourceValue(sourceObject, this.targetPropertyType);
-                this.PropertyAccessor.SetValue(obj, sourceValue);
+
+                var doUpdate = true;
+                if (this.SafelyUpdateTarget)
+                {
+                    var targetValue = this.PropertyAccessor.GetValue(obj);
+                    if (targetValue == null && sourceValue == null)
+                    {
+                        doUpdate = false;
+                    }
+
+                    if (targetValue != null && sourceValue != null)
+                    {
+                        doUpdate = !targetValue.Equals(sourceValue);
+                    }
+                }
+
+                if (doUpdate)
+                {
+                    this.PropertyAccessor.SetValue(obj, sourceValue);
+                }
             }
         }
         
@@ -200,6 +223,7 @@ namespace Mobile.Mvvm.DataBinding
                 return;
             }
             
+            System.Diagnostics.Debug.WriteLine("update source");
             this.Binding.UpdateSourceValue(this.Source, this.PropertyAccessor.GetValue(targetObject));
         }
         
