@@ -21,9 +21,8 @@
 namespace Mobile.Mvvm
 {
     using System;
-    using System.ComponentModel;
 
-    public interface IViewModel : INotifyPropertyChanged, IDisposable
+    public interface IViewModel : IDisposable
     {
     }
 }

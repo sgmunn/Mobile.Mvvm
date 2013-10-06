@@ -25,7 +25,7 @@ namespace Mobile.Mvvm.ViewModel
     using Mobile.Mvvm.Disposables;
     using Mobile.Mvvm.Diagnostics;
 
-    public abstract class ViewModelBase : IViewModel, ILoadable, IPersistentState, ILifetime//, ICommand
+    public abstract class ViewModelBase : IViewModel, INotifyPropertyChanged, ILoadable, IPersistentState, ILifetime
     {
         private readonly CompositeDisposable lifetimeScope;
         
