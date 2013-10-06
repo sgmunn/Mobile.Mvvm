@@ -1,5 +1,5 @@
 // --------------------------------------------------------------------------------------------------------------------
-// <copyright file="ISection.cs" company="sgmunn">
+// <copyright file="PropertyBag.cs" company="sgmunn">
 //   (c) sgmunn 2013  
 //
 //   Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated 
@@ -22,70 +22,50 @@ namespace Mobile.Mvvm.ViewModel
 {
     using System;
     using System.Collections.Generic;
-    using System.Collections.ObjectModel;
 
-    public interface ISection
+    public sealed class PropertyBag 
     {
-        IViewModel Header { get; set; }
+        private readonly Dictionary<string, object> bag;
+        private readonly Action<string> onPropertySet;
 
-        IViewModel Footer { get; set; }
-
-        IList<IViewModel> Rows { get; }
-    }
-    
-
-
-
-    public class RowViewModel : ViewModelBase, ICommand
-    {
-        public RowViewModel()
+        public PropertyBag()
         {
+            this.bag = new Dictionary<string, object>();
+        }
+        
+        public PropertyBag(Action<string> onPropertySet)
+        {
+            this.bag = new Dictionary<string, object>();
+            this.onPropertySet = onPropertySet;
         }
 
-        public virtual void Execute()
+        public void SetProperty(string propertyName, object value)
         {
-        }
-
-        public virtual bool GetCanExecute()
-        {
-            return false;
-        }
-    }
-
-    public class SectionViewModel : ViewModelBase, ISection
-    {
-        public SectionViewModel()
-        {
-            this.Rows = new ObservableCollection<IViewModel>();
-        }
-
-        public IViewModel Header 
-        {
-            get
+            var current = this.GetProperty(propertyName);
+            if (current == null && value == null)
             {
-                return (IViewModel)this.GetPropertyValue("Header");
+                return;
             }
 
-            set
+            if ((current == null && value != null) || !current.Equals(value))
             {
-                this.SetPropertyValue("Header", value);
+                this.bag[propertyName] = value;
+                if (this.onPropertySet != null)
+                {
+                    this.onPropertySet(propertyName);
+                }
             }
         }
 
-        public IViewModel Footer
+        public object GetProperty(string propertyName)
         {
-            get
+            object result;
+            if (this.bag.TryGetValue(propertyName, out result))
             {
-                return (IViewModel)this.GetPropertyValue("Footer");
+                return result;
             }
 
-            set
-            {
-                this.SetPropertyValue("Footer", value);
-            }
+            return null;
         }
-
-        public IList<IViewModel> Rows { get; private set; }
     }
 }
-

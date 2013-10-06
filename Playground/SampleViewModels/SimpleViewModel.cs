@@ -3,13 +3,8 @@ using Mobile.Mvvm.ViewModel;
 
 namespace SampleViewModels
 {
-    // TODO: helper for property change and storage of values, drop in component
-
-
     public class SimpleViewModel : ViewModelBase
     {
-        private string property1;
-
         public SimpleViewModel()
         {
         }
@@ -18,16 +13,12 @@ namespace SampleViewModels
         {
             get
             {
-                return this.property1;
+                return (string)this.GetPropertyValue("Property1");
             }
 
             set
             {
-                if (value != this.property1)
-                {
-                    this.property1 = value;
-                    this.NotifyPropertyChanged("Property1");
-                }
+                this.SetPropertyValue("Property1", value);
             }
         }
     }

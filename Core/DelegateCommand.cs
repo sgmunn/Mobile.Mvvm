@@ -1,5 +1,5 @@
 // --------------------------------------------------------------------------------------------------------------------
-// <copyright file="ISection.cs" company="sgmunn">
+// <copyright file="DelegateCommand.cs" company="sgmunn">
 //   (c) sgmunn 2013  
 //
 //   Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated 
@@ -18,74 +18,49 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace Mobile.Mvvm.ViewModel
+namespace Mobile.Mvvm
 {
     using System;
-    using System.Collections.Generic;
-    using System.Collections.ObjectModel;
 
-    public interface ISection
+    public sealed class DelegateCommand : ICommand
     {
-        IViewModel Header { get; set; }
+        private readonly Action command;
+        private readonly Func<bool> canExecute;
 
-        IViewModel Footer { get; set; }
-
-        IList<IViewModel> Rows { get; }
-    }
-    
-
-
-
-    public class RowViewModel : ViewModelBase, ICommand
-    {
-        public RowViewModel()
+        public DelegateCommand(Action command)
         {
-        }
-
-        public virtual void Execute()
-        {
-        }
-
-        public virtual bool GetCanExecute()
-        {
-            return false;
-        }
-    }
-
-    public class SectionViewModel : ViewModelBase, ISection
-    {
-        public SectionViewModel()
-        {
-            this.Rows = new ObservableCollection<IViewModel>();
-        }
-
-        public IViewModel Header 
-        {
-            get
+            if (command == null)
             {
-                return (IViewModel)this.GetPropertyValue("Header");
+                throw new ArgumentNullException("command");
             }
 
-            set
-            {
-                this.SetPropertyValue("Header", value);
-            }
+            this.command = command;
         }
-
-        public IViewModel Footer
+        
+        public DelegateCommand(Action command, Func<bool> canExecute)
         {
-            get
+            if (command == null)
             {
-                return (IViewModel)this.GetPropertyValue("Footer");
+                throw new ArgumentNullException("command");
             }
 
-            set
+            if (canExecute == null)
             {
-                this.SetPropertyValue("Footer", value);
+                throw new ArgumentNullException("canExecute");
             }
+
+            this.command = command;
+            this.canExecute = canExecute;
         }
 
-        public IList<IViewModel> Rows { get; private set; }
+        public void Execute()
+        {
+            this.command();
+        }
+
+        public bool GetCanExecute()
+        {
+            return this.canExecute();
+        }
     }
 }
-

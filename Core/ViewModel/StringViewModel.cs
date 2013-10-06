@@ -1,5 +1,5 @@
 // --------------------------------------------------------------------------------------------------------------------
-// <copyright file=".cs" company="sgmunn">
+// <copyright file="StringViewModel.cs" company="sgmunn">
 //   (c) sgmunn 2013  
 //
 //   Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated 
@@ -24,27 +24,21 @@ namespace Mobile.Mvvm.ViewModel
 
     public class StringViewModel : ViewModelBase
     {
-        private string caption;
-
         public StringViewModel(string caption)
         {
-            this.caption = caption;
+            this.Caption = caption;
         }
 
         public string Caption
         {
             get
             {
-                return this.caption;
+                return (string)this.GetPropertyValue("Caption");
             }
 
             set
             {
-                if (value != this.caption)
-                {
-                    this.caption = value;
-                    this.NotifyPropertyChanged("Caption");
-                }
+                this.SetPropertyValue("Caption", value);
             }
         }
 

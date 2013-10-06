@@ -22,19 +22,21 @@ namespace Mobile.Mvvm.ViewModel
 {
     using System;
     using System.ComponentModel;
-    using System.Runtime.CompilerServices;
     using Mobile.Mvvm.Disposables;
     using Mobile.Mvvm.Diagnostics;
 
     public abstract class ViewModelBase : IViewModel, ILoadable, IPersistentState, ILifetime//, ICommand
     {
         private readonly CompositeDisposable lifetimeScope;
+        
+        private readonly PropertyBag properties;
 
         private bool disposed;
         
         protected ViewModelBase()
         {
             this.lifetimeScope = new CompositeDisposable();
+            this.properties = new PropertyBag(this.NotifyPropertyChanged);
         }
 
         ~ViewModelBase()
@@ -53,12 +55,6 @@ namespace Mobile.Mvvm.ViewModel
             }
         }
 
-//        public DelegateCommand Command
-//        {
-//            get;
-//            set;
-//        }
-        
         public void Dispose()
         {
             Log.Write("Dispose.ViewModelBase");
@@ -87,24 +83,6 @@ namespace Mobile.Mvvm.ViewModel
         {
         }
 
-//        public virtual void Execute()
-//        {
-//            if (this.Command != null)
-//            {
-//                this.Command.Execute();
-//            }
-//        }
-//        
-//        public virtual bool GetCanExecute()
-//        {
-//            if (this.Command != null)
-//            {
-//                return this.Command.GetCanExecute();
-//            }
-//
-//            return true;
-//        }
-
         protected virtual void Dispose(bool disposing)
         {
             if (disposing)
@@ -113,7 +91,16 @@ namespace Mobile.Mvvm.ViewModel
             }
         }
 
-        // TODO: CallerMemberName
+        protected void SetPropertyValue(string propertyName, object value)
+        {
+            this.properties.SetProperty(propertyName, value);
+        }
+        
+        protected object GetPropertyValue(string propertyName)
+        {
+            return this.properties.GetProperty(propertyName);
+        }
+
         protected virtual void NotifyPropertyChanged(string propertyName)
         {
             var changed = this.PropertyChanged;

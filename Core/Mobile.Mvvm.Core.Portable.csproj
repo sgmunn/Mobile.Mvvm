@@ -90,6 +90,8 @@
     <Compile Include="ViewModel\SectionSynchroniser.cs" />
     <Compile Include="ViewModel\StringViewModel.cs" />
     <Compile Include="ICommand.cs" />
+    <Compile Include="DelegateCommand.cs" />
+    <Compile Include="ViewModel\PropertyBag.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <ItemGroup>
