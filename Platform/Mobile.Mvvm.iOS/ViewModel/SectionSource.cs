@@ -172,7 +172,7 @@ namespace Mobile.Mvvm.ViewModel
 
         public override UITableViewCell GetCell(UITableView tableView, MonoTouch.Foundation.NSIndexPath indexPath)
         {
-            var row = this.sections[indexPath.Section].Rows[indexPath.Row];
+            var row = this.ViewModelForIndexPath(indexPath);
             var cell = tableView.DequeueReusableCell("cell");
             if (cell == null)
             {
@@ -183,10 +183,23 @@ namespace Mobile.Mvvm.ViewModel
 
             return cell;
         }
-        
+
         public override void RowSelected(UITableView tableView, NSIndexPath indexPath)
         {
             tableView.DeselectRow(indexPath, true);
+
+            var row = this.ViewModelForIndexPath(indexPath);
+            var cmd = row as ICommand;
+            if (cmd != null)
+            {
+                cmd.Execute();
+                return;
+            }
+        }
+
+        protected IViewModel ViewModelForIndexPath(NSIndexPath indexPath)
+        {
+            return this.sections[indexPath.Section].Rows[indexPath.Row];
         }
 
         protected virtual void ReloadView()

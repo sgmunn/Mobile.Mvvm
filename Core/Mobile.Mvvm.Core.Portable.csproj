@@ -89,6 +89,7 @@
     <Compile Include="ViewModel\ISectionSource.cs" />
     <Compile Include="ViewModel\SectionSynchroniser.cs" />
     <Compile Include="ViewModel\StringViewModel.cs" />
+    <Compile Include="ICommand.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <ItemGroup>

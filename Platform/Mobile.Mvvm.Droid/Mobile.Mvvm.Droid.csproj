@@ -45,6 +45,7 @@
     <Compile Include="Resources\Resource.designer.cs" />
     <Compile Include="ViewModel\RootViewModelContext.cs" />
     <Compile Include="ViewModel\SectionSource.cs" />
+    <Compile Include="ViewModel\SectionExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\AboutResources.txt" />

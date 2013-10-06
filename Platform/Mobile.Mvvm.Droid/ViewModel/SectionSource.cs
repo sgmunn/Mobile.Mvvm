@@ -17,52 +17,18 @@
 //   IN THE SOFTWARE.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
-using Android.App;
 
 namespace Mobile.Mvvm.ViewModel
 {
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using Android.App;
     using Android.Content;
     using Android.Widget;
     using Android.Views;
+    using Android.Views.Animations;
     using Mobile.Mvvm.DataBinding;
-
-    public static class SectionExtension
-    {
-        public static int ViewModelCount(this ISection section)
-        {
-            return section.Rows.Count + (section.Header != null ? 1 : 0) + (section.Footer != null ? 1 : 0);
-        }
-
-        /// <summary>
-        /// Gets the view model for the given index, taking into account Heade and Footer
-        /// </summary>
-        public static IViewModel ViewModelAtIndex(this ISection section, int index)
-        {
-            if (index == 0 && section.Header != null)
-            {
-                return section.Header;
-            }
-
-            // reduce the index by one if there is a header, row 0 is index 1 in this case
-            var rowIndex = index + (section.Header != null ? -1 : 0);
-            if (rowIndex >= section.Rows.Count)
-            {
-                // assume footer for anything past the number of rows
-                if (section.Footer != null)
-                {
-                    return section.Footer;
-                }
-
-                throw new ArgumentOutOfRangeException("index");
-            }
-
-            return section.Rows[rowIndex];
-        }
-
-    }
 
     public class SectionSource : BaseAdapter<ISection>, ISectionSource, IBindingContext
     {
@@ -100,7 +66,7 @@ namespace Mobile.Mvvm.ViewModel
                     {
                         // clear source / adapter etc
                         this.UnregisterListView(this.listView);
-                        //this.listView.Source = null;
+                        this.listView.Adapter = null;
                     }
 
                     this.listView = value; 
@@ -108,9 +74,8 @@ namespace Mobile.Mvvm.ViewModel
                     if (this.listView != null)
                     {
                         this.RegisterListView(this.listView);
-                        // reload / set adapter etc
-
-                       // this.listView.Source = this;
+                        this.listView.Adapter = this;
+                        this.ReloadView();
                     }
                 }
             }
@@ -165,30 +130,21 @@ namespace Mobile.Mvvm.ViewModel
             this.ReloadView();
         }
 
-        public void Insert(ISection section, int index, IList<IViewModel> rows)
+        public virtual void Insert(ISection section, int index, IList<IViewModel> rows)
         {
-//            // just update the table view
-//            var sectionIndex = this.sections.IndexOf(section);
-//            var paths = new NSIndexPath[rows.Count];
-//            for (int i = 0; i < rows.Count; i++)
-//            {
-//                paths[i] = NSIndexPath.FromRowSection(index + i, sectionIndex);
-//            }
-//
-//            this.TableView.InsertRows(paths, this.AddAnimation);
+            //Animation anim = AnimationUtils.LoadAnimation(this.context, Android.Resource.Animation.FadeIn);
+
+            //anim.Duration = 500;
+            //this.ListView.GetChildAt(index+1).StartAnimation(anim);
+
+            //anim.AnimationStart += (object sender, Animation.AnimationStartEventArgs e) => {
+                this.NotifyDataSetChanged();
+            //};
         }
 
-        public void Remove(ISection section, int index, int count)
+        public virtual void Remove(ISection section, int index, int count)
         {
-//            // just update the table view
-//            var sectionIndex = this.sections.IndexOf(section);
-//            var paths = new NSIndexPath[count];
-//            for (int i = 0; i < count; i++)
-//            {
-//                paths [i] = NSIndexPath.FromRowSection(index + i, sectionIndex);
-//            }
-//
-//            this.TableView.DeleteRows(paths, this.RemoveAnimation);
+            this.NotifyDataSetChanged();
         }
 
         public override long GetItemId(int position)
@@ -254,9 +210,14 @@ namespace Mobile.Mvvm.ViewModel
         
         public override bool IsEnabled(int position)
         {
+            var row = this.ViewModelForPosition(position);
+            var cmd = row as ICommand;
+            if (cmd != null)
+            {
+                return cmd.GetCanExecute();
+            }
+
             return true;
-            //var element = ElementAtIndex(position);
-            //return !(element is Section) && element != null;
         }
 
         public override bool AreAllItemsEnabled()
@@ -281,6 +242,13 @@ namespace Mobile.Mvvm.ViewModel
 
         protected virtual void HandleListViewItemClick(object sender, AdapterView.ItemClickEventArgs e)
         {
+            var row = this.ViewModelForPosition(e.Position);
+            var cmd = row as ICommand;
+            if (cmd != null)
+            {
+                cmd.Execute();
+                return;
+            }
         }
 
         protected virtual void HandleListViewItemLongClick(object sender, AdapterView.ItemLongClickEventArgs e)

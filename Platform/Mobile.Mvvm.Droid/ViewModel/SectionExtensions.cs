@@ -1,5 +1,5 @@
 // --------------------------------------------------------------------------------------------------------------------
-// <copyright file="ISection.cs" company="sgmunn">
+// <copyright file="SectionExtensions.cs" company="sgmunn">
 //   (c) sgmunn 2013  
 //
 //   Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated 
@@ -21,82 +21,38 @@
 namespace Mobile.Mvvm.ViewModel
 {
     using System;
-    using System.Collections.Generic;
-    using System.Collections.ObjectModel;
 
-    public interface ISection
+    public static class SectionExtensions
     {
-        IViewModel Header { get; set; }
-
-        IViewModel Footer { get; set; }
-
-        IList<IViewModel> Rows { get; }
-    }
-    
-
-
-
-    public class RowViewModel : ViewModelBase, ICommand
-    {
-        public RowViewModel()
+        public static int ViewModelCount(this ISection section)
         {
+            return section.Rows.Count + (section.Header != null ? 1 : 0) + (section.Footer != null ? 1 : 0);
         }
 
-        public virtual void Execute()
+        /// <summary>
+        /// Gets the view model for the given index, taking into account Heade and Footer
+        /// </summary>
+        public static IViewModel ViewModelAtIndex(this ISection section, int index)
         {
-        }
-
-        public virtual bool GetCanExecute()
-        {
-            return false;
-        }
-    }
-
-    public class SectionViewModel : ViewModelBase, ISection
-    {
-        private IViewModel header;
-        private IViewModel footer;
-
-        public SectionViewModel()
-        {
-            this.Rows = new ObservableCollection<IViewModel>();
-        }
-
-        public IViewModel Header 
-        {
-            get
+            if (index == 0 && section.Header != null)
             {
-                return this.header;
+                return section.Header;
             }
 
-            set
+            // reduce the index by one if there is a header, row 0 is index 1 in this case
+            var rowIndex = index + (section.Header != null ? -1 : 0);
+            if (rowIndex >= section.Rows.Count)
             {
-                if (value != this.header)
+                // assume footer for anything past the number of rows
+                if (section.Footer != null)
                 {
-                    this.header = value;
-                    this.NotifyPropertyChanged("Header");
+                    return section.Footer;
                 }
+
+                throw new ArgumentOutOfRangeException("index");
             }
+
+            return section.Rows[rowIndex];
         }
-
-        public IViewModel Footer
-        {
-            get
-            {
-                return this.footer;
-            }
-
-            set
-            {
-                if (value != this.footer)
-                {
-                    this.footer = value;
-                    this.NotifyPropertyChanged("Footer");
-                }
-            }
-        }
-
-        public IList<IViewModel> Rows { get; private set; }
     }
 }
-
