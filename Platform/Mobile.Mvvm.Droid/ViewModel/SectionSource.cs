@@ -243,16 +243,13 @@ namespace Mobile.Mvvm.ViewModel
         protected virtual void HandleListViewItemClick(object sender, AdapterView.ItemClickEventArgs e)
         {
             var row = this.ViewModelForPosition(e.Position);
-            var cmd = row as ICommand;
-            if (cmd != null)
-            {
-                cmd.Execute();
-                return;
-            }
+            row.ExecuteTapCommand();
         }
 
         protected virtual void HandleListViewItemLongClick(object sender, AdapterView.ItemLongClickEventArgs e)
         {
+            var row = this.ViewModelForPosition(e.Position);
+            row.ExecuteLongTapCommand();
         }
 
         private void RegisterListView(ListView list)

@@ -22,6 +22,48 @@ namespace Mobile.Mvvm.ViewModel
 {
     using System;
 
+    // value vm, of T
+    // individual classes of T
+    // caption and value (ala elements
+    // need a way to add in with RowVM and ICommand
+    // perhaps drop RowVM and we need a property of type ICommand that is on a VM (instead of a VM implementing ICommand)
+    // this will impact both sectionSources.
+
+    // ICommand and IxxCommand - perhaps even ITapCommand / ILongTapCommand -- adds TapCommand and LongTapCommand
+
+
+    public interface ITapCommand
+    {
+        ICommand TapCommand { get; }
+    }
+    
+    public interface ILongTapCommand
+    {
+        ICommand LongTapCommand { get; }
+    }
+
+    public static class ViewModelExtensions
+    {
+        public static void ExecuteTapCommand(this IViewModel viewModel)
+        {
+            var cmd = viewModel as ITapCommand;
+            if (cmd != null)
+            {
+                cmd.TapCommand.Execute();
+            }
+        }
+
+        public static void ExecuteLongTapCommand(this IViewModel viewModel)
+        {
+            var cmd = viewModel as ILongTapCommand;
+            if (cmd != null)
+            {
+                cmd.LongTapCommand.Execute();
+            }
+        }
+    }
+
+
     public class StringViewModel : ViewModelBase
     {
         public StringViewModel(string caption)

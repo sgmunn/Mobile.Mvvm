@@ -189,12 +189,7 @@ namespace Mobile.Mvvm.ViewModel
             tableView.DeselectRow(indexPath, true);
 
             var row = this.ViewModelForIndexPath(indexPath);
-            var cmd = row as ICommand;
-            if (cmd != null)
-            {
-                cmd.Execute();
-                return;
-            }
+            row.ExecuteTapCommand();
         }
 
         protected IViewModel ViewModelForIndexPath(NSIndexPath indexPath)
