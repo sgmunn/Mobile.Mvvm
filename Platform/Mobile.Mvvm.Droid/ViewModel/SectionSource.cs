@@ -29,6 +29,41 @@ namespace Mobile.Mvvm.ViewModel
     using Android.Views;
     using Mobile.Mvvm.DataBinding;
 
+    public static class SectionExtension
+    {
+        public static int ViewModelCount(this ISection section)
+        {
+            return section.Rows.Count + (section.Header != null ? 1 : 0) + (section.Footer != null ? 1 : 0);
+        }
+
+        /// <summary>
+        /// Gets the view model for the given index, taking into account Heade and Footer
+        /// </summary>
+        public static IViewModel ViewModelAtIndex(this ISection section, int index)
+        {
+            if (index == 0 && section.Header != null)
+            {
+                return section.Header;
+            }
+
+            // reduce the index by one if there is a header, row 0 is index 1 in this case
+            var rowIndex = index + (section.Header != null ? -1 : 0);
+            if (rowIndex >= section.Rows.Count)
+            {
+                // assume footer for anything past the number of rows
+                if (section.Footer != null)
+                {
+                    return section.Footer;
+                }
+
+                throw new ArgumentOutOfRangeException("index");
+            }
+
+            return section.Rows[rowIndex];
+        }
+
+    }
+
     public class SectionSource : BaseAdapter<ISection>, ISectionSource, IBindingContext
     {
         private readonly List<ISection> sections;
@@ -163,16 +198,25 @@ namespace Mobile.Mvvm.ViewModel
 
         public override View GetView(int position, View convertView, ViewGroup parent)
         {
-            var row = this.RowForPosition(position);
+            var row = this.ViewModelForPosition(position);
 
-            throw new NotImplementedException();
+            var inflator = ((Activity)this.context).LayoutInflater;
+            var view = convertView;
+            if (view == null)
+            {
+                view = inflator.Inflate(Android.Resource.Layout.SimpleListItem1, null);
+            }
+
+            view.FindViewById<TextView>(Android.Resource.Id.Text1).Text = row.ToString();
+
+            return view;
         }
 
         public override int Count
         {
             get
             {
-                return this.sections.Sum(x => x.Rows.Count);
+                return this.sections.Sum(x => x.ViewModelCount());
             }
         }
 
@@ -184,15 +228,28 @@ namespace Mobile.Mvvm.ViewModel
             }
         }
 
-        public IViewModel RowForPosition(int position)
+        public IViewModel ViewModelForPosition(int position)
         {
             if (position == 0)
             {
-                return this.sections[0].Rows[0];
+                return this.sections[0].ViewModelAtIndex(0);
             }
 
-            throw new NotImplementedException();
+            int count = 0;
+            foreach (var section in this.sections)
+            {
+                if (position < count + section.ViewModelCount())
+                {
+                    // it's here somewhere
+                    return section.ViewModelAtIndex(position - count);
+                }
+                else
+                {
+                    count += section.ViewModelCount();
+                }
+            }
 
+            throw new ArgumentOutOfRangeException("position");
         }
         
         public override bool IsEnabled(int position)
@@ -260,6 +317,5 @@ namespace Mobile.Mvvm.ViewModel
                 list.ItemLongClick -= this.HandleListViewItemLongClick;
             }
         }
-
     }
 }

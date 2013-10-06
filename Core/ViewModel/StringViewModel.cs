@@ -1,5 +1,5 @@
 // --------------------------------------------------------------------------------------------------------------------
-// <copyright file="ISection.cs" company="sgmunn">
+// <copyright file=".cs" company="sgmunn">
 //   (c) sgmunn 2013  
 //
 //   Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated 
@@ -21,73 +21,37 @@
 namespace Mobile.Mvvm.ViewModel
 {
     using System;
-    using System.Collections.Generic;
-    using System.Collections.ObjectModel;
 
-    public interface ISection
+    public class StringViewModel : ViewModelBase
     {
-        IViewModel Header { get; set; }
+        private string caption;
 
-        IViewModel Footer { get; set; }
-
-        IList<IViewModel> Rows { get; }
-    }
-    
-
-
-
-    public class RowViewModel : ViewModelBase
-    {
-        public RowViewModel()
+        public StringViewModel(string caption)
         {
-        }
-    }
-
-    public class SectionViewModel : ViewModelBase, ISection
-    {
-        private IViewModel header;
-        private IViewModel footer;
-
-        public SectionViewModel()
-        {
-            this.Rows = new ObservableCollection<IViewModel>();
+            this.caption = caption;
         }
 
-        public IViewModel Header 
+        public string Caption
         {
             get
             {
-                return this.header;
+                return this.caption;
             }
 
             set
             {
-                if (value != this.header)
+                if (value != this.caption)
                 {
-                    this.header = value;
-                    this.NotifyPropertyChanged("Header");
+                    this.caption = value;
+                    this.NotifyPropertyChanged("Caption");
                 }
             }
         }
 
-        public IViewModel Footer
+        public override string ToString()
         {
-            get
-            {
-                return this.footer;
-            }
-
-            set
-            {
-                if (value != this.footer)
-                {
-                    this.footer = value;
-                    this.NotifyPropertyChanged("Footer");
-                }
-            }
+            return this.Caption;
         }
-
-        public IList<IViewModel> Rows { get; private set; }
     }
 }
 

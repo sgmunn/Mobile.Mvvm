@@ -13,9 +13,9 @@ namespace Sample.Droid.SampleActivities
     {
         private IRootViewModelContext viewModelContext;
 
-        TextView label1;
+        private TextView label1;
 
-        EditText field1;
+        private EditText field1;
 
         protected override void OnCreate(Bundle bundle)
         {
@@ -33,7 +33,6 @@ namespace Sample.Droid.SampleActivities
             this.viewModelContext.Bindings.AddBinding(label1, "Text", this.viewModelContext.ViewModel, "Property1");
 
             this.viewModelContext.Bindings.AddEventTriggeredBinding(field1, "Text", "TextChanged", this.viewModelContext.ViewModel, "Property1");
-
         }
     }
 }

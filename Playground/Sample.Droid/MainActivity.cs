@@ -27,7 +27,7 @@ namespace Sample.Droid
             
             button.Click += delegate
             {
-                var intent = new Intent(this, typeof(PlainActivity));
+                var intent = new Intent(this, typeof(SimpleListActivity));
                 this.StartActivity(intent);
                 //button.Text = string.Format("{0} clicks!", count++);
             };
