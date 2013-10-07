@@ -22,6 +22,7 @@ namespace Mobile.Mvvm.ViewModel.Dialog
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
     using MonoTouch.Foundation;
     using MonoTouch.UIKit;
     using Mobile.Mvvm.DataBinding;
@@ -31,6 +32,8 @@ namespace Mobile.Mvvm.ViewModel.Dialog
         private readonly List<ISection> sections;
 
         private readonly SectionSynchroniser sync;
+
+        private List<IDataTemplate> templates;
 
         private UITableView tableView;
 
@@ -44,6 +47,11 @@ namespace Mobile.Mvvm.ViewModel.Dialog
             this.RemoveAnimation = UITableViewRowAnimation.Automatic;
         }
         
+        public SectionSource(IEnumerable<IDataTemplate> templates) : this()
+        {
+            this.templates = templates.ToList();
+        }
+
         public UITableView TableView
         {
             get 
@@ -172,13 +180,19 @@ namespace Mobile.Mvvm.ViewModel.Dialog
         public override UITableViewCell GetCell(UITableView tableView, MonoTouch.Foundation.NSIndexPath indexPath)
         {
             var row = this.ViewModelForIndexPath(indexPath);
-            var cell = tableView.DequeueReusableCell("cell");
+            var cell = (UITableViewCell)row.GetTemplate(this.templates).GetViewForViewModel(row, (id) => tableView.DequeueReusableCell((string)id));
+
+            // fallback default view
             if (cell == null)
             {
-                cell = new UITableViewCell(UITableViewCellStyle.Default, "cell");
-            }
+                cell = tableView.DequeueReusableCell("cell");
+                if (cell == null)
+                {
+                    cell = new UITableViewCell(UITableViewCellStyle.Default, "cell");
+                }
 
-            cell.TextLabel.Text = row.ToString();
+                cell.TextLabel.Text = row.ToString();
+            }
 
             return cell;
         }

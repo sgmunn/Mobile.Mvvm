@@ -16,6 +16,21 @@ using Mobile.Mvvm;
 
 namespace Sample.Droid.SampleActivities
 {
+    public static class DialogDataTemplates
+    {
+        public static IEnumerable<IDataTemplate> DefaultTemplates(Context context)
+        {
+            var inflator = LayoutInflater.FromContext(context);
+
+
+            yield return new DataTemplate(Android.Resource.Layout.SimpleListItem1)
+                .Creates<View>((id, root) => inflator.Inflate((int)id, (ViewGroup)root, false))
+                    .WhenBinding<StringViewModel, View>((vm, view) => view.FindViewById<TextView>(Android.Resource.Id.Text1).Text = vm.ToString());
+        }
+    }
+
+
+
     [Activity (Label = "SimpleListActivity")]            
     public class SimpleListActivity : ListActivity
     {
@@ -47,7 +62,7 @@ namespace Sample.Droid.SampleActivities
             this.sections[1].Footer = new StringViewModel("Footer");
 
             // view did load equivalent
-            this.source = new SectionSource(this);
+            this.source = new SectionSource(this, DialogDataTemplates.DefaultTemplates(this));
             this.source.ListView = this.ListView;
 
 

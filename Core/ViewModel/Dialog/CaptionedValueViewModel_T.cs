@@ -22,6 +22,28 @@ namespace Mobile.Mvvm.ViewModel.Dialog
 {
     using System;
 
+    public class HeaderElementViewModel : StringElementViewModel
+    {
+        public HeaderElementViewModel(string caption) : base(caption)
+        {
+        }
+
+        public HeaderElementViewModel(string caption, string value) : base(caption, value)
+        {
+        }
+    }
+    
+    public class FooterElementViewModel : StringElementViewModel
+    {
+        public FooterElementViewModel(string caption) : base(caption)
+        {
+        }
+
+        public FooterElementViewModel(string caption, string value) : base(caption, value)
+        {
+        }
+    }
+
     public class StringElementViewModel : CaptionedValueViewModel<string>
     {
         public StringElementViewModel(string caption) : base(caption)

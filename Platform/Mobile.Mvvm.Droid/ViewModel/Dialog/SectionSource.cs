@@ -40,6 +40,8 @@ namespace Mobile.Mvvm.ViewModel.Dialog
         
         private readonly object locker = new object();
 
+        private List<IDataTemplate> templates;
+
         private ListView listView;
 
         public SectionSource(Context context)
@@ -51,6 +53,11 @@ namespace Mobile.Mvvm.ViewModel.Dialog
             this.InjectedProperties = new InjectionScope();
         }
         
+        public SectionSource(Context context, IEnumerable<IDataTemplate> templates) : this(context)
+        {
+            this.templates = templates.ToList();
+        }
+
         public ListView ListView
         {
             get 
@@ -155,15 +162,22 @@ namespace Mobile.Mvvm.ViewModel.Dialog
         public override View GetView(int position, View convertView, ViewGroup parent)
         {
             var row = this.ViewModelForPosition(position);
+            var view = (View)row.GetTemplate(this.templates).GetViewForViewModel(row, (id) => convertView, parent);
 
-            var inflator = ((Activity)this.context).LayoutInflater;
-            var view = convertView;
+            // fallback default view
             if (view == null)
             {
-                view = inflator.Inflate(Android.Resource.Layout.SimpleListItem1, null);
-            }
+                ////System.Diagnostics.Debug.WriteLine("Using fallback view for List");
 
-            view.FindViewById<TextView>(Android.Resource.Id.Text1).Text = row.ToString();
+                var inflator = ((Activity)this.context).LayoutInflater;
+                view = convertView;
+                if (view == null)
+                {
+                    view = inflator.Inflate(Android.Resource.Layout.SimpleListItem1, null);
+                }
+
+                view.FindViewById<TextView>(Android.Resource.Id.Text1).Text = row.ToString();
+            }
 
             return view;
         }

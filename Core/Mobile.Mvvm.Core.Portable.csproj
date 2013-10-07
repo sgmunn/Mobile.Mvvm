@@ -97,6 +97,9 @@
     <Compile Include="ViewModel\Dialog\SectionSynchroniser.cs" />
     <Compile Include="ViewModel\Dialog\SectionViewModel.cs" />
     <Compile Include="ViewModel\Dialog\CaptionedValueViewModel_T.cs" />
+    <Compile Include="ViewModel\IDataTemplate.cs" />
+    <Compile Include="ViewModel\DataTemplate.cs" />
+    <Compile Include="ViewModel\DataTemplateExtensions.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <ItemGroup>
