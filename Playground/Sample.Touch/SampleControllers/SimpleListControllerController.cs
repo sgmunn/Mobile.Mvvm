@@ -6,6 +6,7 @@ using Mobile.Mvvm.ViewModel;
 using System.Collections.ObjectModel;
 using System.Collections.Generic;
 using SampleViewModels;
+using Mobile.Mvvm.ViewModel.Dialog;
 
 namespace Sample.Touch.SampleControllers
 {
@@ -22,14 +23,14 @@ namespace Sample.Touch.SampleControllers
             section1.Header = new StringViewModel("Header");
             this.sections.Add(section1);
 
-            section1.Rows.Add(new TestCommandRowViewModel(section1));
-            section1.Rows.Add(new RowViewModel());
-            section1.Rows.Add(new RowViewModel());
+            section1.Rows.Add(new TestCommandRowViewModel(section1, "Add"));
+            section1.Rows.Add(new StringViewModel("item 1"));
+            section1.Rows.Add(new StringViewModel("item 2"));
 
             this.sections.Add(new SectionViewModel());
-            this.sections[1].Rows.Add(new RowViewModel());
-            this.sections[1].Rows.Add(new RowViewModel());
-            this.sections[1].Rows.Add(new RowViewModel());
+            this.sections[1].Rows.Add(new StringViewModel("item 1"));
+            this.sections[1].Rows.Add(new StringViewModel("item 2"));
+            this.sections[1].Rows.Add(new StringViewModel("item 3"));
 
 //            this.NavigationItem.RightBarButtonItem = new UIBarButtonItem(UIBarButtonSystemItem.Add, (s,e) => {
 //                this.sections[0].Rows.Add(new RowViewModel());

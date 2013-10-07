@@ -82,16 +82,21 @@
     <Compile Include="Reflection\ReflectionUtils.cs" />
     <Compile Include="DataBinding\EventTriggeredBindingExpression.cs" />
     <Compile Include="Disposables\AnonymousDisposable.cs" />
-    <Compile Include="ViewModel\ISection.cs" />
     <Compile Include="ViewModel\IRootViewModelContext.cs" />
     <Compile Include="ViewModel\RootViewModelContextBase.cs" />
     <Compile Include="ViewModel\IBindingContext.cs" />
-    <Compile Include="ViewModel\ISectionSource.cs" />
-    <Compile Include="ViewModel\SectionSynchroniser.cs" />
     <Compile Include="ViewModel\StringViewModel.cs" />
     <Compile Include="ICommand.cs" />
     <Compile Include="DelegateCommand.cs" />
     <Compile Include="ViewModel\PropertyBag.cs" />
+    <Compile Include="ViewModel\ITapCommand.cs" />
+    <Compile Include="ViewModel\ILongTapCommand.cs" />
+    <Compile Include="ViewModel\ViewModelExtensions.cs" />
+    <Compile Include="ViewModel\Dialog\ISection.cs" />
+    <Compile Include="ViewModel\Dialog\ISectionSource.cs" />
+    <Compile Include="ViewModel\Dialog\SectionSynchroniser.cs" />
+    <Compile Include="ViewModel\Dialog\SectionViewModel.cs" />
+    <Compile Include="ViewModel\Dialog\CaptionedValueViewModel_T.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <ItemGroup>
@@ -100,6 +105,7 @@
     <Folder Include="ViewModel\" />
     <Folder Include="DataBinding\" />
     <Folder Include="Reflection\" />
+    <Folder Include="ViewModel\Dialog\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Notes.txt" />

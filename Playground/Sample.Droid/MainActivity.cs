@@ -12,14 +12,12 @@ namespace Sample.Droid
     [Activity (Label = "Sample.Droid", MainLauncher = true)]
     public class MainActivity : Activity
     {
-        int count = 1;
-
         protected override void OnCreate(Bundle bundle)
         {
             base.OnCreate(bundle);
 
             // Set our view from the "main" layout resource
-            SetContentView(Resource.Layout.Main);
+            this.SetContentView(Resource.Layout.Main);
 
             // Get our button from the layout resource,
             // and attach an event to it

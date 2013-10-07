@@ -1,5 +1,5 @@
 // --------------------------------------------------------------------------------------------------------------------
-// <copyright file="StringViewModel.cs" company="sgmunn">
+// <copyright file="ITapCommand.cs" company="sgmunn">
 //   (c) sgmunn 2013  
 //
 //   Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated 
@@ -22,30 +22,8 @@ namespace Mobile.Mvvm.ViewModel
 {
     using System;
 
-    public class StringViewModel : ViewModelBase
+    public interface ITapCommand
     {
-        public StringViewModel(string caption)
-        {
-            this.Caption = caption;
-        }
-
-        public string Caption
-        {
-            get
-            {
-                return (string)this.GetPropertyValue("Caption");
-            }
-
-            set
-            {
-                this.SetPropertyValue("Caption", value);
-            }
-        }
-
-        public override string ToString()
-        {
-            return this.Caption;
-        }
+        ICommand TapCommand { get; }
     }
 }
-

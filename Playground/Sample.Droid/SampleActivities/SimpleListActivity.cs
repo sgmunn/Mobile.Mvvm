@@ -11,6 +11,8 @@ using Android.Widget;
 using System.Collections.ObjectModel;
 using Mobile.Mvvm.ViewModel;
 using SampleViewModels;
+using Mobile.Mvvm.ViewModel.Dialog;
+using Mobile.Mvvm;
 
 namespace Sample.Droid.SampleActivities
 {
@@ -29,14 +31,17 @@ namespace Sample.Droid.SampleActivities
             section1.Header = new StringViewModel("Header");
             this.sections.Add(section1);
 
-            section1.Rows.Add(new TestCommandRowViewModel(section1));
-            section1.Rows.Add(new RowViewModel());
-            section1.Rows.Add(new RowViewModel());
+            section1.Rows.Add(new TestCommandRowViewModel(section1, "add"));
+            section1.Rows.Add(new StringElementViewModel("update") { TapCommand = new DelegateCommand(() => {
+                    ((StringViewModel)section1.Header).Caption = "Updated!";
+                }) });
+            section1.Rows.Add(new StringViewModel("item 1"));
+            section1.Rows.Add(new StringViewModel("item 2"));
 
             this.sections.Add(new SectionViewModel());
-            this.sections[1].Rows.Add(new RowViewModel());
-            this.sections[1].Rows.Add(new RowViewModel());
-            this.sections[1].Rows.Add(new RowViewModel());
+            this.sections[1].Rows.Add(new StringViewModel("item 1"));
+            this.sections[1].Rows.Add(new StringViewModel("item 2"));
+            this.sections[1].Rows.Add(new StringViewModel("item 3"));
             
             this.sections[1].Header = new StringViewModel("Header");
             this.sections[1].Footer = new StringViewModel("Footer");

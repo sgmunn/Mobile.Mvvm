@@ -1,5 +1,5 @@
 // --------------------------------------------------------------------------------------------------------------------
-// <copyright file="ISectionSource.cs" company="sgmunn">
+// <copyright file="CaptionedValueViewModel_T.cs" company="sgmunn">
 //   (c) sgmunn 2013  
 //
 //   Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated 
@@ -18,25 +18,63 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace Mobile.Mvvm.ViewModel
+namespace Mobile.Mvvm.ViewModel.Dialog
 {
     using System;
-    using System.Collections.Generic;
-    
-    public interface ISectionSource
+
+    public class StringElementViewModel : CaptionedValueViewModel<string>
     {
-        // clears all sections and unbinds the UI
-        void Clear();
+        public StringElementViewModel(string caption) : base(caption)
+        {
+        }
 
-        // performs a clear and reload with the given source
-        void Load(IList<ISection> sourceList);
-
-        void Insert(int index, IList<ISection> sections);
-
-        void Remove(int index, int count);
-
-        void Insert(ISection section, int index, IList<IViewModel> rows);
-
-        void Remove(ISection section, int index, int count);
+        public StringElementViewModel(string caption, string value) : base(caption, value)
+        {
+        }
     }
+    
+    public class BooleanElementViewModel : CaptionedValueViewModel<bool>
+    {
+        public BooleanElementViewModel(string caption) : base(caption)
+        {
+        }
+
+        public BooleanElementViewModel(string caption, bool value) : base(caption, value)
+        {
+        }
+    }
+
+    public class CaptionedValueViewModel<T> : StringViewModel, ITapCommand
+    {
+        public CaptionedValueViewModel(string caption) : base(caption)
+        {
+        }
+
+        public CaptionedValueViewModel(string caption, T value) : base(caption)
+        {
+            this.Value = value;
+        }
+
+        public T Value
+        {
+            get
+            {
+                return (T)this.GetPropertyValue("Value");
+            }
+
+            set
+            {
+                this.SetPropertyValue("Value", value);
+            }
+        }
+
+        // TODO: INPC if command is bound
+        public ICommand TapCommand { get; set; }
+
+        public override string ToString()
+        {
+            return this.Caption;
+        }
+    }
+    
 }

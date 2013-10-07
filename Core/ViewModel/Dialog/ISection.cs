@@ -1,5 +1,5 @@
 // --------------------------------------------------------------------------------------------------------------------
-// <copyright file="StringViewModel.cs" company="sgmunn">
+// <copyright file="ISection.cs" company="sgmunn">
 //   (c) sgmunn 2013  
 //
 //   Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated 
@@ -18,34 +18,18 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace Mobile.Mvvm.ViewModel
+namespace Mobile.Mvvm.ViewModel.Dialog
 {
     using System;
+    using System.Collections.Generic;
 
-    public class StringViewModel : ViewModelBase
+    public interface ISection
     {
-        public StringViewModel(string caption)
-        {
-            this.Caption = caption;
-        }
+        IViewModel Header { get; set; }
 
-        public string Caption
-        {
-            get
-            {
-                return (string)this.GetPropertyValue("Caption");
-            }
+        IViewModel Footer { get; set; }
 
-            set
-            {
-                this.SetPropertyValue("Caption", value);
-            }
-        }
-
-        public override string ToString()
-        {
-            return this.Caption;
-        }
+        IList<IViewModel> Rows { get; }
     }
 }
 

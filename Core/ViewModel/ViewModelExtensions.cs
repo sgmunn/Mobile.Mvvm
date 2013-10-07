@@ -1,5 +1,5 @@
 // --------------------------------------------------------------------------------------------------------------------
-// <copyright file="ISection.cs" company="sgmunn">
+// <copyright file="ViewModelExtensions.cs" company="sgmunn">
 //   (c) sgmunn 2013  
 //
 //   Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated 
@@ -21,71 +21,25 @@
 namespace Mobile.Mvvm.ViewModel
 {
     using System;
-    using System.Collections.Generic;
-    using System.Collections.ObjectModel;
 
-    public interface ISection
+    public static class ViewModelExtensions
     {
-        IViewModel Header { get; set; }
-
-        IViewModel Footer { get; set; }
-
-        IList<IViewModel> Rows { get; }
-    }
-    
-
-
-
-    public class RowViewModel : ViewModelBase, ICommand
-    {
-        public RowViewModel()
+        public static void ExecuteTapCommand(this IViewModel viewModel)
         {
-        }
-
-        public virtual void Execute()
-        {
-        }
-
-        public virtual bool GetCanExecute()
-        {
-            return false;
-        }
-    }
-
-    public class SectionViewModel : ViewModelBase, ISection
-    {
-        public SectionViewModel()
-        {
-            this.Rows = new ObservableCollection<IViewModel>();
-        }
-
-        public IViewModel Header 
-        {
-            get
+            var cmd = viewModel as ITapCommand;
+            if (cmd != null)
             {
-                return (IViewModel)this.GetPropertyValue("Header");
-            }
-
-            set
-            {
-                this.SetPropertyValue("Header", value);
+                cmd.TapCommand.Execute();
             }
         }
 
-        public IViewModel Footer
+        public static void ExecuteLongTapCommand(this IViewModel viewModel)
         {
-            get
+            var cmd = viewModel as ILongTapCommand;
+            if (cmd != null)
             {
-                return (IViewModel)this.GetPropertyValue("Footer");
-            }
-
-            set
-            {
-                this.SetPropertyValue("Footer", value);
+                cmd.LongTapCommand.Execute();
             }
         }
-
-        public IList<IViewModel> Rows { get; private set; }
     }
 }
-

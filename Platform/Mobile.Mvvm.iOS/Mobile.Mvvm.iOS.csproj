@@ -39,11 +39,12 @@
   <ItemGroup>
     <Folder Include="Resources\" />
     <Folder Include="ViewModel\" />
+    <Folder Include="ViewModel\Dialog\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
     <Compile Include="ViewModel\RootViewModelContext.cs" />
-    <Compile Include="ViewModel\SectionSource.cs" />
+    <Compile Include="ViewModel\Dialog\SectionSource.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Core\Mobile.Mvvm.Core.Portable.csproj">

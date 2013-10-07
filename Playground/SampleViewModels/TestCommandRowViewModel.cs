@@ -1,25 +1,22 @@
 using System;
 using Mobile.Mvvm.ViewModel;
+using Mobile.Mvvm;
+using Mobile.Mvvm.ViewModel.Dialog;
 
 namespace SampleViewModels
 {
-    public class TestCommandRowViewModel : RowViewModel
+    public class TestCommandRowViewModel : StringViewModel, ITapCommand
     {
         private SectionViewModel section;
 
-        public TestCommandRowViewModel(SectionViewModel section)
+        public TestCommandRowViewModel(SectionViewModel section, string caption) : base(caption)
         {
-            this.section = section;    
+            this.section = section;   
+            this.TapCommand = new DelegateCommand(() => {
+                this.section.Rows.Add(new StringViewModel("added"));
+            });
         }
 
-        public override void Execute()
-        {
-            this.section.Rows.Add(new RowViewModel());
-        }
-
-        public override bool GetCanExecute()
-        {
-            return true;
-        }
+        public Mobile.Mvvm.ICommand TapCommand { get; private set; }
     }
 }

@@ -1,5 +1,5 @@
 // --------------------------------------------------------------------------------------------------------------------
-// <copyright file="StringViewModel.cs" company="sgmunn">
+// <copyright file="ISectionSource.cs" company="sgmunn">
 //   (c) sgmunn 2013  
 //
 //   Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated 
@@ -18,34 +18,25 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace Mobile.Mvvm.ViewModel
+namespace Mobile.Mvvm.ViewModel.Dialog
 {
     using System;
-
-    public class StringViewModel : ViewModelBase
+    using System.Collections.Generic;
+    
+    public interface ISectionSource
     {
-        public StringViewModel(string caption)
-        {
-            this.Caption = caption;
-        }
+        // clears all sections and unbinds the UI
+        void Clear();
 
-        public string Caption
-        {
-            get
-            {
-                return (string)this.GetPropertyValue("Caption");
-            }
+        // performs a clear and reload with the given source
+        void Load(IList<ISection> sourceList);
 
-            set
-            {
-                this.SetPropertyValue("Caption", value);
-            }
-        }
+        void Insert(int index, IList<ISection> sections);
 
-        public override string ToString()
-        {
-            return this.Caption;
-        }
+        void Remove(int index, int count);
+
+        void Insert(ISection section, int index, IList<IViewModel> rows);
+
+        void Remove(ISection section, int index, int count);
     }
 }
-

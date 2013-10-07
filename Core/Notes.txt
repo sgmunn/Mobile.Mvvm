@@ -1,1 +1,6 @@
 BindingScope can store bindings for many objects, an InjectedPropertyStore can only store attached properties for a single object.
+
+need a mechanism to bind a button to a command
+
+
+

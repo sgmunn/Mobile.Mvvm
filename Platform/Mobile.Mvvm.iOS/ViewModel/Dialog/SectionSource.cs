@@ -17,15 +17,14 @@
 //   IN THE SOFTWARE.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
-using System.Collections.Generic;
-using System.Collections.Specialized;
-using MonoTouch.Foundation;
-using Mobile.Mvvm.DataBinding;
 
-namespace Mobile.Mvvm.ViewModel
+namespace Mobile.Mvvm.ViewModel.Dialog
 {
     using System;
+    using System.Collections.Generic;
+    using MonoTouch.Foundation;
     using MonoTouch.UIKit;
+    using Mobile.Mvvm.DataBinding;
 
     public class SectionSource: UITableViewSource, ISectionSource, IBindingContext
     {
