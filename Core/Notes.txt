@@ -1,6 +1,34 @@
-BindingScope can store bindings for many objects, an InjectedPropertyStore can only store attached properties for a single object.
 
-need a mechanism to bind a button to a command
+- injection scopes need to have parent scopes so that you can get the injected value of an object regardless of where that value was added.
+
+- need a mechanism to bind a button to a command
+
+- binding parser, like mvvm cross or ko
+    - focus on being able to do the standard stuff + converters
+    - the delegate property accessors are really only need for really complex and performant binding, reflection otherwise is fine
+    - <TargetPropertyPath> <modeExpression> <sourcePropertyExpression>
+    
+     <TargetPropertyPath> = name
+                            name.child ...
+                            name[index] .. for indexed list propeties
+                            
+    <modeExpression>        :>   <:   ::   
+    
+    <sourcePropertyExpression>
+                            <propertyPath> |<converterFunction>
+                            
+    <converterFunction>
+                            <converterFunctionName> (  <propertyPath> , <convertParam>  )     
+                            
+    <propertyPath>
+                            [ $parent.<path> ] | [ $root.<path> ] |  <path>                                                                 
+        
+
+- ko has $parent, $root etc for binding scope, we should allow the same thing
+    - our binding scope gives us a way of grouping bindings together for lifetime management purposes
+    - for this to work, we need a way to link view models in a parent - child chain
+
+- can we extend 
 
 
 
