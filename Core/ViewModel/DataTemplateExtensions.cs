@@ -24,22 +24,10 @@ namespace Mobile.Mvvm.ViewModel
     using System.Collections.Generic;
     using System.ComponentModel;
     
-    // section source's need these
-    // additionally, view model root contexts
-
     //    this.RegisterTemplate("TableViewCell_ISectionRoot")
     //        .Creates((id) => new TableViewCell(UITableViewCellStyle.Default, id))
     //            .WhenInitializing<TableViewCell>((view) => view.Accessory = UITableViewCellAccessory.DisclosureIndicator)
     //            .WhenBinding<ISectionRoot, TableViewCell>((vm, view) => view.Text = vm.ToString());
-
-
-    //    public DataTemplateSelector RegisterTemplate(string reuseId)
-    //    {
-    //        var template = new DataTemplateSelector(reuseId);
-    //
-    //        this.TemplateSelectors.Add(template);
-    //        return template;
-    //    }
 
     public static class DataTemplateExtensions
     {
@@ -71,12 +59,12 @@ namespace Mobile.Mvvm.ViewModel
             return exactMatch ?? semiMatch;
         }
 
-        public static object GetViewForViewModel(this IDataTemplate template, object viewModel, Func<object, object> getConvertView)
+        public static object GetViewForViewModel(this IDataTemplate template, IBindingContext context, object viewModel, Func<object, object> getConvertView)
         {
-            return GetViewForViewModel(template, viewModel, getConvertView, null);
+            return GetViewForViewModel(template, context, viewModel, getConvertView, null);
         }
         
-        public static object GetViewForViewModel(this IDataTemplate template, object viewModel, Func<object, object> getConvertView, object root)
+        public static object GetViewForViewModel(this IDataTemplate template, IBindingContext context, object viewModel, Func<object, object> getConvertView, object root)
         {
             if (template != null)
             {
@@ -95,7 +83,8 @@ namespace Mobile.Mvvm.ViewModel
                 }
 
                 template.InitializeView(cell);
-                template.BindViewModel(viewModel, cell);
+                context.Bindings.ClearBindings(cell);
+                template.BindViewModel(context, viewModel, cell);
                 return cell;
             }
 

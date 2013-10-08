@@ -130,16 +130,16 @@ namespace Mobile.Mvvm.ViewModel.Dialog
                 case NotifyCollectionChangedAction.Add:
                     this.targetSource.Insert(e.NewStartingIndex, e.NewItems.OfType<ISection>().ToList());
                     break;
-                    case NotifyCollectionChangedAction.Remove:
+                case NotifyCollectionChangedAction.Remove:
                     this.targetSource.Remove(e.OldStartingIndex, e.OldItems.Count);
                     break;
-                    case NotifyCollectionChangedAction.Reset:
+                case NotifyCollectionChangedAction.Reset:
                     // clear current list, unregister all sections, unbind all view models
                     // iterate over all items, register each section and full reload (binding as we go)
                     //this.ReloadSection(sectionIndex);
                     this.targetSource.Load(this.sourceList);
                     break;
-                    default:
+                default:
                     break;
             }           
         }
@@ -157,13 +157,13 @@ namespace Mobile.Mvvm.ViewModel.Dialog
                 case NotifyCollectionChangedAction.Add:
                     this.targetSource.Insert(section, e.NewStartingIndex, e.NewItems.OfType<IViewModel>().ToList());
                     break;
-                    case NotifyCollectionChangedAction.Remove:
+                case NotifyCollectionChangedAction.Remove:
                     this.targetSource.Remove(section, e.OldStartingIndex, e.OldItems.Count);
                     break;
-                    case NotifyCollectionChangedAction.Reset:
+                case NotifyCollectionChangedAction.Reset:
                     this.targetSource.Load(this.sourceList);
                     break;
-                    default:
+                default:
                     break;
             }           
         }

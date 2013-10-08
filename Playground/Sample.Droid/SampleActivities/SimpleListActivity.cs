@@ -25,7 +25,13 @@ namespace Sample.Droid.SampleActivities
 
             yield return new DataTemplate(Android.Resource.Layout.SimpleListItem1)
                 .Creates<View>((id, root) => inflator.Inflate((int)id, (ViewGroup)root, false))
-                    .WhenBinding<StringViewModel, View>((vm, view) => view.FindViewById<TextView>(Android.Resource.Id.Text1).Text = vm.ToString());
+                    .WhenBinding<StringViewModel, View>((c, vm, view) => {
+                        var text1 = view.FindViewById<TextView>(Android.Resource.Id.Text1);
+                        //viewModelContext.Bindings.ClearBindings();
+                        //viewModelContext.Bindings.AddEventTriggeredBinding(text1, "Text", "TextChanged", vm, "Caption");
+
+                        c.Bindings.AddBinding(text1, "Text", vm, "Caption");
+                    });
         }
     }
 
@@ -43,12 +49,12 @@ namespace Sample.Droid.SampleActivities
             this.sections = new ObservableCollection<ISection>();
 
             var section1 = new SectionViewModel();
-            section1.Header = new StringViewModel("Header");
+            section1.Header = new StringViewModel("Header 1");
             this.sections.Add(section1);
 
             section1.Rows.Add(new TestCommandRowViewModel(section1, "add"));
             section1.Rows.Add(new StringElementViewModel("update") { TapCommand = new DelegateCommand(() => {
-                    ((StringViewModel)section1.Header).Caption = "Updated!";
+                    ((StringViewModel)section1.Rows[1]).Caption = "Updated!";
                 }) });
             section1.Rows.Add(new StringViewModel("item 1"));
             section1.Rows.Add(new StringViewModel("item 2"));
@@ -58,8 +64,15 @@ namespace Sample.Droid.SampleActivities
             this.sections[1].Rows.Add(new StringViewModel("item 2"));
             this.sections[1].Rows.Add(new StringViewModel("item 3"));
             
-            this.sections[1].Header = new StringViewModel("Header");
-            this.sections[1].Footer = new StringViewModel("Footer");
+            this.sections[1].Header = new StringViewModel("Header 2");
+            this.sections[1].Footer = new StringViewModel("Footer 2");
+
+            this.sections.Add(new SectionViewModel());
+            this.sections[2].Header = new StringViewModel("Header 3");
+            for (int i = 0; i < 100; i++)
+            {
+                this.sections[2].Rows.Add(new StringViewModel("item " + i.ToString()));
+            }
 
             // view did load equivalent
             this.source = new SectionSource(this, DialogDataTemplates.DefaultTemplates(this));

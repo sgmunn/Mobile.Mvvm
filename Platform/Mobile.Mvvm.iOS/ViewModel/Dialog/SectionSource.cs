@@ -180,7 +180,7 @@ namespace Mobile.Mvvm.ViewModel.Dialog
         public override UITableViewCell GetCell(UITableView tableView, MonoTouch.Foundation.NSIndexPath indexPath)
         {
             var row = this.ViewModelForIndexPath(indexPath);
-            var cell = (UITableViewCell)row.GetTemplate(this.templates).GetViewForViewModel(row, (id) => tableView.DequeueReusableCell((string)id));
+            var cell = (UITableViewCell)row.GetTemplate(this.templates).GetViewForViewModel(this, row, (id) => tableView.DequeueReusableCell((string)id));
 
             // fallback default view
             if (cell == null)

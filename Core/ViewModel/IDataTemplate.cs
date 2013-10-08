@@ -43,7 +43,7 @@ namespace Mobile.Mvvm.ViewModel
 
         void InitializeView(object view);
 
-        void BindViewModel(object viewModel, object view);
+        void BindViewModel(IBindingContext context, object viewModel, object view);
 
         float CalculateHeight(object viewModel);
 

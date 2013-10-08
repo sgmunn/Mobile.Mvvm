@@ -1,5 +1,5 @@
 // --------------------------------------------------------------------------------------------------------------------
-// <copyright file="RootViewModelContextBase.cs" company="sgmunn">
+// <copyright file="BindingContextBase.cs" company="sgmunn">
 //   (c) sgmunn 2013  
 //
 //   Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated 
@@ -21,17 +21,52 @@
 namespace Mobile.Mvvm.ViewModel
 {
     using System;
-
+    using Mobile.Mvvm.DataBinding;
+    
     /// <summary>
-    /// Defines a context for a view model, bindings and injected properties.
+    /// Defines a context for bindings and injected properties.
     /// </summary>
-    public abstract class RootViewModelContextBase : BindingContextBase, IRootViewModelContext, IDisposable
+    public class BindingContextBase : IBindingContext, IDisposable
     {
-        protected RootViewModelContextBase(IViewModel viewModel)
+        private bool disposed;
+
+        public BindingContextBase()
         {
-            this.ViewModel = viewModel;
+            this.Bindings = new BindingScope();
+            this.InjectedProperties = new InjectionScope(this.CreateInjectedPropertyStore);
         }
 
-        public IViewModel ViewModel { get; private set; }
+        ~BindingContextBase()
+        {
+            this.Dispose(false);
+        }
+
+        public IBindingScope Bindings { get; private set; }
+
+        public IInjectionScope InjectedProperties { get; private set; }
+
+        public void Dispose()
+        {
+            if (!this.disposed)
+            {
+                this.disposed = true;
+                this.Dispose(true);
+                GC.SuppressFinalize(this);
+            }
+        }
+
+        protected virtual IInjectedPropertyStore CreateInjectedPropertyStore(object owner)
+        {
+            return new InjectedPropertyStore(owner);
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                this.Bindings.Dispose();
+                this.InjectedProperties.Dispose();
+            }
+        }
     }
 }

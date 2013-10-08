@@ -44,6 +44,7 @@ namespace Mobile.Mvvm.DataBinding
 
         public void RemoveBinding(IBindingExpression expression)
         {
+            expression.Dispose();
             this.exresssions.Remove(expression);
         }        
 

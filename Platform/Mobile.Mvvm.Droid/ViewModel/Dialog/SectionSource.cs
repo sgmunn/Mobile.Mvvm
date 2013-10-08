@@ -162,7 +162,9 @@ namespace Mobile.Mvvm.ViewModel.Dialog
         public override View GetView(int position, View convertView, ViewGroup parent)
         {
             var row = this.ViewModelForPosition(position);
-            var view = (View)row.GetTemplate(this.templates).GetViewForViewModel(row, (id) => convertView, parent);
+            Console.WriteLine("get view {0}, {1}", position, ((StringViewModel)row).Caption);
+
+            var view = (View)row.GetTemplate(this.templates).GetViewForViewModel(this, row, (id) => convertView, parent);
 
             // fallback default view
             if (view == null)

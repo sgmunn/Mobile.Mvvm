@@ -28,55 +28,74 @@ namespace Mobile.Mvvm.DataBinding
     /// <remarks>
     /// The primary purpose for this class is provide a means by which bindings can perform faster than using
     /// propertyInfo.GetValue / .SetValue
-    /// A secondary reason allows arbitrarily complex bindings to compex properties - currently binding only support
+    /// A secondary reason allows arbitrarily complex bindings to complex properties - currently binding only support
     /// a simple property
     /// </remarks>
-    public sealed class DelegatePropertyAccessor : IPropertyAccessor
+    public class DelegatePropertyAccessor<T, TV> : IPropertyAccessor
     {
-        public DelegatePropertyAccessor(string propertyPath, Func<object, object> getter, Action<object, object> setter)
+        public DelegatePropertyAccessor(Func<T, TV> getter, Action<T, TV> setter)
         {
-            if (string.IsNullOrEmpty(propertyPath))
-            {
-                throw new ArgumentNullException("propertyPath");
-            }
-            
-            this.PropertyPath = propertyPath;
             this.Getter = getter;
             this.Setter = setter;
         }
 
-        public string PropertyPath { get; private set; }
+        public Func<T, TV> Getter { get; private set; }
 
-        public Func<object, object> Getter { get; private set; }
-        
-        public Action<object, object> Setter { get; private set; }
+        public Action<T, TV> Setter { get; private set; }
 
-        public bool CanGetValue(object obj) 
+        public virtual bool CanGetValue(T obj) 
         { 
             return this.Getter != null;
         }
 
-        public bool CanSetValue(object obj) 
+        public virtual bool CanSetValue(T obj) 
         { 
             return this.Setter != null;
         }
 
-        public object GetValue(object obj)
+        public TV GetValue(T obj)
         {
             if (this.CanGetValue(obj))
             {
                 return this.Getter(obj);
             }
 
-            return null;
+            return default(TV);
         }
 
-        public void SetValue(object obj, object value)
+        public void SetValue(T obj, TV value)
         {
             if (this.CanSetValue(obj))
             {
                 this.Setter(obj, value);
             }
+        }
+
+        bool IPropertyAccessor.CanGetValue(object obj)
+        {
+            return this.CanGetValue((T)obj);
+        }
+
+        bool IPropertyAccessor.CanSetValue(object obj)
+        {
+            return this.CanSetValue((T)obj);
+        }
+
+        object IPropertyAccessor.GetValue(object obj)
+        {
+            return this.GetValue((T)obj);
+        }
+
+        void IPropertyAccessor.SetValue(object obj, object value)
+        {
+            this.SetValue((T)obj, (TV)value);
+        }
+    }
+
+    public sealed class DelegatePropertyAccessor : DelegatePropertyAccessor<object, object>
+    {
+        public DelegatePropertyAccessor(Func<object, object> getter, Action<object, object> setter) : base(getter, setter)
+        {
         }
     }
 }

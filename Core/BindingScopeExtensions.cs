@@ -76,18 +76,24 @@ namespace Mobile.Mvvm
         /// </summary>
         public static void ReplaceBindingSource(this IBindingScope scope, object source, string targetPropertyName)
         {
-            var bindingExpressions = scope.GetBindingExpressions();
+            var allBindingExpressions = scope.GetBindingExpressions();
+            var bindingExpressions = allBindingExpressions.Where(x => string.IsNullOrEmpty(targetPropertyName) || x.TargetProperty.Equals(targetPropertyName)).ToList();
             
             var newExpressions = new List<IBindingExpression>();
             
-            foreach (var expression in bindingExpressions.Where(x => string.IsNullOrEmpty(targetPropertyName) || x.TargetProperty.Equals(targetPropertyName)))
+            foreach (var expression in bindingExpressions)
             {
                 var newExpression = new WeakBindingExpression(expression.Target, expression.TargetProperty, source, expression.Binding);
                 newExpression.Bind();
                 newExpressions.Add(newExpression);
             }
 
-            scope.ClearBindings();
+            // don't remove all bindings, just the ones we replaced
+            foreach (var expression in bindingExpressions)
+            {
+                scope.RemoveBinding(expression);
+            }
+
             foreach (var expression in newExpressions)
             {
                 scope.AddBinding(expression);
@@ -95,13 +101,26 @@ namespace Mobile.Mvvm
         }
         
         /// <summary>
+        /// Clears the bindings for the given target
+        /// </summary>
+        public static void ClearBindings(this IBindingScope scope, object target)
+        {
+            var bindingExpressions = scope.GetBindingExpressions(target, string.Empty);
+
+            foreach (var expression in bindingExpressions)
+            {
+                scope.RemoveBinding(expression);
+            }
+        }
+
+        /// <summary>
         /// Gets the binding expression for a target
         /// </summary>
         public static IBindingExpression[] GetBindingExpressions(this IBindingScope scope, object target, string propertyName)
         {
             var bindingExpressions = scope.GetBindingExpressions();
             
-            return bindingExpressions.Where(bx => bx.TargetProperty.Equals(propertyName) && bx.Target == target).ToArray();
+            return bindingExpressions.Where(bx => bx.Target == target && (string.IsNullOrEmpty(propertyName) || bx.TargetProperty.Equals(propertyName))).ToArray();
         } 
         
         /// <summary>

@@ -31,7 +31,7 @@ namespace Mobile.Mvvm.ViewModel
         private Func<object, object> creator1; 
         private Func<object, object, object> creator2; 
         private Action<object> initializer;
-        private Action<object, object> binder;
+        private Action<IBindingContext, object, object> binder;
         private Func<object, float> height;
         
         public DataTemplate()
@@ -124,7 +124,7 @@ namespace Mobile.Mvvm.ViewModel
             return this;
         }
 
-        public DataTemplate WhenBinding<TViewModel, TView>(Action<TViewModel, TView> binder)
+        public DataTemplate WhenBinding<TViewModel, TView>(Action<IBindingContext, TViewModel, TView> binder)
         {
             if (binder == null)
             {
@@ -136,7 +136,7 @@ namespace Mobile.Mvvm.ViewModel
                 this.viewModelType = typeof(TViewModel);
             }
 
-            this.binder = (vm, view) => binder((TViewModel)vm, (TView)view);
+            this.binder = (context, vm, view) => binder(context, (TViewModel)vm, (TView)view);
 
             return this;
         }
@@ -212,11 +212,11 @@ namespace Mobile.Mvvm.ViewModel
             }
         }
 
-        public void BindViewModel(object viewModel, object view)
+        public void BindViewModel(IBindingContext context, object viewModel, object view)
         {
             if (this.binder != null)
             {
-                this.binder(viewModel, view);
+                this.binder(context, viewModel, view);
             }
         }
 
