@@ -162,20 +162,16 @@ namespace Mobile.Mvvm.ViewModel.Dialog
         public override View GetView(int position, View convertView, ViewGroup parent)
         {
             var row = this.ViewModelForPosition(position);
-            Console.WriteLine("get view {0}, {1}", position, ((StringViewModel)row).Caption);
-
             var view = (View)row.GetTemplate(this.templates).GetViewForViewModel(this, row, (id) => convertView, parent);
 
             // fallback default view
             if (view == null)
             {
-                ////System.Diagnostics.Debug.WriteLine("Using fallback view for List");
-
-                var inflator = ((Activity)this.context).LayoutInflater;
+                var inflator = LayoutInflater.FromContext(this.context);
                 view = convertView;
                 if (view == null)
                 {
-                    view = inflator.Inflate(Android.Resource.Layout.SimpleListItem1, null);
+                    view = inflator.Inflate(Android.Resource.Layout.SimpleListItem1, parent, false);
                 }
 
                 view.FindViewById<TextView>(Android.Resource.Id.Text1).Text = row.ToString();

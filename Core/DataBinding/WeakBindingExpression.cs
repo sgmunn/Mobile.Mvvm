@@ -223,7 +223,6 @@ namespace Mobile.Mvvm.DataBinding
                 return;
             }
             
-            System.Diagnostics.Debug.WriteLine("update source");
             this.Binding.UpdateSourceValue(this.Source, this.PropertyAccessor.GetValue(targetObject));
         }
         
@@ -300,7 +299,7 @@ namespace Mobile.Mvvm.DataBinding
             this.TargetProperty = targetProperty;
             this.Binding = binding;
 
-            this.targetPropertyType = target.GetPropertyInfo(this.TargetProperty).PropertyType;
+            this.targetPropertyType = this.PropertyAccessor.GetPropertyType(target);
         }
   
         /// <summary>

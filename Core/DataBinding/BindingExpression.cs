@@ -255,7 +255,7 @@ namespace Mobile.Mvvm.DataBinding
             this.TargetProperty = targetProperty;
             this.Binding = binding;
 
-            this.targetPropertyType = target.GetPropertyInfo(this.TargetProperty).PropertyType;
+            this.targetPropertyType = this.PropertyAccessor.GetPropertyType(target);
         }
   
         /// <summary>

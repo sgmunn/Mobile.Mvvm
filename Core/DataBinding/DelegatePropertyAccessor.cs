@@ -1,5 +1,5 @@
 //  --------------------------------------------------------------------------------------------------------------------
-//  <copyright file="BindingAssistant.cs" company="sgmunn">
+//  <copyright file="DelegatePropertyAccessor.cs" company="sgmunn">
 //    (c) sgmunn 2012  
 //
 //    Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated 
@@ -71,6 +71,11 @@ namespace Mobile.Mvvm.DataBinding
             }
         }
 
+        Type IPropertyAccessor.GetPropertyType(object obj)
+        {
+            return typeof(TV);
+        }
+        
         bool IPropertyAccessor.CanGetValue(object obj)
         {
             return this.CanGetValue((T)obj);

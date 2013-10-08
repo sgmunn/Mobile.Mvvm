@@ -22,6 +22,7 @@ namespace Mobile.Mvvm.DataBinding
 {
     using System;
 
+    // TODO: support dotted property names and indexed paths
     public sealed class ReflectionPropertyAccessor : IPropertyAccessor
     {
         public ReflectionPropertyAccessor(string propertyPath)
@@ -35,6 +36,11 @@ namespace Mobile.Mvvm.DataBinding
         }
         
         public string PropertyPath { get; private set; }
+
+        public Type GetPropertyType(object obj)
+        {
+            return obj.GetPropertyInfo(this.PropertyPath).PropertyType;
+        }
 
         public bool CanGetValue(object obj) 
         { 

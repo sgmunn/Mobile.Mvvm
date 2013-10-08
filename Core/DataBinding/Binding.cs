@@ -21,7 +21,6 @@
 namespace Mobile.Mvvm.DataBinding
 {
     using System;
-    using System.Reflection;
     using System.Globalization;
 
     /// <summary>
@@ -115,8 +114,10 @@ namespace Mobile.Mvvm.DataBinding
 
             if (this.Converter != null)
             {
-                var propInfo = sourceObject.GetPropertyInfo(this.PropertyName);
-                newValue = this.Converter.ConvertBack(newValue, propInfo.GetType(), this.ConverterParameter, CultureInfo.CurrentUICulture);
+                //var propertyType = sourceObject.GetPropertyInfo(this.PropertyName).GetType();
+                var propertyType = this.PropertyAccessor.GetPropertyType(sourceObject);
+
+                newValue = this.Converter.ConvertBack(newValue, propertyType, this.ConverterParameter, CultureInfo.CurrentUICulture);
             }
 
             this.PropertyAccessor.SetValue(sourceObject, newValue);

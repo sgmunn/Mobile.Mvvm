@@ -13,6 +13,7 @@ using Mobile.Mvvm.ViewModel;
 using SampleViewModels;
 using Mobile.Mvvm.ViewModel.Dialog;
 using Mobile.Mvvm;
+using Mobile.Mvvm.DataBinding;
 
 namespace Sample.Droid.SampleActivities
 {
@@ -22,15 +23,23 @@ namespace Sample.Droid.SampleActivities
         {
             var inflator = LayoutInflater.FromContext(context);
 
-
             yield return new DataTemplate(Android.Resource.Layout.SimpleListItem1)
                 .Creates<View>((id, root) => inflator.Inflate((int)id, (ViewGroup)root, false))
                     .WhenBinding<StringViewModel, View>((c, vm, view) => {
                         var text1 = view.FindViewById<TextView>(Android.Resource.Id.Text1);
-                        //viewModelContext.Bindings.ClearBindings();
-                        //viewModelContext.Bindings.AddEventTriggeredBinding(text1, "Text", "TextChanged", vm, "Caption");
 
-                        c.Bindings.AddBinding(text1, "Text", vm, "Caption");
+                        //c.Bindings.AddEventTriggeredBinding(text1, "Text", "TextChanged", vm, "Caption");
+
+                        //c.Bindings.AddBinding(text1, "Text", vm, "Caption");
+
+                        var targetPropertySetter = new DelegatePropertyAccessor<TextView, string>(x => x.Text, (x,v) => x.Text = v);
+
+                        // this one has the advantage of being cross platform
+                        var sourcePropertySetter = new DelegatePropertyAccessor<StringViewModel, string>(x => x.Caption, (x,v) => x.Caption = v);
+                        var binding = new Binding("Caption", sourcePropertySetter);
+
+                        c.Bindings.AddBinding(view, "Text", targetPropertySetter, vm, binding);
+
                     });
         }
     }

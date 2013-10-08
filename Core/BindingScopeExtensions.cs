@@ -24,7 +24,6 @@ namespace Mobile.Mvvm
     using System.Collections.Generic;
     using System.Linq;
     using Mobile.Mvvm.DataBinding;
-    using System.Reflection;
 
     public static class BindingScopeExtensions
     {
@@ -52,6 +51,17 @@ namespace Mobile.Mvvm
             return scope.AddBinding(target, binding.PropertyName, source, binding);
         }
         
+        /// <summary>
+        /// Sets the binding between target and source.
+        /// </summary>
+        public static IBindingExpression AddBinding(this IBindingScope scope, object target, string propertyName, IPropertyAccessor propertyAccessor, object source, Binding binding)
+        {
+            var expression = new WeakBindingExpression(target, propertyName, propertyAccessor, source, binding);
+            expression.Bind();
+            scope.AddBinding(expression);
+            return expression;
+        }
+
         /// <summary>
         /// Sets the binding between target and source.
         /// </summary>

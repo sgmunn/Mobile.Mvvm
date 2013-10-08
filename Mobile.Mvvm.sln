@@ -180,7 +180,7 @@ Global
 		{371D6E44-E499-4136-A871-A5EA5260A209} = {31EF5695-E6D3-4E6D-A681-60F712501372}
 	EndGlobalSection
 	GlobalSection(MonoDevelopProperties) = preSolution
-		StartupItem = Playground\Sample.Touch\Sample.Touch.csproj
+		StartupItem = Playground\Sample.Droid\Sample.Droid.csproj
 		Policies = $0
 		$0.DotNetNamingPolicy = $1
 		$1.DirectoryNamespaceAssociation = PrefixedHierarchical

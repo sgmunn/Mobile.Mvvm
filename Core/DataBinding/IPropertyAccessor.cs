@@ -24,6 +24,7 @@ namespace Mobile.Mvvm.DataBinding
 
     public interface IPropertyAccessor
     {
+        Type GetPropertyType(object obj);
         bool CanGetValue(object obj);
         bool CanSetValue(object obj);
         object GetValue(object obj);
