@@ -17,6 +17,7 @@
 //   IN THE SOFTWARE.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
+using Mobile.Mvvm.DataBinding;
 
 namespace Mobile.Mvvm.ViewModel
 {
@@ -26,6 +27,7 @@ namespace Mobile.Mvvm.ViewModel
     public class DataTemplate : IDataTemplate
     {
         private readonly Dictionary<string, object> attributes;
+        private readonly List<string> bindingExpresions;
         private Type viewModelType;
         private Func<object, bool> selector;
         private Func<object, object> creator1; 
@@ -37,12 +39,14 @@ namespace Mobile.Mvvm.ViewModel
         public DataTemplate()
         {
             this.attributes = new Dictionary<string, object>();
+            this.bindingExpresions = new List<string>();
         }
 
         public DataTemplate(object id)
         {
             this.Id = id;
             this.attributes = new Dictionary<string, object>();
+            this.bindingExpresions = new List<string>();
         }
 
         public object Id
@@ -140,6 +144,24 @@ namespace Mobile.Mvvm.ViewModel
 
             return this;
         }
+        
+        public DataTemplate Bind<TViewModel>(string expression)
+        {
+            if (expression == null)
+            {
+                throw new ArgumentNullException("expression");
+            }
+            
+            if (this.viewModelType == null)
+            {
+                this.viewModelType = typeof(TViewModel);
+            }
+
+            // TODO: ideally we would tokenise this now so that we don't have to do it when we're binding
+            this.bindingExpresions.Add(expression);
+
+            return this;
+        }
 
         public DataTemplate HavingHeight<TViewModel>(Func<TViewModel, float> height)
         {
@@ -214,9 +236,19 @@ namespace Mobile.Mvvm.ViewModel
 
         public void BindViewModel(IBindingContext context, object viewModel, object view)
         {
+            // prefer binding functions over expressions, or at least do them first
             if (this.binder != null)
             {
                 this.binder(context, viewModel, view);
+            }
+
+            foreach (var expression in this.bindingExpresions)
+            {
+                var exp = BindingParser.Default.Parse(expression, view, viewModel);
+                if (exp != null)
+                {
+                    context.Bindings.AddBinding(exp);
+                }
             }
         }
 

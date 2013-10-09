@@ -25,22 +25,30 @@ namespace Sample.Droid.SampleActivities
 
             yield return new DataTemplate(Android.Resource.Layout.SimpleListItem1)
                 .Creates<View>((id, root) => inflator.Inflate((int)id, (ViewGroup)root, false))
+
                     .WhenBinding<StringViewModel, View>((c, vm, view) => {
+                        // at the moment we have to do this bit for android, unless we have a custom view, which isn't really likely
                         var text1 = view.FindViewById<TextView>(Android.Resource.Id.Text1);
-
-                        //c.Bindings.AddEventTriggeredBinding(text1, "Text", "TextChanged", vm, "Caption");
-
-                        //c.Bindings.AddBinding(text1, "Text", vm, "Caption");
-
-                        var targetPropertySetter = new DelegatePropertyAccessor<TextView, string>(x => x.Text, (x,v) => x.Text = v);
-
-                        // this one has the advantage of being cross platform
-                        var sourcePropertySetter = new DelegatePropertyAccessor<StringViewModel, string>(x => x.Caption, (x,v) => x.Caption = v);
-                        var binding = new Binding("Caption", sourcePropertySetter);
-
-                        c.Bindings.AddBinding(view, "Text", targetPropertySetter, vm, binding);
-
+                        c.Bindings.AddBinding(BindingParser.Default.Parse("Text: Caption", text1, vm));
                     });
+
+
+//                    .WhenBinding<StringViewModel, View>((c, vm, view) => {
+//                        var text1 = view.FindViewById<TextView>(Android.Resource.Id.Text1);
+//
+//                        //c.Bindings.AddEventTriggeredBinding(text1, "Text", "TextChanged", vm, "Caption");
+//
+//                        //c.Bindings.AddBinding(text1, "Text", vm, "Caption");
+//
+//                        var targetPropertySetter = new DelegatePropertyAccessor<TextView, string>(x => x.Text, (x,v) => x.Text = v);
+//
+//                        // this one has the advantage of being cross platform
+//                        var sourcePropertySetter = new DelegatePropertyAccessor<StringViewModel, string>(x => x.Caption, (x,v) => x.Caption = v);
+//                        var binding = new Binding("Caption", sourcePropertySetter);
+//
+//                        c.Bindings.AddBinding(view, "Text", targetPropertySetter, vm, binding);
+//
+//                    });
         }
     }
 

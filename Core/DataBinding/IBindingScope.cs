@@ -27,6 +27,10 @@ namespace Mobile.Mvvm.DataBinding
     /// </summary>
     public interface IBindingScope : IDisposable
     {
+        /// <summary>
+        /// Adds the binding expression and binds the expression.
+        /// </summary>
+        /// <param name="expression">Expression.</param>
         void AddBinding(IBindingExpression expression);
         void RemoveBinding(IBindingExpression expression);
         void ClearBindings();

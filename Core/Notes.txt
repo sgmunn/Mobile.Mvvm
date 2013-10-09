@@ -28,7 +28,9 @@
     - our binding scope gives us a way of grouping bindings together for lifetime management purposes
     - for this to work, we need a way to link view models in a parent - child chain
 
-- can we extend 
+- need to support more complex property paths, eg TextLabel.Text
+
+- 
 
 
 

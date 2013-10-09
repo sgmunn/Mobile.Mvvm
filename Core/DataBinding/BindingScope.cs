@@ -32,13 +32,17 @@ namespace Mobile.Mvvm.DataBinding
             this.exresssions = new List<IBindingExpression>();
         }
 
+        /// <summary>
+        /// Adds the binding expression and binds the expression.
+        /// </summary>
         public void AddBinding(IBindingExpression expression)
         {
             if (expression == null)
             {
                 throw new ArgumentNullException("expression");
             }
-            
+
+            expression.Bind();
             this.exresssions.Add(expression);
         }        
 

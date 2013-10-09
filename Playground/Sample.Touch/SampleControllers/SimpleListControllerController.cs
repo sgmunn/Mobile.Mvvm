@@ -60,20 +60,21 @@ namespace Sample.Touch.SampleControllers
         {
 
             yield return new DataTemplate("c1")
-                .Creates<UITableViewCell>((id, root) => new UITableViewCell(UITableViewCellStyle.Default, (string)id))
-                    .WhenBinding<StringViewModel, UITableViewCell>((c, vm, view) => {
-                        //c.Bindings.AddBinding(view, "Text", vm, "Caption");
-
-                        // IPropertyAccessor instances can be shared
-
-                        var targetPropertySetter = new DelegatePropertyAccessor<UITableViewCell, string>(x => x.TextLabel.Text, (x,v) => x.TextLabel.Text = v);
-                        var sourcePropertySetter = new DelegatePropertyAccessor<StringViewModel, string>(x => x.Caption, (x,v) => x.Caption = v);
-                        var binding = new Binding("Caption", sourcePropertySetter);
-
-                        c.Bindings.AddBinding(view, "Text", targetPropertySetter, vm, binding);
-
-
-                    });
+                .Creates<TableViewCell>((id, root) => new TableViewCell(UITableViewCellStyle.Default, (string)id))
+                    .Bind<StringViewModel>("Text: Caption");
+//                    .WhenBinding<StringViewModel, UITableViewCell>((c, vm, view) => {
+//                        //c.Bindings.AddBinding(view, "Text", vm, "Caption");
+//
+//                        // IPropertyAccessor instances can be shared
+//
+//                        var targetPropertySetter = new DelegatePropertyAccessor<UITableViewCell, string>(x => x.TextLabel.Text, (x,v) => x.TextLabel.Text = v);
+//                        var sourcePropertySetter = new DelegatePropertyAccessor<StringViewModel, string>(x => x.Caption, (x,v) => x.Caption = v);
+//                        var binding = new Binding("Caption", sourcePropertySetter);
+//
+//                        c.Bindings.AddBinding(view, "Text", targetPropertySetter, vm, binding);
+//
+//
+//                    });
         }
     }
 

@@ -101,6 +101,7 @@
     <Compile Include="ViewModel\DataTemplate.cs" />
     <Compile Include="ViewModel\DataTemplateExtensions.cs" />
     <Compile Include="ViewModel\BindingContextBase.cs" />
+    <Compile Include="DataBinding\BindingParser.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <ItemGroup>
