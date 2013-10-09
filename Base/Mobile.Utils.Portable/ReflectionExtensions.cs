@@ -18,7 +18,7 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace Mobile.Mvvm
+namespace Mobile.Utils
 {
     using System;
     using System.Collections.Generic;

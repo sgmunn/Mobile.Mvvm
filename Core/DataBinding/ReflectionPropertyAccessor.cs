@@ -21,6 +21,7 @@
 namespace Mobile.Mvvm.DataBinding
 {
     using System;
+    using Mobile.Utils;
 
     // TODO: support dotted property names and indexed paths
     public sealed class ReflectionPropertyAccessor : IPropertyAccessor

@@ -22,8 +22,8 @@ namespace Mobile.Mvvm.ViewModel
 {
     using System;
     using System.ComponentModel;
-    using Mobile.Mvvm.Disposables;
-    using Mobile.Mvvm.Diagnostics;
+    using Mobile.Utils.Disposables;
+    using Mobile.Utils.Diagnostics;
 
     public abstract class ViewModelBase : IViewModel, INotifyPropertyChanged, ILoadable, IPersistentState, ILifetime
     {

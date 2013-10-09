@@ -21,7 +21,7 @@
 namespace Mobile.Mvvm
 {
     using System;
-    using Mobile.Mvvm.Disposables;
+    using Mobile.Utils.Disposables;
 
     public interface ILifetime
     {

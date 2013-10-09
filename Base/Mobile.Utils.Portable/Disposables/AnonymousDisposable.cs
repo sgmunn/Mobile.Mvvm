@@ -1,5 +1,5 @@
 // --------------------------------------------------------------------------------------------------------------------
-// <copyright file=".cs" company="sgmunn">
+// <copyright file="AnonymousDisposable.cs" company="sgmunn">
 //   (c) sgmunn 2013  
 //
 //   Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated 
@@ -18,7 +18,7 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace Mobile.Mvvm.Disposables
+namespace Mobile.Utils.Disposables
 {
     using System;
     using System.Threading;
@@ -57,5 +57,4 @@ namespace Mobile.Mvvm.Disposables
             }
         }
     }
-    
 }

@@ -38,12 +38,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Disposables\CompositeDisposable.cs" />
     <Compile Include="IViewModel.cs" />
     <Compile Include="ILifetime.cs" />
-    <Compile Include="Diagnostics\Log.cs" />
     <Compile Include="WeakEventWrapper.cs" />
-    <Compile Include="ReflectionExtensions.cs" />
     <Compile Include="ViewModel\ViewModelBase.cs" />
     <Compile Include="IStateBundle.cs" />
     <Compile Include="IPersistentState.cs" />
@@ -79,9 +76,7 @@
     <Compile Include="DataBinding\IInjectionScope.cs" />
     <Compile Include="DataBinding\InjectionScope.cs" />
     <Compile Include="DataBinding\A.cs" />
-    <Compile Include="Reflection\ReflectionUtils.cs" />
     <Compile Include="DataBinding\EventTriggeredBindingExpression.cs" />
-    <Compile Include="Disposables\AnonymousDisposable.cs" />
     <Compile Include="ViewModel\IRootViewModelContext.cs" />
     <Compile Include="ViewModel\RootViewModelContextBase.cs" />
     <Compile Include="ViewModel\IBindingContext.cs" />
@@ -105,14 +100,17 @@
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <ItemGroup>
-    <Folder Include="Disposables\" />
-    <Folder Include="Diagnostics\" />
     <Folder Include="ViewModel\" />
     <Folder Include="DataBinding\" />
-    <Folder Include="Reflection\" />
     <Folder Include="ViewModel\Dialog\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Notes.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Base\Mobile.Utils.Portable\Mobile.Utils.Portable.csproj">
+      <Project>{502C0CAA-31C1-478F-878A-7002D76FE461}</Project>
+      <Name>Mobile.Utils.Portable</Name>
+    </ProjectReference>
   </ItemGroup>
 </Project>

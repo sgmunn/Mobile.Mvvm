@@ -22,7 +22,8 @@ namespace Mobile.Mvvm.DataBinding
 {
     using System;
     using System.Reflection;
-    using Mobile.Mvvm.Disposables;
+    using Mobile.Utils.Disposables;
+    using Mobile.Utils.Reflection;
 
     public sealed class EventTriggeredBindingExpression : EventTriggeredBindingExpression<object, EventArgs>
     {

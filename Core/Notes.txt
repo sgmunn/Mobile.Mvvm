@@ -1,4 +1,18 @@
 
+- custom layout inflator for android, apply bindings from the view axml
+- complex property paths
+- look at support for $parent, $root in property paths
+    this will require that binding scopes or contexts have a notion of a parent scope 
+    we can use this notion for injected properties as well.
+
+- need to get converter binding expressions parsed
+    need to register binding converters, type mapper etc
+    need to parse binding parameter, basic types I guess (int, decimal, string)
+    
+- time to start using this in an application
+    berry app maybe?
+
+
 - injection scopes need to have parent scopes so that you can get the injected value of an object regardless of where that value was added.
 
 - need a mechanism to bind a button to a command

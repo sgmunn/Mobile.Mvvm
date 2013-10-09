@@ -19,6 +19,12 @@ namespace Sample.Droid.SampleActivities
 {
     public static class DialogDataTemplates
     {
+        // if we have a context passed in, then we might as well pass in the context for the binding scope as well!
+        // only downside is that the template can't be shared across view contexts
+
+
+
+
         public static IEnumerable<IDataTemplate> DefaultTemplates(Context context)
         {
             var inflator = LayoutInflater.FromContext(context);

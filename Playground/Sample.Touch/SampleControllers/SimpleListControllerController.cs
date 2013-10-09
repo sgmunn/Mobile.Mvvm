@@ -16,6 +16,11 @@ namespace Sample.Touch.SampleControllers
     {
         private string text;
 
+        public TableViewCell(string reuseIdentifer)
+            : base(UITableViewCellStyle.Default, reuseIdentifer)
+        {
+        }
+        
         public TableViewCell(UITableViewCellStyle style, string reuseIdentifer)
             : base(style, reuseIdentifer)
         {

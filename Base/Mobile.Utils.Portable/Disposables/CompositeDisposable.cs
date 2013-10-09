@@ -18,12 +18,12 @@
 //  </copyright>
 //  --------------------------------------------------------------------------------------------------------------------
 
-namespace Mobile.Mvvm.Disposables
+namespace Mobile.Utils.Disposables
 {
     using System;
     using System.Collections.Generic;
 
-    public class CompositeDisposable : IDisposable
+    public sealed class CompositeDisposable : IDisposable
     {
         private readonly List<IDisposable> disposables;
 

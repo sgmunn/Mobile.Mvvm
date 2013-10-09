@@ -20,7 +20,7 @@
 // Taken in part from:
 // http://rx.codeplex.com/SourceControl/latest#Rx.NET/Source/System.Reactive.Linq/Reactive/Internal/ReflectionUtils.cs
 
-namespace Mobile.Mvvm.DataBinding
+namespace Mobile.Utils.Reflection
 {
     using System;
     using System.Reflection;
