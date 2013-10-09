@@ -58,6 +58,8 @@ namespace Sample.Touch.SampleControllers
     {
         public static IEnumerable<IDataTemplate> DefaultTemplates()
         {
+            // for iOS, we need to have either strong bindings or create our own stubb classes
+            // not sure of the best way to go, 
 
             yield return new DataTemplate("c1")
                 .Creates<TableViewCell>((id, root) => new TableViewCell(UITableViewCellStyle.Default, (string)id))

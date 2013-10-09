@@ -12,10 +12,10 @@
                             name.child ...
                             name[index] .. for indexed list propeties
                             
-    <modeExpression>        :>   <:   ::   
+    <modeExpression>        >  |  <  | :   
     
     <sourcePropertyExpression>
-                            <propertyPath> |<converterFunction>
+                            <propertyPath> | <converterFunction>
                             
     <converterFunction>
                             <converterFunctionName> (  <propertyPath> , <convertParam>  )     
@@ -30,7 +30,17 @@
 
 - need to support more complex property paths, eg TextLabel.Text
 
-- 
+- need to support having bindings in the view axml for android, as this will be the preferred mechanism
+
+- for iOS, we need to have either strong bindings or create our own stubb classes
+    not sure of the best way to go, on the face of it, a simple wrapper for UITableViewCell would probably do
+    the reason is that UITableViewCell, being a "built in" UIxxx control, gets GC'd before the iOS native 
+    object and is re-instantiated whenever it needs to be. Because we have weak references everywhere
+    our bindings get broken. Stron references fix that, but we have to clean up properly.
+    If we have a wrapper class, our managed object stays around for as long as the native object exists
+    
+    I might just go for the wrapper classes as it will give the basis of the dialog style views
+
 
 
 
