@@ -32,6 +32,7 @@ namespace Mobile.Mvvm.DataBinding
         /// </summary>
         /// <param name="expression">Expression.</param>
         void AddBinding(IBindingExpression expression);
+        void AddBinding(IBindingExpression[] expression);
         void RemoveBinding(IBindingExpression expression);
         void ClearBindings();
         IBindingExpression[] GetBindingExpressions();

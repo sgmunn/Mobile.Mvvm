@@ -27,7 +27,7 @@ namespace Mobile.Mvvm.DataBinding
         /// <summary>
         /// Parses the given expression and returns a binding expression against source and target
         /// </summary>
-        IBindingExpression Parse(string expression, object target, object source);
+        IBindingExpression[] Parse(string expression, object target, object source);
     }
 
 
@@ -48,22 +48,32 @@ namespace Mobile.Mvvm.DataBinding
         /// <remarks>
         /// for now the following forms of expression are supported
         /// 
-        /// <targetProperty> <bindingMode> <sourceProperty>
+        /// <targetProperty> <bindingMode> <sourceProperty> [ ; ] ...
         /// 
         /// <targetProperty> <bindingMode>  <converterName> ( <sourceProperty> [, <converterParam> ] ) 
         /// 
         /// <bindingMode> =  : | > | <
         /// 
         /// </remarks>
-        public IBindingExpression Parse(string expression, object target, object source)
+        public IBindingExpression[] Parse(string expression, object target, object source)
+        {
+            var expressionParts = expression.Split(new [] { ";" }, StringSplitOptions.RemoveEmptyEntries);
+            var results = new List<IBindingExpression>();
+            foreach (var part in expressionParts)
+            {
+                results.Add(this.ParseSingleExpression(part, target, source));
+            }
+
+            return results.ToArray();
+        }
+
+        private IBindingExpression ParseSingleExpression(string expression, object target, object source)
         {
             var tokens = this.Tokenise(expression);
             if (tokens.Count != 3 && tokens.Count != 5)
             {
                 return null;
             }
-
-
 
             var targetProperty = tokens[0].Trim();
             var bindingMode = this.ModeFromToken(tokens[1].Trim());

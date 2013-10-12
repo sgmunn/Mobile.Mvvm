@@ -26,7 +26,7 @@ namespace Sample.Droid
 		
 		public static void UpdateIdValues()
 		{
-			Mobile.Mvvm.Resource.String.library_name = Sample.Droid.Resource.String.library_name;
+			global::Mobile.Mvvm.Resource.String.library_name = global::Sample.Droid.Resource.String.library_name;
 		}
 		
 		public partial class Attribute

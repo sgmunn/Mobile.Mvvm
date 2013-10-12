@@ -59,12 +59,7 @@ namespace Mobile.Mvvm.ViewModel
             return exactMatch ?? semiMatch;
         }
 
-        public static object GetViewForViewModel(this IDataTemplate template, IBindingContext context, object viewModel, Func<object, object> getConvertView)
-        {
-            return GetViewForViewModel(template, context, viewModel, getConvertView, null);
-        }
-        
-        public static object GetViewForViewModel(this IDataTemplate template, IBindingContext context, object viewModel, Func<object, object> getConvertView, object root)
+        public static object GetViewForViewModel(this IDataTemplate template, IBindingContext context, object viewModel, Func<object, object> getConvertView, params object[] args)
         {
             if (template != null)
             {
@@ -79,7 +74,7 @@ namespace Mobile.Mvvm.ViewModel
 
                 if (cell == null)
                 {
-                    cell = template.CreateView(root);
+                    cell = template.CreateView(args);
                 }
 
                 template.InitializeView(cell);

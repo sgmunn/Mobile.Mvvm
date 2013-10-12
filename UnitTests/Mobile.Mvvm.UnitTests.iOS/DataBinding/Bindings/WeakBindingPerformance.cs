@@ -29,14 +29,12 @@ namespace Mobile.Mvvm.UnitTests.Bindings
         [Test]
         public void WhenSettingTheTargetProperty1000TimesWithADelegatePropertyAccessor_ThenTheSpeedIsOK()
         {
-            var source = new DelegatePropertyAccessor("Property1", 
-                                                      (s) => ((SimpleSourceObject)s).Property1,
+            var source = new DelegatePropertyAccessor((s) => ((SimpleSourceObject)s).Property1,
                                                       (s,v) => { ((SimpleSourceObject)s).Property1 = (string)v; });
             
             this.Binding.PropertyAccessor = source;
 
-            var target = new DelegatePropertyAccessor("PropertyA",
-                                                      (s) => ((SimpleTargetObject)s).PropertyA,
+            var target = new DelegatePropertyAccessor((s) => ((SimpleTargetObject)s).PropertyA,
                                                       (s,v) => { ((SimpleTargetObject)s).PropertyA = (string)v; });
 
             this.Expression.PropertyAccessor = target;

@@ -1,5 +1,5 @@
 // --------------------------------------------------------------------------------------------------------------------
-// <copyright file="IDataTemplate.cs" company="sgmunn">
+// <copyright file="TouchLog.cs" company="sgmunn">
 //   (c) sgmunn 2013  
 //
 //   Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated 
@@ -18,35 +18,21 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace Mobile.Mvvm.ViewModel
+namespace Mobile.Utils.Diagnostics
 {
     using System;
 
-    public enum TemplateMatch
+    public class TouchLog : ILog
     {
-        None,
-        Assignable,
-        Exact
-    }
+        public void Write(string message)
+        {
+            Console.WriteLine(message);
+        }
 
-    public interface IDataTemplate
-    {
-        object Id { get; }
-
-        Type ViewType { get; }
-
-        TemplateMatch CanApplyToViewModel(object viewModel);
-
-        object CreateView();
-
-        object CreateView(params object[] args);
-
-        void InitializeView(object view);
-
-        void BindViewModel(IBindingContext context, object viewModel, object view);
-
-        //// use attributes - float CalculateHeight(object viewModel);
-
-        object this [string attribute] { get; }
+        public void Write(string message, params object[] args)
+        {
+            Console.WriteLine(message, args);
+        }
     }
 }
+

@@ -45,6 +45,18 @@ namespace Mobile.Mvvm.DataBinding
             expression.Bind();
             this.exresssions.Add(expression);
         }        
+        
+        /// <summary>
+        /// Adds the binding expressions and binds the expressions.
+        /// </summary>
+        public void AddBinding(IBindingExpression[] expressions)
+        {
+            foreach (var exp in expressions)
+            {
+                exp.Bind();
+                this.exresssions.Add(exp);
+            }
+        }        
 
         public void RemoveBinding(IBindingExpression expression)
         {

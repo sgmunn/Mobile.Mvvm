@@ -66,10 +66,17 @@ namespace Sample.Touch.SampleControllers
             // for iOS, we need to have either strong bindings or create our own stubb classes
             // not sure of the best way to go, 
 
-            yield return new DataTemplate("c1")
-                .Creates<TableViewCell>((id, root) => new TableViewCell(UITableViewCellStyle.Default, (string)id))
-                    .Bind<StringViewModel>("Text: Caption");
+            // a DataTemplate is the description of a single view type to a single view model type
+            // therefore it needs to be a generic class <TView, TViewModel>
+            
+            yield return new DataTemplate<TableViewCell, StringViewModel>("c1", "Text: Caption")
+                .OnCreate((id) => new TableViewCell(UITableViewCellStyle.Default, id));
+
+//            yield return new DataTemplate("c1")
+//                .Creates<TableViewCell>((id) => new TableViewCell(UITableViewCellStyle.Default, (string)id))
+//                    .Bind<StringViewModel>("Text: Caption");
 //                    .WhenBinding<StringViewModel, UITableViewCell>((c, vm, view) => {
+
 //                        //c.Bindings.AddBinding(view, "Text", vm, "Caption");
 //
 //                        // IPropertyAccessor instances can be shared

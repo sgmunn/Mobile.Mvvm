@@ -15,6 +15,8 @@ namespace Sample.Droid
         protected override void OnCreate(Bundle bundle)
         {
             base.OnCreate(bundle);
+            
+            Android.Views.LayoutInflater.From(this).Factory = MyFactory.Default;
 
             // Set our view from the "main" layout resource
             this.SetContentView(Resource.Layout.Main);
@@ -22,6 +24,7 @@ namespace Sample.Droid
             // Get our button from the layout resource,
             // and attach an event to it
             Button button = FindViewById<Button>(Resource.Id.myButton);
+            Console.WriteLine("the button is {0}", Resource.Id.myButton);
             
             button.Click += delegate
             {

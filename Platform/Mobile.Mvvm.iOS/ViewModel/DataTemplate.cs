@@ -1,5 +1,5 @@
 // --------------------------------------------------------------------------------------------------------------------
-// <copyright file="IDataTemplate.cs" company="sgmunn">
+// <copyright file="DataTemplate.cs" company="sgmunn">
 //   (c) sgmunn 2013  
 //
 //   Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated 
@@ -22,31 +22,18 @@ namespace Mobile.Mvvm.ViewModel
 {
     using System;
 
-    public enum TemplateMatch
+    public class DataTemplate<TView, TViewModel> : DataTemplateBase<TView, TViewModel>
+        where TView : class where TViewModel : class
     {
-        None,
-        Assignable,
-        Exact
-    }
+        public DataTemplate(string id, string bindingExpression = null) : base(id, bindingExpression)
+        {
+        }
 
-    public interface IDataTemplate
-    {
-        object Id { get; }
-
-        Type ViewType { get; }
-
-        TemplateMatch CanApplyToViewModel(object viewModel);
-
-        object CreateView();
-
-        object CreateView(params object[] args);
-
-        void InitializeView(object view);
-
-        void BindViewModel(IBindingContext context, object viewModel, object view);
-
-        //// use attributes - float CalculateHeight(object viewModel);
-
-        object this [string attribute] { get; }
+        public DataTemplate<TView, TViewModel> OnCreate(Func<string, TView> viewFactory)
+        {
+            base.BaseSelect((x, y) => viewFactory((string)x));
+            return this;
+        }
     }
 }
+

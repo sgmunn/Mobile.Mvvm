@@ -14,6 +14,9 @@ using SampleViewModels;
 using Mobile.Mvvm.ViewModel.Dialog;
 using Mobile.Mvvm;
 using Mobile.Mvvm.DataBinding;
+using Android.Util;
+using System.Threading;
+using System.Collections.Concurrent;
 
 namespace Sample.Droid.SampleActivities
 {
@@ -29,14 +32,47 @@ namespace Sample.Droid.SampleActivities
         {
             var inflator = LayoutInflater.FromContext(context);
 
-            yield return new DataTemplate(Android.Resource.Layout.SimpleListItem1)
-                .Creates<View>((id, root) => inflator.Inflate((int)id, (ViewGroup)root, false))
+//            yield return new DataTemplate(Android.Resource.Layout.SimpleListItem1)
+//                .Creates<View>((id, args) => inflator.Inflate((int)id, (ViewGroup)args[0], false))
+//                    .WhenBinding<StringViewModel, View>((c, vm, view) => {
+//                        // at the moment we have to do this bit for android, unless we have a custom view, which isn't really likely
+//                        // this is the only way we can do this when we use a built-in layout
+//                        c.Bindings.AddBindings(view.FindViewById<TextView>(Android.Resource.Id.Text1), vm, "Text: Caption");
+//                    });
+//
 
-                    .WhenBinding<StringViewModel, View>((c, vm, view) => {
-                        // at the moment we have to do this bit for android, unless we have a custom view, which isn't really likely
-                        var text1 = view.FindViewById<TextView>(Android.Resource.Id.Text1);
-                        c.Bindings.AddBinding(BindingParser.Default.Parse("Text: Caption", text1, vm));
-                    });
+            // pass the context to the template,
+            // the template can create the view from the layout, if we gave it an id or we gave it a factory with a id, layout, TView signature
+
+
+            yield return new DataTemplate<View, StringViewModel>(inflator, Android.Resource.Layout.SimpleListItem1)
+                .BindChildView(Android.Resource.Id.Text1, "Text: Caption");
+
+             //   .OnCreate((id, viewGroup) => inflator.Inflate(id, viewGroup, false))
+
+                // multiple of these, where the id is a child view of the view that was created
+                // .BindChildView(Android.Resource.Id.Text1, "Text: Caption")
+
+//                    .Bind((c, vm, view) => {
+//                        // at the moment we have to do this bit for android, unless we have a custom view, which isn't really likely
+//                        // this is the only way we can do this when we use a built-in layout
+//                        c.Bindings.AddBindings(view.FindViewById(Android.Resource.Id.Text1), vm, "Text: Caption");
+//                    });
+
+
+
+
+
+            // android only
+            // Creates<>(id, attach)
+            // WhenBinding<ViewModel>(id, string);
+
+            // we have a context, can we get an injected 
+
+            // Bind<ViewModel>(resourceId, expression);
+
+            // if we use our own layout, in which case we want to set up our own layout with factory
+            // we can then get the binding text based on the id
 
 
 //                    .WhenBinding<StringViewModel, View>((c, vm, view) => {
@@ -59,6 +95,45 @@ namespace Sample.Droid.SampleActivities
     }
 
 
+    public class MyFactory : Java.Lang.Object, LayoutInflater.IFactory
+    {
+        private readonly ConcurrentDictionary<string, string> bindings;
+
+        public static MyFactory Default = new MyFactory();
+
+        public MyFactory()
+        {
+            this.bindings = new ConcurrentDictionary<string, string>();    
+        }
+
+        public string BindingForId(int id)
+        {
+            var key = "@" + id.ToString();  
+            if (this.bindings.ContainsKey(key))
+            {
+                return this.bindings[key];
+            }
+
+            return string.Empty;
+        }
+
+        public View OnCreateView(string name, Context context, Android.Util.IAttributeSet attrs)
+        {
+            var x = attrs.GetAttributeValue("http://schemas.android.com/apk/res/android", "id");
+            //Console.WriteLine("id = {0}", x);
+            
+            var y = attrs.GetAttributeValue("http://schemas.mvvm.mobile.com/android", "bind");
+            //Console.WriteLine("bind = {0}", y);
+
+            if (!string.IsNullOrEmpty(x) && !string.IsNullOrEmpty(y))
+            {
+                this.bindings.TryAdd(x, y);
+            }
+
+            return null;
+        }
+    }
+
 
     [Activity (Label = "SimpleListActivity")]            
     public class SimpleListActivity : ListActivity
@@ -68,7 +143,12 @@ namespace Sample.Droid.SampleActivities
 
         protected override void OnCreate(Bundle bundle)
         {
+            Console.WriteLine("Activity Created !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
             base.OnCreate(bundle);
+
+            Android.Views.LayoutInflater.From(this).Factory = MyFactory.Default;
+
+
             this.sections = new ObservableCollection<ISection>();
 
             var section1 = new SectionViewModel();

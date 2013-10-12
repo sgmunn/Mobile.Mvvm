@@ -18,3 +18,6 @@ Platform/Mobile.Mvvm.Droid/bin
 Platform/Mobile.Mvvm.Droid/obj
 Base/Mobile.Utils.Portable/bin
 Base/Mobile.Utils.Portable/obj
+Base/Mobile.Utils.Droid/bin
+Base/Mobile.Utils.Droid/obj
+Base/Mobile.Utils.iOS/bin

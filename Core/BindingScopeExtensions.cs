@@ -61,6 +61,16 @@ namespace Mobile.Mvvm
             scope.AddBinding(expression);
             return expression;
         }
+        
+        /// <summary>
+        /// Sets the binding between target and source.
+        /// </summary>
+        public static IBindingExpression[] AddBindings(this IBindingScope scope, object target, object source, string bindingExpression)
+        {
+            var expressions = BindingParser.Default.Parse(bindingExpression, target, source);
+            scope.AddBinding(expressions);
+            return expressions;
+        }
 
         /// <summary>
         /// Sets the binding between target and source.

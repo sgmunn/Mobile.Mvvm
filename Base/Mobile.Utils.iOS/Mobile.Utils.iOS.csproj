@@ -5,12 +5,12 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>10.0.0</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{493A68F4-2B44-474C-B40E-7D59669019F2}</ProjectGuid>
+    <ProjectGuid>{72B38D4A-74D3-4741-91A3-22D85D84EFB8}</ProjectGuid>
     <ProjectTypeGuids>{6BC8ED88-2882-458C-8E55-DFD12B67127B};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
-    <RootNamespace>Mobile.Mvvm</RootNamespace>
+    <RootNamespace>Mobile.Utils</RootNamespace>
     <IPhoneResourcePrefix>Resources</IPhoneResourcePrefix>
-    <AssemblyName>Mobile.Mvvm.iOS</AssemblyName>
+    <AssemblyName>Mobile.Utils.iOS</AssemblyName>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -38,23 +38,16 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Resources\" />
-    <Folder Include="ViewModel\" />
-    <Folder Include="ViewModel\Dialog\" />
+    <Folder Include="Diagnostics\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
-    <Compile Include="ViewModel\RootViewModelContext.cs" />
-    <Compile Include="ViewModel\Dialog\SectionSource.cs" />
-    <Compile Include="ViewModel\DataTemplate.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\Core\Mobile.Mvvm.Core.Portable.csproj">
-      <Project>{0E78EB4F-B89D-485C-88A0-3B69B232BD36}</Project>
-      <Name>Mobile.Mvvm.Core.Portable</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Base\Mobile.Utils.Portable\Mobile.Utils.Portable.csproj">
+    <ProjectReference Include="..\Mobile.Utils.Portable\Mobile.Utils.Portable.csproj">
       <Project>{502C0CAA-31C1-478F-878A-7002D76FE461}</Project>
       <Name>Mobile.Utils.Portable</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Diagnostics\TouchLog.cs" />
   </ItemGroup>
 </Project>
