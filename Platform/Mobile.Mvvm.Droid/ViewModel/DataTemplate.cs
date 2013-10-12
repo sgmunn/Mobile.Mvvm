@@ -29,7 +29,7 @@ namespace Mobile.Mvvm.ViewModel
     {
         private readonly List<Tuple<int, string>> childBindings;
 
-        private LayoutInflater inflator;
+        private readonly LayoutInflater inflator;
 
         public DataTemplate(LayoutInflater inflator, int id, string bindingExpression = null) 
             : base(id, bindingExpression)
@@ -47,7 +47,7 @@ namespace Mobile.Mvvm.ViewModel
 
         public DataTemplate<TView, TViewModel> OnCreate(Func<int, ViewGroup, TView> viewFactory)
         {
-            base.BaseSelect((x, y) => viewFactory((int)x, (ViewGroup)y[0]));
+            this.BaseOnCreate((x, y) => viewFactory((int)x, (ViewGroup)y[0]));
             return this;
         }
         

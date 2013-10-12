@@ -31,7 +31,7 @@ namespace Mobile.Mvvm.ViewModel
 
         public DataTemplate<TView, TViewModel> OnCreate(Func<string, TView> viewFactory)
         {
-            base.BaseSelect((x, y) => viewFactory((string)x));
+            this.BaseOnCreate((x, y) => viewFactory((string)x));
             return this;
         }
     }
