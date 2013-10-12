@@ -45,8 +45,6 @@ namespace Mobile.Mvvm.ViewModel
 
         void BindViewModel(IBindingContext context, object viewModel, object view);
 
-        //// use attributes - float CalculateHeight(object viewModel);
-
         object this [string attribute] { get; }
     }
 }
