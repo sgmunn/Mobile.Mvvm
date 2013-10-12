@@ -63,14 +63,13 @@ namespace Mobile.Mvvm.ViewModel
 
             if (this.inflator != null)
             {
-                // TODO: we need to control this better
+                // TODO: we need to control this better, passing true or false to attach
                 return this.inflator.Inflate((int)this.Id, (ViewGroup)args[0], false);
             }
 
             return base.CreateView(args);
         }
 
-        
         public override void BindViewModel(IBindingContext context, object viewModel, object view)
         {
             base.BindViewModel(context, viewModel, view);
@@ -81,6 +80,7 @@ namespace Mobile.Mvvm.ViewModel
             {
                 foreach (var childBinding in this.childBindings)
                 {
+                    context.Bindings.ClearBindings(v.FindViewById(childBinding.Item1));
                     context.Bindings.AddBindings(v.FindViewById(childBinding.Item1), viewModel, childBinding.Item2);
                 }
             }
