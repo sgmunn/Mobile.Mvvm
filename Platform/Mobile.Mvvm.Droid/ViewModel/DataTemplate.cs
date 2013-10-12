@@ -17,11 +17,11 @@
 //   IN THE SOFTWARE.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
-using System.Collections.Generic;
 
 namespace Mobile.Mvvm.ViewModel
 {
     using System;
+    using System.Collections.Generic;
     using Android.Views;
 
     public class DataTemplate<TView, TViewModel> : DataTemplateBase<TView, TViewModel>
@@ -85,7 +85,6 @@ namespace Mobile.Mvvm.ViewModel
                 }
             }
         }
-
     }
 }
 

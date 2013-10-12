@@ -46,7 +46,7 @@
     <Compile Include="ViewModel\RootViewModelContext.cs" />
     <Compile Include="ViewModel\Dialog\SectionExtensions.cs" />
     <Compile Include="ViewModel\Dialog\SectionSource.cs" />
-    <Compile Include="ViewModel\EmptyClass.cs" />
+    <Compile Include="ViewModel\DataTemplate.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\AboutResources.txt" />
