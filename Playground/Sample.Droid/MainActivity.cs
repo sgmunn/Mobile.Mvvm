@@ -12,9 +12,9 @@ namespace Sample.Droid
     [Activity (Label = "Sample.Droid", MainLauncher = true)]
     public class MainActivity : Activity
     {
-        protected override void OnCreate(Bundle bundle)
+        protected override void OnCreate(Bundle savedInstanceState)
         {
-            base.OnCreate(bundle);
+            base.OnCreate(savedInstanceState);
             
             Android.Views.LayoutInflater.From(this).Factory = MyFactory.Default;
 
@@ -23,15 +23,16 @@ namespace Sample.Droid
 
             // Get our button from the layout resource,
             // and attach an event to it
-            Button button = FindViewById<Button>(Resource.Id.myButton);
-            Console.WriteLine("the button is {0}", Resource.Id.myButton);
-            
-            button.Click += delegate
+            this.FindViewById<Button>(Resource.Id.button1).Click += delegate
             {
-                //var intent = new Intent(this, typeof(PlainActivity));
+                var intent = new Intent(this, typeof(PlainActivity));
+                this.StartActivity(intent);
+            };
+
+            this.FindViewById<Button>(Resource.Id.button2).Click += delegate
+            {
                 var intent = new Intent(this, typeof(SimpleListActivity));
                 this.StartActivity(intent);
-                //button.Text = string.Format("{0} clicks!", count++);
             };
         }
     }

@@ -5,9 +5,13 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent">
     <Button
-        android:id="@+id/myButton"
+        android:id="@+id/button1"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="hello button"
-        mvvm:bind="Text: Caption" />
+        android:text="Plain View" />
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="Simple List" />
 </LinearLayout>

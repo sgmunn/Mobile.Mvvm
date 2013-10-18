@@ -17,13 +17,16 @@ namespace Sample.Droid.SampleActivities
 
         private EditText field1;
 
-        protected override void OnCreate(Bundle bundle)
+        private Button button1;
+
+        protected override void OnCreate(Bundle savedInstanceState)
         {
-            base.OnCreate(bundle);
+            base.OnCreate(savedInstanceState);
             this.SetContentView(Resource.Layout.PlainActivityLayout);
 
             this.label1 = this.FindViewById<TextView>(Resource.Id.textView1);
             this.field1 = this.FindViewById<EditText>(Resource.Id.editText1);
+            this.button1 = this.FindViewById<Button>(Resource.Id.button1);
 
             var vm = new SimpleViewModel();
             this.viewModelContext = new RootViewModelContext(this, vm);
@@ -33,6 +36,10 @@ namespace Sample.Droid.SampleActivities
             this.viewModelContext.Bindings.AddBinding(label1, "Text", this.viewModelContext.ViewModel, "Property1");
 
             this.viewModelContext.Bindings.AddEventTriggeredBinding(field1, "Text", "TextChanged", this.viewModelContext.ViewModel, "Property1");
+
+            // the idea here is to be able to bind, Click to an command and Enabled to CanExecute
+            this.button1.Click += (sender, e) => vm.TestCommand.Execute();
+            this.button1.Enabled = vm.TestCommand.GetCanExecute();
         }
     }
 }

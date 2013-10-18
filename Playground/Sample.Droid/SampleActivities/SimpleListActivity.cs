@@ -143,7 +143,6 @@ namespace Sample.Droid.SampleActivities
 
         protected override void OnCreate(Bundle bundle)
         {
-            Console.WriteLine("Activity Created !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
             base.OnCreate(bundle);
 
             Android.Views.LayoutInflater.From(this).Factory = MyFactory.Default;
