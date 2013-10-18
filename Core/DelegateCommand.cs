@@ -60,7 +60,7 @@ namespace Mobile.Mvvm
 
         public bool GetCanExecute()
         {
-            return this.canExecute();
+            return (this.canExecute == null) || this.canExecute();
         }
     }
 }
