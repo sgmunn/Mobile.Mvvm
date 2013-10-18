@@ -33,11 +33,15 @@ namespace Mobile.Mvvm.ViewModel.Dialog
 
         private readonly SectionSynchroniser sync;
 
-        private List<IDataTemplate> templates;
+        private readonly List<IDataTemplate> templates;
 
         private UITableView tableView;
 
-        public SectionSource()
+        public SectionSource() : this(Enumerable.Empty<IDataTemplate>())
+        {
+        }
+        
+        public SectionSource(IEnumerable<IDataTemplate> templates)
         {
             this.sections = new List<ISection>();
             this.sync = new SectionSynchroniser(this);
@@ -45,10 +49,6 @@ namespace Mobile.Mvvm.ViewModel.Dialog
             this.InjectedProperties = new InjectionScope();
             this.AddAnimation = UITableViewRowAnimation.Automatic;
             this.RemoveAnimation = UITableViewRowAnimation.Automatic;
-        }
-        
-        public SectionSource(IEnumerable<IDataTemplate> templates) : this()
-        {
             this.templates = templates.ToList();
         }
 

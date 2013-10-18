@@ -40,22 +40,22 @@ namespace Mobile.Mvvm.ViewModel.Dialog
         
         private readonly object locker = new object();
 
-        private List<IDataTemplate> templates;
+        private readonly List<IDataTemplate> templates;
 
         private ListView listView;
 
-        public SectionSource(Context context)
+        public SectionSource(Context context) : this(context, Enumerable.Empty<IDataTemplate>())
         {
+        }
+        
+        public SectionSource(Context context, IEnumerable<IDataTemplate> templates)
+        {
+            this.templates = templates.ToList();
             this.context = context;
             this.sections = new List<ISection>();
             this.sync = new SectionSynchroniser(this);
             this.Bindings = new BindingScope();
             this.InjectedProperties = new InjectionScope();
-        }
-        
-        public SectionSource(Context context, IEnumerable<IDataTemplate> templates) : this(context)
-        {
-            this.templates = templates.ToList();
         }
 
         public ListView ListView
