@@ -138,7 +138,7 @@ namespace Sample.Droid.SampleActivities
     [Activity (Label = "SimpleListActivity")]            
     public class SimpleListActivity : ListActivity
     {
-        private SectionSource source;
+        private SectionedListSource source;
         private IList<ISection> sections;
 
         protected override void OnCreate(Bundle bundle)
@@ -178,7 +178,7 @@ namespace Sample.Droid.SampleActivities
             }
 
             // view did load equivalent
-            this.source = new SectionSource(this, DialogDataTemplates.DefaultTemplates(this));
+            this.source = new SectionedListSource(this, DialogDataTemplates.DefaultTemplates(this));
             this.source.ListView = this.ListView;
 
 

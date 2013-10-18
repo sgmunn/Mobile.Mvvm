@@ -1,5 +1,5 @@
 // --------------------------------------------------------------------------------------------------------------------
-// <copyright file="SectionSource.cs" company="sgmunn">
+// <copyright file="SectionedListSource.cs" company="sgmunn">
 //   (c) sgmunn 2013  
 //
 //   Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated 
@@ -30,7 +30,7 @@ namespace Mobile.Mvvm.ViewModel.Dialog
     using Android.Views.Animations;
     using Mobile.Mvvm.DataBinding;
 
-    public class SectionSource : BaseAdapter<ISection>, ISectionSource, IBindingContext
+    public class SectionedListSource : BaseAdapter<ISection>, ISectionSource, IBindingContext
     {
         private readonly List<ISection> sections;
 
@@ -44,11 +44,11 @@ namespace Mobile.Mvvm.ViewModel.Dialog
 
         private ListView listView;
 
-        public SectionSource(Context context) : this(context, Enumerable.Empty<IDataTemplate>())
+        public SectionedListSource(Context context) : this(context, Enumerable.Empty<IDataTemplate>())
         {
         }
         
-        public SectionSource(Context context, IEnumerable<IDataTemplate> templates)
+        public SectionedListSource(Context context, IEnumerable<IDataTemplate> templates)
         {
             this.templates = templates.ToList();
             this.context = context;

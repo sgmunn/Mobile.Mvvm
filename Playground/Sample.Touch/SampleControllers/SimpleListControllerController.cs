@@ -94,7 +94,7 @@ namespace Sample.Touch.SampleControllers
 
     public class SimpleListControllerController : UITableViewController
     {
-        private SectionSource source;
+        private SectionedListSource source;
         private IList<ISection> sections;
 
         public SimpleListControllerController() : base (UITableViewStyle.Grouped)
@@ -140,7 +140,7 @@ namespace Sample.Touch.SampleControllers
         public override void ViewDidLoad()
         {
             base.ViewDidLoad();
-            this.source = new SectionSource(DialogDataTemplates.DefaultTemplates());
+            this.source = new SectionedListSource(DialogDataTemplates.DefaultTemplates());
             this.source.TableView = this.TableView;
 
             

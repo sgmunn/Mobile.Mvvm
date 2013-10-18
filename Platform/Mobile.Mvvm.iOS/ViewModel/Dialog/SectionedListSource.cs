@@ -1,5 +1,5 @@
 // --------------------------------------------------------------------------------------------------------------------
-// <copyright file="SectionSource.cs" company="sgmunn">
+// <copyright file="SectionedListSource.cs" company="sgmunn">
 //   (c) sgmunn 2013  
 //
 //   Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated 
@@ -27,7 +27,7 @@ namespace Mobile.Mvvm.ViewModel.Dialog
     using MonoTouch.UIKit;
     using Mobile.Mvvm.DataBinding;
 
-    public class SectionSource: UITableViewSource, ISectionSource, IBindingContext
+    public class SectionedListSource: UITableViewSource, ISectionSource, IBindingContext
     {
         private readonly List<ISection> sections;
 
@@ -37,11 +37,11 @@ namespace Mobile.Mvvm.ViewModel.Dialog
 
         private UITableView tableView;
 
-        public SectionSource() : this(Enumerable.Empty<IDataTemplate>())
+        public SectionedListSource() : this(Enumerable.Empty<IDataTemplate>())
         {
         }
         
-        public SectionSource(IEnumerable<IDataTemplate> templates)
+        public SectionedListSource(IEnumerable<IDataTemplate> templates)
         {
             this.sections = new List<ISection>();
             this.sync = new SectionSynchroniser(this);
