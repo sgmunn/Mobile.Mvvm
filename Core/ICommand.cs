@@ -24,7 +24,9 @@ namespace Mobile.Mvvm
  
     public interface ICommand
     {
+        event EventHandler CanExecuteChanged;
         void Execute();
         bool GetCanExecute();
+        void RaiseCanExecuteChanged();
     }
 }

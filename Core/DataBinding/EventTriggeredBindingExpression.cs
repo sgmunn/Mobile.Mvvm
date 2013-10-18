@@ -36,7 +36,7 @@ namespace Mobile.Mvvm.DataBinding
     public class EventTriggeredBindingExpression<TTargetType, TEventArgs> : WeakBindingExpression
         where TTargetType : class where TEventArgs : EventArgs
     {
-        private CompositeDisposable subscriptions;
+        private readonly CompositeDisposable subscriptions;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Mobile.Mvvm.DataBinding.EventTriggeredBindingExpression"/> class.

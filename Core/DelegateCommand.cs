@@ -53,6 +53,8 @@ namespace Mobile.Mvvm
             this.canExecute = canExecute;
         }
 
+        public event EventHandler CanExecuteChanged;
+
         public void Execute()
         {
             this.command();
@@ -61,6 +63,15 @@ namespace Mobile.Mvvm
         public bool GetCanExecute()
         {
             return (this.canExecute == null) || this.canExecute();
+        }
+
+        public void RaiseCanExecuteChanged()
+        {
+            var handler = this.CanExecuteChanged;
+            if (handler != null)
+            {
+                handler(this, EventArgs.Empty);
+            }
         }
     }
 }

@@ -6,11 +6,21 @@ namespace SampleViewModels
 {
     public class SimpleViewModel : ViewModelBase
     {
+        private bool enabled = true;
+
         public SimpleViewModel()
         {
             this.TestCommand = new DelegateCommand(() =>
             {
                 this.Property1 = "Clicked";
+
+            }, () => this.enabled);
+
+            this.TestCommand2 = new DelegateCommand(() =>
+                                                   {
+                this.enabled = !this.enabled;
+                this.TestCommand.RaiseCanExecuteChanged();
+
             });
         }
 
@@ -28,6 +38,8 @@ namespace SampleViewModels
         }
 
         public ICommand TestCommand { get; set; }
+        
+        public ICommand TestCommand2 { get; set; }
     }
 }
 
