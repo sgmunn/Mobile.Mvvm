@@ -57,7 +57,7 @@ namespace Sample.Droid.SampleActivities
             this.binding = new WeakCommandBinding(this.button2, "Click", "Enabled", vm.TestCommand2);
             this.binding.Bind();
 
-            this.loader = new ViewModelLoader<string>(this.DoLoad, this.UpdateViewModel, new UIThreadScheduler());
+            this.loader = new ViewModelLoader<string>(this.GetHelloWorld, this.UpdateViewModel, new UIThreadScheduler());
         }
 
         protected override void OnPause()
@@ -70,11 +70,6 @@ namespace Sample.Droid.SampleActivities
         {
             base.OnResume();
             this.loader.Load();
-        }
-
-        private Task<string> DoLoad(CancellationToken cancel)
-        {
-            return GetHelloWorld(cancel);
         }
 
         private void UpdateViewModel(string x)

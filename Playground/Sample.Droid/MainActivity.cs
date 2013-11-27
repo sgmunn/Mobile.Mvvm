@@ -12,6 +12,11 @@ namespace Sample.Droid
     [Activity (Label = "Sample.Droid", MainLauncher = true)]
     public class MainActivity : Activity
     {
+        static MainActivity()
+        {
+            Mobile.Utils.Diagnostics.Log.Set(Mobile.Utils.Diagnostics.ConsoleLog.Instance);
+        }
+
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
