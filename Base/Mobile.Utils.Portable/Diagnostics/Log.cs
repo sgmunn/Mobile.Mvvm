@@ -22,7 +22,7 @@ namespace Mobile.Utils.Diagnostics
 {
      using System;
 
-    public static class Log : ILog
+    public static class Log
     {
         private static ILog logger = NullLog.Instance;
 

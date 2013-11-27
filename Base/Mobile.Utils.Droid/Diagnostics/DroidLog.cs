@@ -22,13 +22,21 @@ namespace Mobile.Utils.Diagnostics
 {
     using System;
 
-    public class DroidLog : ILog
+    public sealed class DroidLog : ILog
     {
         public void Write(string message)
         {
         }
 
         public void Write(string message, params object[] args)
+        {
+        }
+
+        public void Debug(string message)
+        {
+        }
+
+        public void Debug(string message, params object[] args)
         {
         }
     }
