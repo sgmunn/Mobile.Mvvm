@@ -20,31 +20,15 @@
 
 namespace Mobile.Utils.Diagnostics
 {
-    using System;
+     using System;
 
-    public interface ILog
+    public static class Log : ILog
     {
-        void Write(string message);
-        void Write(string message, params object[] args);
-    }
-    
-    public class NullLog : ILog
-    {
-        public void Write(string message)
-        {
-        }
+        private static ILog logger = NullLog.Instance;
 
-        public void Write(string message, params object[] args)
+        public static void Init(ILog log)
         {
-        }
-    }
-
-    public static class Log
-    {
-        private static ILog logger = new NullLog();
-
-        public static void Set(ILog log)
-        {
+            log.EnsureNotNull("log");
             logger = log;
         }
 
@@ -56,6 +40,16 @@ namespace Mobile.Utils.Diagnostics
         public static void Write(string message, params object[] args)
         {
             logger.Write(message, args);
+        }
+
+        public static void Debug(string message)
+        {
+            logger.Debug(message);
+        }
+
+        public static void Debug(string message, params object[] args)
+        {
+            logger.Debug(message, args);
         }
     }
 }

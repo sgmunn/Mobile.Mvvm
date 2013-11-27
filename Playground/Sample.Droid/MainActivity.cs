@@ -14,7 +14,7 @@ namespace Sample.Droid
     {
         static MainActivity()
         {
-            Mobile.Utils.Diagnostics.Log.Set(Mobile.Utils.Diagnostics.ConsoleLog.Instance);
+            Mobile.Utils.Diagnostics.Log.Init(Mobile.Utils.Diagnostics.ConsoleLog.Instance);
         }
 
         protected override void OnCreate(Bundle savedInstanceState)

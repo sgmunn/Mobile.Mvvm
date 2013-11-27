@@ -1,5 +1,5 @@
 // --------------------------------------------------------------------------------------------------------------------
-// <copyright file="ConsoleLog.cs" company="sgmunn">
+// <copyright file="NullLog.cs" company="sgmunn">
 //   (c) sgmunn 2013  
 //
 //   Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated 
@@ -17,38 +17,29 @@
 //   IN THE SOFTWARE.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
-using Android.Graphics;
 
 namespace Mobile.Utils.Diagnostics
 {
     using System;
-
-    public sealed class ConsoleLog : ILog
+    
+    public sealed class NullLog : ILog
     {
-        public static readonly ILog Instance = new ConsoleLog();
+        public static readonly ILog Instance = new NullLog();
 
         public void Write(string message)
         {
-            Console.Write(message);
         }
 
         public void Write(string message, params object[] args)
         {
-            Console.Write(message, args);
         }
 
         public void Debug(string message)
         {
-            #if DEBUG
-            Console.Write(message);
-            #endif
         }
 
         public void Debug(string message, params object[] args)
         {
-            #if DEBUG
-            Console.Write(message, args);
-            #endif
         }
     }
 }
