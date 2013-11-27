@@ -44,6 +44,7 @@
   <ItemGroup>
     <Compile Include="Resources\Resource.designer.cs" />
     <Compile Include="Diagnostics\DroidLog.cs" />
+    <Compile Include="Tasks\UIThreadScheduler.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\AboutResources.txt" />
@@ -60,5 +61,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Diagnostics\" />
+    <Folder Include="Tasks\" />
   </ItemGroup>
 </Project>

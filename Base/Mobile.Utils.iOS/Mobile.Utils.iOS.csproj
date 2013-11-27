@@ -39,6 +39,7 @@
   <ItemGroup>
     <Folder Include="Resources\" />
     <Folder Include="Diagnostics\" />
+    <Folder Include="Tasks\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
@@ -49,5 +50,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Diagnostics\TouchLog.cs" />
+    <Compile Include="Tasks\UIThreadScheduler.cs" />
   </ItemGroup>
 </Project>
