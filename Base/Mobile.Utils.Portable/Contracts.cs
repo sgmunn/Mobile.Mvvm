@@ -1,5 +1,5 @@
 // --------------------------------------------------------------------------------------------------------------------
-// <copyright file="ViewModelExtensions.cs" company="sgmunn">
+// <copyright file="Contracts.cs" company="sgmunn">
 //   (c) sgmunn 2013  
 //
 //   Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated 
@@ -18,28 +18,19 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace Mobile.Mvvm.ViewModel
+namespace Mobile.Utils
 {
     using System;
 
-    public static class ViewModelExtensions
+    public static class Contracts
     {
-        public static void ExecuteTapCommand(this IViewModel viewModel)
+        public static void EnsureNotNull(this object obj, string name)
         {
-            var cmd = viewModel as ITapCommand;
-            if (cmd != null && cmd.TapCommand != null)
+            if (obj == null)
             {
-                cmd.TapCommand.Execute();
-            }
-        }
-
-        public static void ExecuteLongTapCommand(this IViewModel viewModel)
-        {
-            var cmd = viewModel as ILongTapCommand;
-            if (cmd != null && cmd.LongTapCommand != null)
-            {
-                cmd.LongTapCommand.Execute();
+                throw new ArgumentNullException(name);
             }
         }
     }
 }
+

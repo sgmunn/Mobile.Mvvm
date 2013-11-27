@@ -44,8 +44,28 @@ namespace SampleViewModels
 
         public string Property2
         {
-            get;
-            set;
+            get
+            {
+                return (string)this.GetPropertyValue("Property2");
+            }
+
+            set
+            {
+                this.SetPropertyValue("Property2", value);
+            }
+        }
+
+        public bool BoolProperty1
+        {
+            get
+            {
+                return (bool)this.GetPropertyValue("BoolProperty1");
+            }
+
+            set
+            {
+                this.SetPropertyValue("BoolProperty1", value);
+            }
         }
 
         public ICommand TestCommand { get; set; }

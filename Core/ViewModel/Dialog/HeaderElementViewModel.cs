@@ -1,5 +1,5 @@
 // --------------------------------------------------------------------------------------------------------------------
-// <copyright file="ViewModelExtensions.cs" company="sgmunn">
+// <copyright file="HeaderElementViewModel.cs" company="sgmunn">
 //   (c) sgmunn 2013  
 //
 //   Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated 
@@ -18,28 +18,18 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace Mobile.Mvvm.ViewModel
+namespace Mobile.Mvvm.ViewModel.Dialog
 {
     using System;
 
-    public static class ViewModelExtensions
+    public class HeaderElementViewModel : StringElementViewModel
     {
-        public static void ExecuteTapCommand(this IViewModel viewModel)
+        public HeaderElementViewModel(string caption) : base(caption)
         {
-            var cmd = viewModel as ITapCommand;
-            if (cmd != null && cmd.TapCommand != null)
-            {
-                cmd.TapCommand.Execute();
-            }
         }
 
-        public static void ExecuteLongTapCommand(this IViewModel viewModel)
+        public HeaderElementViewModel(string caption, string value) : base(caption, value)
         {
-            var cmd = viewModel as ILongTapCommand;
-            if (cmd != null && cmd.LongTapCommand != null)
-            {
-                cmd.LongTapCommand.Execute();
-            }
         }
     }
 }

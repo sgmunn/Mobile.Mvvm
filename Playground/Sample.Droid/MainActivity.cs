@@ -34,6 +34,12 @@ namespace Sample.Droid
                 var intent = new Intent(this, typeof(SimpleListActivity));
                 this.StartActivity(intent);
             };
+
+            this.FindViewById<Button>(Resource.Id.button3).Click += delegate
+            {
+                var intent = new Intent(this, typeof(SimpleViewModelActivity));
+                this.StartActivity(intent);
+            };
         }
     }
 }

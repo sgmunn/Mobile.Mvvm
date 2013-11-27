@@ -1,5 +1,5 @@
 // --------------------------------------------------------------------------------------------------------------------
-// <copyright file="StringViewModel.cs" company="sgmunn">
+// <copyright file="CaptionViewModel.cs" company="sgmunn">
 //   (c) sgmunn 2013  
 //
 //   Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated 
@@ -18,13 +18,13 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace Mobile.Mvvm.ViewModel
+namespace Mobile.Mvvm.ViewModel.Dialog
 {
     using System;
 
-    public class StringViewModel : ViewModelBase
+    public class CaptionViewModel : ViewModelBase
     {
-        public StringViewModel(string caption)
+        public CaptionViewModel(string caption)
         {
             this.Caption = caption;
         }

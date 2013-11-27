@@ -45,7 +45,12 @@ namespace Sample.Droid.SampleActivities
             // the template can create the view from the layout, if we gave it an id or we gave it a factory with a id, layout, TView signature
 
 
-            yield return new DataTemplate<View, StringViewModel>(inflator, Android.Resource.Layout.SimpleListItem1)
+            yield return new DataTemplate<View, StringWrapperElementViewModel>(inflator, Android.Resource.Layout.SimpleListItem2)
+                    .BindChildView(Android.Resource.Id.Text2, "Text: Value")
+                    .BindChildView(Android.Resource.Id.Text1, "Text: Caption")
+                    ;
+
+            yield return new DataTemplate<View, CaptionViewModel>(inflator, Android.Resource.Layout.SimpleListItem1)
                 .BindChildView(Android.Resource.Id.Text1, "Text: Caption");
 
              //   .OnCreate((id, viewGroup) => inflator.Inflate(id, viewGroup, false))
@@ -151,29 +156,29 @@ namespace Sample.Droid.SampleActivities
             this.groups = new ObservableCollection<IGroup>();
 
             var section1 = new GroupViewModel();
-            section1.Header = new StringViewModel("Header 1");
+            section1.Header = new CaptionViewModel("Header 1");
             this.groups.Add(section1);
 
             section1.Rows.Add(new TestCommandRowViewModel(section1, "add"));
             section1.Rows.Add(new StringElementViewModel("update") { TapCommand = new DelegateCommand(() => {
-                    ((StringViewModel)section1.Rows[1]).Caption = "Updated!";
+                    ((CaptionViewModel)section1.Rows[1]).Caption = "Updated!";
                 }) });
-            section1.Rows.Add(new StringViewModel("item 1"));
-            section1.Rows.Add(new StringViewModel("item 2"));
+            section1.Rows.Add(new CaptionViewModel("item 1"));
+            section1.Rows.Add(new CaptionViewModel("item 2"));
 
             this.groups.Add(new GroupViewModel());
-            this.groups[1].Rows.Add(new StringViewModel("item 1"));
-            this.groups[1].Rows.Add(new StringViewModel("item 2"));
-            this.groups[1].Rows.Add(new StringViewModel("item 3"));
+            this.groups[1].Rows.Add(new CaptionViewModel("item 1"));
+            this.groups[1].Rows.Add(new CaptionViewModel("item 2"));
+            this.groups[1].Rows.Add(new CaptionViewModel("item 3"));
             
-            this.groups[1].Header = new StringViewModel("Header 2");
-            this.groups[1].Footer = new StringViewModel("Footer 2");
+            this.groups[1].Header = new CaptionViewModel("Header 2");
+            this.groups[1].Footer = new CaptionViewModel("Footer 2");
 
             this.groups.Add(new GroupViewModel());
-            this.groups[2].Header = new StringViewModel("Header 3");
+            this.groups[2].Header = new CaptionViewModel("Header 3");
             for (int i = 0; i < 100; i++)
             {
-                this.groups[2].Rows.Add(new StringViewModel("item " + i.ToString()));
+                this.groups[2].Rows.Add(new CaptionViewModel("item " + i.ToString()));
             }
 
             // view did load equivalent
@@ -190,5 +195,6 @@ namespace Sample.Droid.SampleActivities
             // Create your application here
         }
     }
+
 }
 

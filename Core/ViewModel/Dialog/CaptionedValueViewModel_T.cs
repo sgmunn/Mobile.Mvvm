@@ -17,56 +17,22 @@
 //   IN THE SOFTWARE.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
+using System.Threading.Tasks;
 
 namespace Mobile.Mvvm.ViewModel.Dialog
 {
     using System;
 
-    public class HeaderElementViewModel : StringElementViewModel
+    public interface ICaptionedElementValue<T> 
     {
-        public HeaderElementViewModel(string caption) : base(caption)
-        {
-        }
-
-        public HeaderElementViewModel(string caption, string value) : base(caption, value)
-        {
-        }
+        string Caption { get; set; }
+        T Value { get; set; }
     }
+
+
     
-    public class FooterElementViewModel : StringElementViewModel
-    {
-        public FooterElementViewModel(string caption) : base(caption)
-        {
-        }
 
-        public FooterElementViewModel(string caption, string value) : base(caption, value)
-        {
-        }
-    }
-
-    public class StringElementViewModel : CaptionedValueViewModel<string>
-    {
-        public StringElementViewModel(string caption) : base(caption)
-        {
-        }
-
-        public StringElementViewModel(string caption, string value) : base(caption, value)
-        {
-        }
-    }
-    
-    public class BooleanElementViewModel : CaptionedValueViewModel<bool>
-    {
-        public BooleanElementViewModel(string caption) : base(caption)
-        {
-        }
-
-        public BooleanElementViewModel(string caption, bool value) : base(caption, value)
-        {
-        }
-    }
-
-    public class CaptionedValueViewModel<T> : StringViewModel, ITapCommand
+    public class CaptionedValueViewModel<T> : CaptionViewModel, ICaptionedElementValue<T>, ITapCommand
     {
         public CaptionedValueViewModel(string caption) : base(caption)
         {
@@ -98,5 +64,4 @@ namespace Mobile.Mvvm.ViewModel.Dialog
             return this.Caption;
         }
     }
-    
 }

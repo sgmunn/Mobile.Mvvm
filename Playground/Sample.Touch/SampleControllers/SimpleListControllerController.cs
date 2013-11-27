@@ -69,7 +69,7 @@ namespace Sample.Touch.SampleControllers
             // a DataTemplate is the description of a single view type to a single view model type
             // therefore it needs to be a generic class <TView, TViewModel>
             
-            yield return new DataTemplate<TableViewCell, StringViewModel>("c1", "Text: Caption")
+            yield return new DataTemplate<TableViewCell, CaptionViewModel>("c1", "Text: Caption")
                 .OnCreate((id) => new TableViewCell(UITableViewCellStyle.Default, id));
 
 //            yield return new DataTemplate("c1")
@@ -102,26 +102,26 @@ namespace Sample.Touch.SampleControllers
             this.groups = new ObservableCollection<IGroup>();
 
             var section1 = new GroupViewModel();
-            section1.Header = new StringViewModel("Header");
+            section1.Header = new CaptionViewModel("Header");
             this.groups.Add(section1);
 
             section1.Rows.Add(new TestCommandRowViewModel(section1, "Add"));
             section1.Rows.Add(new StringElementViewModel("update") { TapCommand = new DelegateCommand(() => {
-                    ((StringViewModel)section1.Rows[1]).Caption = "Updated!";
+                    ((CaptionViewModel)section1.Rows[1]).Caption = "Updated!";
                 }) });
-            section1.Rows.Add(new StringViewModel("item 1"));
-            section1.Rows.Add(new StringViewModel("item 2"));
+            section1.Rows.Add(new CaptionViewModel("item 1"));
+            section1.Rows.Add(new CaptionViewModel("item 2"));
 
             this.groups.Add(new GroupViewModel());
-            this.groups[1].Rows.Add(new StringViewModel("item 1"));
-            this.groups[1].Rows.Add(new StringViewModel("item 2"));
-            this.groups[1].Rows.Add(new StringViewModel("item 3"));
+            this.groups[1].Rows.Add(new CaptionViewModel("item 1"));
+            this.groups[1].Rows.Add(new CaptionViewModel("item 2"));
+            this.groups[1].Rows.Add(new CaptionViewModel("item 3"));
             
             this.groups.Add(new GroupViewModel());
-            this.groups[2].Header = new StringViewModel("Header");
+            this.groups[2].Header = new CaptionViewModel("Header");
             for (int i = 0; i < 100; i++)
             {
-                this.groups[2].Rows.Add(new StringViewModel("item " + i.ToString()));
+                this.groups[2].Rows.Add(new CaptionViewModel("item " + i.ToString()));
             }
 
 //            this.NavigationItem.RightBarButtonItem = new UIBarButtonItem(UIBarButtonSystemItem.Add, (s,e) => {

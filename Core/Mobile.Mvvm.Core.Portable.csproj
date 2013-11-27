@@ -80,7 +80,6 @@
     <Compile Include="ViewModel\IRootViewModelContext.cs" />
     <Compile Include="ViewModel\RootViewModelContextBase.cs" />
     <Compile Include="ViewModel\IBindingContext.cs" />
-    <Compile Include="ViewModel\StringViewModel.cs" />
     <Compile Include="ICommand.cs" />
     <Compile Include="DelegateCommand.cs" />
     <Compile Include="ViewModel\PropertyBag.cs" />
@@ -98,6 +97,13 @@
     <Compile Include="ViewModel\Dialog\IGroupSource.cs" />
     <Compile Include="ViewModel\Dialog\GroupSourceSynchroniser.cs" />
     <Compile Include="ViewModel\Dialog\GroupViewModel.cs" />
+    <Compile Include="ViewModel\ViewModelPropertyWrapper.cs" />
+    <Compile Include="ViewModel\Dialog\CaptionViewModel.cs" />
+    <Compile Include="ViewModel\Dialog\StringElementViewModel.cs" />
+    <Compile Include="ViewModel\Dialog\BooleanElementViewModel.cs" />
+    <Compile Include="ViewModel\Dialog\FooterElementViewModel.cs" />
+    <Compile Include="ViewModel\Dialog\HeaderElementViewModel.cs" />
+    <Compile Include="ViewModel\Dialog\CaptionedViewModelPropertyWrapper.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <ItemGroup>

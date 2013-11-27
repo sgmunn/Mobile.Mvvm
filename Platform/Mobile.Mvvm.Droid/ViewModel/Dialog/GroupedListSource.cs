@@ -37,7 +37,7 @@ namespace Mobile.Mvvm.ViewModel.Dialog
         private readonly GroupSourceSynchroniser sync;
 
         private readonly Context context;
-        
+
         private readonly object locker = new object();
 
         private readonly List<IDataTemplate> templates;
@@ -47,8 +47,274 @@ namespace Mobile.Mvvm.ViewModel.Dialog
         public GroupedListSource(Context context) : this(context, Enumerable.Empty<IDataTemplate>())
         {
         }
-        
+
         public GroupedListSource(Context context, IEnumerable<IDataTemplate> templates)
+        {
+            this.templates = templates.ToList();
+            this.context = context;
+            this.groups = new List<IGroup>();
+            this.sync = new GroupSourceSynchroniser(this);
+            this.Bindings = new BindingScope();
+            this.InjectedProperties = new InjectionScope();
+        }
+
+        public ListView ListView
+        {
+            get 
+            { 
+                return this.listView; 
+            }
+
+            set 
+            { 
+                if (value != this.listView)
+                {
+                    if (this.listView != null)
+                    {
+                        // clear source / adapter etc
+                        this.UnregisterListView(this.listView);
+                        this.listView.Adapter = null;
+                    }
+
+                    this.listView = value; 
+
+                    if (this.listView != null)
+                    {
+                        this.RegisterListView(this.listView);
+                        this.listView.Adapter = this;
+                        this.ReloadView();
+                    }
+                }
+            }
+        }
+
+        public IBindingScope Bindings { get; private set; }
+
+        public IInjectionScope InjectedProperties { get; private set; }
+
+        public void Bind(IList<IGroup> source)
+        {
+            this.sync.Bind(source);
+        }
+
+        public void Unbind()
+        {
+            this.sync.Unbind();
+        }
+
+        public void Clear()
+        {
+            this.Bindings.ClearBindings();
+            this.InjectedProperties.Clear();
+            this.groups.Clear();
+            this.ReloadView();
+        }
+
+        public void Load(IList<IGroup> sourceList)
+        {
+            this.Bindings.ClearBindings();
+            this.InjectedProperties.Clear();
+            this.groups.Clear();
+            if (sourceList != null)
+            {
+                this.groups.AddRange(sourceList);
+            }
+
+            this.ReloadView();
+        }
+
+        public void Insert(int index, IList<IGroup> newGroups)
+        {
+            this.groups.InsertRange(index, newGroups);
+            // lazy, just reload
+            this.ReloadView();
+        }
+
+        public void Remove(int index, int count)
+        {
+            this.groups.RemoveRange(index, count);
+            // lazy, just reload
+            this.ReloadView();
+        }
+
+        public virtual void Insert(IGroup group, int index, IList<IViewModel> rows)
+        {
+            //Animation anim = AnimationUtils.LoadAnimation(this.context, Android.Resource.Animation.FadeIn);
+
+            //anim.Duration = 500;
+            //this.ListView.GetChildAt(index+1).StartAnimation(anim);
+
+            //anim.AnimationStart += (object sender, Animation.AnimationStartEventArgs e) => {
+            this.NotifyDataSetChanged();
+            //};
+        }
+
+        public virtual void Remove(IGroup group, int index, int count)
+        {
+            this.NotifyDataSetChanged();
+        }
+
+        public override long GetItemId(int position)
+        {
+            return position;
+        }
+
+        public override View GetView(int position, View convertView, ViewGroup parent)
+        {
+            var row = this.ViewModelForPosition(position);
+            var view = (View)row.GetTemplate(this.templates).GetViewForViewModel(this, row, (id) => convertView, parent);
+
+            // fallback default view
+            if (view == null)
+            {
+                var inflator = LayoutInflater.FromContext(this.context);
+                view = convertView;
+                if (view == null)
+                {
+                    view = inflator.Inflate(Android.Resource.Layout.SimpleListItem1, parent, false);
+                }
+
+                view.FindViewById<TextView>(Android.Resource.Id.Text1).Text = row.ToString();
+            }
+
+            return view;
+        }
+
+        public override int Count
+        {
+            get
+            {
+                return this.groups.Sum(x => x.ViewModelCount());
+            }
+        }
+
+        public override IGroup this[int index]
+        {
+            get
+            {
+                return this.groups[index];
+            }
+        }
+
+        public IViewModel ViewModelForPosition(int position)
+        {
+            if (position == 0)
+            {
+                return this.groups[0].ViewModelAtIndex(0);
+            }
+
+            int count = 0;
+            foreach (var group in this.groups)
+            {
+                if (position < count + group.ViewModelCount())
+                {
+                    // it's here somewhere
+                    return group.ViewModelAtIndex(position - count);
+                }
+                else
+                {
+                    count += group.ViewModelCount();
+                }
+            }
+
+            throw new ArgumentOutOfRangeException("position");
+        }
+
+        public override bool IsEnabled(int position)
+        {
+            var row = this.ViewModelForPosition(position);
+            var cmd = row as ICommand;
+            if (cmd != null)
+            {
+                return cmd.GetCanExecute();
+            }
+
+            return true;
+        }
+
+        public override bool AreAllItemsEnabled()
+        {
+            return false;
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            //DeregisterListView();
+            this.Bindings.Dispose();
+            this.InjectedProperties.Dispose();
+            base.Dispose(disposing);
+        }
+
+        protected virtual void ReloadView()
+        {
+            ((Activity)this.context).RunOnUiThread(() => {
+                this.NotifyDataSetChanged();
+            });
+        }
+
+        protected virtual void HandleListViewItemClick(object sender, AdapterView.ItemClickEventArgs e)
+        {
+            var row = this.ViewModelForPosition(e.Position);
+            row.ExecuteTapCommand();
+        }
+
+        protected virtual void HandleListViewItemLongClick(object sender, AdapterView.ItemLongClickEventArgs e)
+        {
+            var row = this.ViewModelForPosition(e.Position);
+            row.ExecuteLongTapCommand();
+        }
+
+        private void RegisterListView(ListView list)
+        {
+            if (list == null)
+            {
+                throw new ArgumentNullException("list");
+            }
+
+            lock (this.locker)
+            {
+                list.ItemClick -= this.HandleListViewItemClick;
+                list.ItemClick += this.HandleListViewItemClick;
+
+                list.ItemLongClick -= this.HandleListViewItemLongClick;
+                list.ItemLongClick += this.HandleListViewItemLongClick;
+            }
+        }
+
+        private void UnregisterListView(ListView list)
+        {
+            if (list == null)
+            {
+                throw new ArgumentNullException("list");
+            }
+
+            lock (this.locker)
+            {
+                list.ItemClick -= this.HandleListViewItemClick;
+                list.ItemLongClick -= this.HandleListViewItemLongClick;
+            }
+        }
+    }
+
+    public class GroupedListSource2 : BaseAdapter<IGroup>, IGroupSource, IBindingContext
+    {
+        private readonly List<IGroup> groups;
+
+        private readonly GroupSourceSynchroniser sync;
+
+        private readonly Context context;
+        
+        private readonly object locker = new object();
+
+        private readonly List<IDataTemplate> templates;
+
+        private ListView listView;
+
+        public GroupedListSource2(Context context) : this(context, Enumerable.Empty<IDataTemplate>())
+        {
+        }
+        
+        public GroupedListSource2(Context context, IEnumerable<IDataTemplate> templates)
         {
             this.templates = templates.ToList();
             this.context = context;

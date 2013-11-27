@@ -5,7 +5,7 @@ using Mobile.Mvvm.ViewModel.Dialog;
 
 namespace SampleViewModels
 {
-    public class TestCommandRowViewModel : StringViewModel, ITapCommand
+    public class TestCommandRowViewModel : CaptionViewModel, ITapCommand
     {
         private GroupViewModel group;
 
@@ -13,7 +13,7 @@ namespace SampleViewModels
         {
             this.group = group;   
             this.TapCommand = new DelegateCommand(() => {
-                this.group.Rows.Add(new StringViewModel("added"));
+                this.group.Rows.Add(new CaptionViewModel("added"));
             });
         }
 
