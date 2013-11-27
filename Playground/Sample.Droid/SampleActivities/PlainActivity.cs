@@ -10,71 +10,10 @@ using System.Threading.Tasks;
 using Android;
 using Android.Util;
 using System.Threading;
+using Mobile.Utils.Tasks;
 
 namespace Sample.Droid.SampleActivities
 {
-    public interface IViewModelLoader<TViewModel> where TViewModel : IViewModel
-    {
-        Task Load();
-        void Cancel();
-    }
-
-    public class ViewModelLoader<TViewModel> : IViewModelLoader<TViewModel> where TViewModel : IViewModel
-    {
-        private readonly CancellationTokenSource cancellation;
-
-        private readonly Action<TViewModel> load;
-
-        private readonly TViewModel viewModel;
-
-        public ViewModelLoader(TViewModel viewModel, Action<TViewModel> load)
-        {
-            this.viewModel = viewModel;
-            this.load = load;
-            this.cancellation = new CancellationTokenSource();
-        }
-
-        public Task Load()
-        {
-            return Task.Factory.StartNew(this.PerformLoad, this.cancellation.Token);
-        }
-
-        public void Cancel()
-        {
-            this.cancellation.Cancel();
-        }
-
-        protected virtual void PerformLoad()
-        {
-            this.load(this.viewModel);
-        }
-    }
-
-    public class ViewModelLoader
-    {
-        private readonly CancellationTokenSource cancellation;
-
-        private readonly Func<CancellationToken, Task> loader;
-
-        public ViewModelLoader(Func<CancellationToken, Task> loader)
-        {
-            this.loader = loader;
-            this.cancellation = new CancellationTokenSource();
-        }
-
-        public virtual Task Load()
-        {
-            return this.loader(this.cancellation.Token);
-        }
-
-        public virtual void Cancel()
-        {
-            this.cancellation.Cancel();
-        }
-    }
-
-
-
     [Activity (Label = "PlainActivity")]            
     public class PlainActivity : Activity
     {
@@ -90,7 +29,7 @@ namespace Sample.Droid.SampleActivities
 
         private ICommandBinding binding;
 
-        private ViewModelLoader loader;
+        private ViewModelLoader<string> loader;
 
         protected override void OnCreate(Bundle savedInstanceState)
         {
@@ -118,7 +57,7 @@ namespace Sample.Droid.SampleActivities
             this.binding = new WeakCommandBinding(this.button2, "Click", "Enabled", vm.TestCommand2);
             this.binding.Bind();
 
-            this.loader = new ViewModelLoader(this.DoLoad);
+            this.loader = new ViewModelLoader<string>(this.DoLoad, this.UpdateViewModel, new UIThreadScheduler());
         }
 
         protected override void OnPause()
@@ -133,23 +72,23 @@ namespace Sample.Droid.SampleActivities
             this.loader.Load();
         }
 
-        private Task DoLoad(CancellationToken cancel)
+        private Task<string> DoLoad(CancellationToken cancel)
         {
-            return GetHelloWorld(cancel).ContinueWith((x) => this.UpdateViewModel(x.Result), cancel);
+            return GetHelloWorld(cancel);
         }
 
         private void UpdateViewModel(string x)
         {
-            this.RunOnUiThread(() => {
+            //this.RunOnUiThread(() => {
                 Console.WriteLine("update UI thread {0}", System.Threading.Thread.CurrentThread.ManagedThreadId);
                 ((SimpleViewModel)this.viewModelContext.ViewModel).Property1 = x;
-            });
+            //});
         }
 
         private async Task<string> GetHelloWorld(CancellationToken cancel)
         {
             Console.WriteLine("get data thread {0}", System.Threading.Thread.CurrentThread.ManagedThreadId);
-            await Task.Delay(3000);
+            await Task.Delay(3000).ConfigureAwait(false);
 
             if (cancel.IsCancellationRequested)
             {
@@ -157,7 +96,7 @@ namespace Sample.Droid.SampleActivities
                 return "xx";
             }
 
-            Console.WriteLine("get data thread {0}", System.Threading.Thread.CurrentThread.ManagedThreadId);
+            Console.WriteLine(">> get data thread {0}", System.Threading.Thread.CurrentThread.ManagedThreadId);
             return "hello world";
         }
     }

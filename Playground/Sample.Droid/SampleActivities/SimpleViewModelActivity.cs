@@ -59,9 +59,6 @@ namespace Sample.Droid.SampleActivities
 
             this.groups = new ObservableCollection<IGroup>();
 
-
-
-
             var group1 = new GroupViewModel();
             group1.Header = new CaptionViewModel("Header 1");
             this.groups.Add(group1);
@@ -70,7 +67,7 @@ namespace Sample.Droid.SampleActivities
             group1.Rows.Add(new StringWrapperElementViewModel(theViewModel, "Property2"));
 
             group1.Rows.Add(new StringElementViewModel("tap me") { TapCommand = new DelegateCommand(() => {
-                ((StringWrapperElementViewModel)group1.Rows[1]).Value = "i was clicked";
+                ((StringWrapperElementViewModel)group1.Rows[0]).Value = "i was clicked";
             }) });
 
 
