@@ -45,7 +45,6 @@ namespace Sample.Droid.SampleActivities
     public class SimpleViewModelActivity : ListActivity
     {
         private GroupedListSource source;
-        private IList<IGroup> groups;
 
         protected override void OnCreate(Bundle savedInstanceState)
         {
@@ -57,20 +56,6 @@ namespace Sample.Droid.SampleActivities
             theViewModel.Property2 = "World";
 
 
-            this.groups = new ObservableCollection<IGroup>();
-
-            var group1 = new GroupViewModel();
-            group1.Header = new CaptionViewModel("Header 1");
-            this.groups.Add(group1);
-
-            group1.Rows.Add(new StringWrapperElementViewModel(theViewModel, "Property1"));
-            group1.Rows.Add(new StringWrapperElementViewModel(theViewModel, "Property2"));
-
-            group1.Rows.Add(new StringElementViewModel("tap me") { TapCommand = new DelegateCommand(() => {
-                ((StringWrapperElementViewModel)group1.Rows[0]).Value = "i was clicked";
-            }) });
-
-
             // view did load equivalent
             this.source = new GroupedListSource(this, DialogDataTemplates.DefaultTemplates(this));
             this.source.ListView = this.ListView;
@@ -78,7 +63,7 @@ namespace Sample.Droid.SampleActivities
             // Register the TableView's data source
             this.ListView.Adapter = this.source;
 
-            this.source.Bind(this.groups);
+            this.source.Bind(WrappedSimpleViewModel.GetViewModel(theViewModel));
 
             // Create your application here
         }

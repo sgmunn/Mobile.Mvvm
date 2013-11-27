@@ -69,8 +69,11 @@ namespace Sample.Touch.SampleControllers
             // a DataTemplate is the description of a single view type to a single view model type
             // therefore it needs to be a generic class <TView, TViewModel>
             
-            yield return new DataTemplate<TableViewCell, CaptionViewModel>("c1", "Text: Caption")
+            yield return new DataTemplate<TableViewCell, StringWrapperElementViewModel>("c1", "Text: Value")
                 .OnCreate((id) => new TableViewCell(UITableViewCellStyle.Default, id));
+
+            yield return new DataTemplate<TableViewCell, CaptionViewModel>("c1", "Text: Caption")
+                    .OnCreate((id) => new TableViewCell(UITableViewCellStyle.Default, id));
 
 //            yield return new DataTemplate("c1")
 //                .Creates<TableViewCell>((id) => new TableViewCell(UITableViewCellStyle.Default, (string)id))
@@ -92,11 +95,11 @@ namespace Sample.Touch.SampleControllers
         }
     }
 
-    public class SimpleListControllerController : UITableViewController
+    public class SimpleListController : UITableViewController
     {
         private GroupedListSource source;
 
-        public SimpleListControllerController() : base (UITableViewStyle.Grouped)
+        public SimpleListController() : base (UITableViewStyle.Grouped)
         {
 
 //            this.NavigationItem.RightBarButtonItem = new UIBarButtonItem(UIBarButtonSystemItem.Add, (s,e) => {
@@ -123,6 +126,45 @@ namespace Sample.Touch.SampleControllers
             this.TableView.Source = this.source;
 
             this.source.Bind(SimpleListViewModel.GetViewModel());
+        }
+    }
+
+    public class SimpleViewModelController : UITableViewController
+    {
+        private GroupedListSource source;
+
+        public SimpleViewModelController() : base (UITableViewStyle.Grouped)
+        {
+
+//            this.NavigationItem.RightBarButtonItem = new UIBarButtonItem(UIBarButtonSystemItem.Add, (s,e) => {
+//                this.sections[0].Rows.Add(new RowViewModel());
+//            });
+        }
+
+        public override void DidReceiveMemoryWarning()
+        {
+            // Releases the view if it doesn't have a superview.
+            base.DidReceiveMemoryWarning();
+
+            // Release any cached data, images, etc that aren't in use.
+        }
+
+        public override void ViewDidLoad()
+        {
+            base.ViewDidLoad();
+            this.source = new GroupedListSource(DialogDataTemplates.DefaultTemplates());
+            this.source.TableView = this.TableView;
+
+            var theViewModel = new SimpleViewModel();
+
+            theViewModel.Property1 = "Hello";
+            theViewModel.Property2 = "World";
+
+
+            // Register the TableView's data source
+            this.TableView.Source = this.source;
+
+            this.source.Bind(WrappedSimpleViewModel.GetViewModel(theViewModel));
         }
     }
 }

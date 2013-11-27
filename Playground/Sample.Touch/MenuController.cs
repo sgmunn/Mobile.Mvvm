@@ -41,7 +41,11 @@ namespace Sample.Touch
             }) });
 
             section1.Rows.Add(new StringElementViewModel("Simple List") { TapCommand = new DelegateCommand(() => {
-                this.NavigationController.PushViewController(new SimpleListControllerController(), true);
+                this.NavigationController.PushViewController(new SimpleListController(), true);
+            }) });
+
+            section1.Rows.Add(new StringElementViewModel("Wrapped View Model Binding To List") { TapCommand = new DelegateCommand(() => {
+                this.NavigationController.PushViewController(new SimpleViewModelController(), true);
             }) });
 
 
