@@ -307,7 +307,7 @@ namespace Mobile.Mvvm.DataBinding
                 t1.ExecuteCommand();
             });
 
-            var d = ReflectionUtils.CreateDelegate(delegateType, eventWrapper,  eventWrapper.GetType().GetMethod("HandleEvent"));
+            var d = ReflectionUtils.CreateDelegate(delegateType, eventWrapper,  eventWrapper.GetType().GetTypeInfo().GetDeclaredMethod("HandleEvent"));
             addMethod.Invoke(t, new object[] { d });
 
             var unSubscribe = new AnonymousDisposable(() => {
