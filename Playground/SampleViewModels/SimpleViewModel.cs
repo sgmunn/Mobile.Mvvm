@@ -22,6 +22,11 @@ namespace SampleViewModels
                 this.TestCommand.RaiseCanExecuteChanged();
 
             });
+
+            this.TestCommand3 = new DelegateCommand(() =>
+                {
+                    this.Property2 = Guid.NewGuid().ToString();
+                });
         }
 
         public string Property1
@@ -37,9 +42,17 @@ namespace SampleViewModels
             }
         }
 
+        public string Property2
+        {
+            get;
+            set;
+        }
+
         public ICommand TestCommand { get; set; }
         
         public ICommand TestCommand2 { get; set; }
+
+        public ICommand TestCommand3 { get; set; }
     }
 }
 

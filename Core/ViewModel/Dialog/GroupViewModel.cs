@@ -1,5 +1,5 @@
 // --------------------------------------------------------------------------------------------------------------------
-// <copyright file="ISectionSource.cs" company="sgmunn">
+// <copyright file="GroupViewModel.cs" company="sgmunn">
 //   (c) sgmunn 2013  
 //
 //   Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated 
@@ -22,21 +22,41 @@ namespace Mobile.Mvvm.ViewModel.Dialog
 {
     using System;
     using System.Collections.Generic;
-    
-    public interface ISectionSource
+    using System.Collections.ObjectModel;
+
+    public class GroupViewModel : ViewModelBase, IGroup
     {
-        // clears all sections and unbinds the UI
-        void Clear();
+        public GroupViewModel()
+        {
+            this.Rows = new ObservableCollection<IViewModel>();
+        }
 
-        // performs a clear and reload with the given source
-        void Load(IList<ISection> sourceList);
+        public IViewModel Header 
+        {
+            get
+            {
+                return (IViewModel)this.GetPropertyValue("Header");
+            }
 
-        void Insert(int index, IList<ISection> sections);
+            set
+            {
+                this.SetPropertyValue("Header", value);
+            }
+        }
 
-        void Remove(int index, int count);
+        public IViewModel Footer
+        {
+            get
+            {
+                return (IViewModel)this.GetPropertyValue("Footer");
+            }
 
-        void Insert(ISection section, int index, IList<IViewModel> rows);
+            set
+            {
+                this.SetPropertyValue("Footer", value);
+            }
+        }
 
-        void Remove(ISection section, int index, int count);
+        public IList<IViewModel> Rows { get; private set; }
     }
 }

@@ -138,8 +138,8 @@ namespace Sample.Droid.SampleActivities
     [Activity (Label = "SimpleListActivity")]            
     public class SimpleListActivity : ListActivity
     {
-        private SectionedListSource source;
-        private IList<ISection> sections;
+        private GroupedListSource source;
+        private IList<IGroup> groups;
 
         protected override void OnCreate(Bundle bundle)
         {
@@ -148,11 +148,11 @@ namespace Sample.Droid.SampleActivities
             Android.Views.LayoutInflater.From(this).Factory = MyFactory.Default;
 
 
-            this.sections = new ObservableCollection<ISection>();
+            this.groups = new ObservableCollection<IGroup>();
 
-            var section1 = new SectionViewModel();
+            var section1 = new GroupViewModel();
             section1.Header = new StringViewModel("Header 1");
-            this.sections.Add(section1);
+            this.groups.Add(section1);
 
             section1.Rows.Add(new TestCommandRowViewModel(section1, "add"));
             section1.Rows.Add(new StringElementViewModel("update") { TapCommand = new DelegateCommand(() => {
@@ -161,30 +161,30 @@ namespace Sample.Droid.SampleActivities
             section1.Rows.Add(new StringViewModel("item 1"));
             section1.Rows.Add(new StringViewModel("item 2"));
 
-            this.sections.Add(new SectionViewModel());
-            this.sections[1].Rows.Add(new StringViewModel("item 1"));
-            this.sections[1].Rows.Add(new StringViewModel("item 2"));
-            this.sections[1].Rows.Add(new StringViewModel("item 3"));
+            this.groups.Add(new GroupViewModel());
+            this.groups[1].Rows.Add(new StringViewModel("item 1"));
+            this.groups[1].Rows.Add(new StringViewModel("item 2"));
+            this.groups[1].Rows.Add(new StringViewModel("item 3"));
             
-            this.sections[1].Header = new StringViewModel("Header 2");
-            this.sections[1].Footer = new StringViewModel("Footer 2");
+            this.groups[1].Header = new StringViewModel("Header 2");
+            this.groups[1].Footer = new StringViewModel("Footer 2");
 
-            this.sections.Add(new SectionViewModel());
-            this.sections[2].Header = new StringViewModel("Header 3");
+            this.groups.Add(new GroupViewModel());
+            this.groups[2].Header = new StringViewModel("Header 3");
             for (int i = 0; i < 100; i++)
             {
-                this.sections[2].Rows.Add(new StringViewModel("item " + i.ToString()));
+                this.groups[2].Rows.Add(new StringViewModel("item " + i.ToString()));
             }
 
             // view did load equivalent
-            this.source = new SectionedListSource(this, DialogDataTemplates.DefaultTemplates(this));
+            this.source = new GroupedListSource(this, DialogDataTemplates.DefaultTemplates(this));
             this.source.ListView = this.ListView;
 
 
             // Register the TableView's data source
             this.ListView.Adapter = this.source;
 
-            this.source.Bind(this.sections);
+            this.source.Bind(this.groups);
 
 
             // Create your application here

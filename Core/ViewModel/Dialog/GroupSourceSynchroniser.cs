@@ -1,5 +1,5 @@
 // --------------------------------------------------------------------------------------------------------------------
-// <copyright file="SectionSynchroniser.cs" company="sgmunn">
+// <copyright file="GroupSourceSynchroniser.cs" company="sgmunn">
 //   (c) sgmunn 2013  
 //
 //   Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated 
@@ -26,15 +26,15 @@ namespace Mobile.Mvvm.ViewModel.Dialog
     using System.Linq;
 
     /// <summary>
-    /// Helper class to keep a collection of ISections in sync with a ISectionSource
+    /// Helper class to keep a collection of IGroups in sync with a IGroupSource
     /// </summary>
-    public sealed class SectionSynchroniser
+    public sealed class GroupSourceSynchroniser
     {
-        private readonly ISectionSource targetSource;
+        private readonly IGroupSource targetSource;
 
-        private IList<ISection> sourceList;
+        private IList<IGroup> sourceList;
 
-        public SectionSynchroniser(ISectionSource source)
+        public GroupSourceSynchroniser(IGroupSource source)
         {
             if (source == null)
             {
@@ -43,16 +43,16 @@ namespace Mobile.Mvvm.ViewModel.Dialog
 
             this.targetSource = source;
             /*
-             * we want to bind to a collection of sections
+             * we want to bind to a collection of groups
              * we will watch that collection for changes and add / remove items to our internal list
              * we will provide virtual methods to override to be able to alter the add / remove behaviour
-             * each section must also provide a notification of items within itself being added or removed
+             * each group must also provide a notification of items within itself being added or removed
              * if we fail to provide either notification, then the table becomes a static list and we won't
              * dynamically add or remove items
              */ 
         }
 
-        public void Bind(IList<ISection> sourceList)
+        public void Bind(IList<IGroup> sourceList)
         {
             if (sourceList == null)
             {
@@ -66,13 +66,13 @@ namespace Mobile.Mvvm.ViewModel.Dialog
             var notifyingCollection = this.sourceList as INotifyCollectionChanged;
             if (notifyingCollection != null)
             {
-                notifyingCollection.CollectionChanged -= this.HandleSectionsChanged;
-                notifyingCollection.CollectionChanged += this.HandleSectionsChanged;
+                notifyingCollection.CollectionChanged -= this.HandleGroupsChanged;
+                notifyingCollection.CollectionChanged += this.HandleGroupsChanged;
             }
 
-            foreach (var section in this.sourceList)
+            foreach (var group in this.sourceList)
             {
-                this.RegisterSection(section);
+                this.RegisterGroup(group);
             }
 
             this.targetSource.Load(sourceList);
@@ -85,12 +85,12 @@ namespace Mobile.Mvvm.ViewModel.Dialog
                 var notifyingCollection = this.sourceList as INotifyCollectionChanged;
                 if (notifyingCollection != null)
                 {
-                    notifyingCollection.CollectionChanged -= this.HandleSectionsChanged;
+                    notifyingCollection.CollectionChanged -= this.HandleGroupsChanged;
                 }
 
-                foreach (var section in this.sourceList)
+                foreach (var group in this.sourceList)
                 {
-                    this.UnregisterSection(section);
+                    this.UnregisterGroup(group);
                 }
             }
 
@@ -104,39 +104,39 @@ namespace Mobile.Mvvm.ViewModel.Dialog
             this.targetSource.Clear();
         }
 
-        private void RegisterSection(ISection section)
+        private void RegisterGroup(IGroup group)
         {
-            var notifyingCollection = section.Rows as INotifyCollectionChanged;
+            var notifyingCollection = group.Rows as INotifyCollectionChanged;
             if (notifyingCollection != null)
             {
-                notifyingCollection.CollectionChanged -= this.HandleSectionRowsChanged;
-                notifyingCollection.CollectionChanged += this.HandleSectionRowsChanged;
+                notifyingCollection.CollectionChanged -= this.HandleGroupRowsChanged;
+                notifyingCollection.CollectionChanged += this.HandleGroupRowsChanged;
             }
         }
 
-        private void UnregisterSection(ISection section)
+        private void UnregisterGroup(IGroup group)
         {
-            var notifyingCollection = section.Rows as INotifyCollectionChanged;
+            var notifyingCollection = group.Rows as INotifyCollectionChanged;
             if (notifyingCollection != null)
             {
-                notifyingCollection.CollectionChanged -= this.HandleSectionRowsChanged;
+                notifyingCollection.CollectionChanged -= this.HandleGroupRowsChanged;
             }
         }
 
-        private void HandleSectionsChanged(object sender, NotifyCollectionChangedEventArgs e)
+        private void HandleGroupsChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
             switch (e.Action) 
             {
                 case NotifyCollectionChangedAction.Add:
-                    this.targetSource.Insert(e.NewStartingIndex, e.NewItems.OfType<ISection>().ToList());
+                    this.targetSource.Insert(e.NewStartingIndex, e.NewItems.OfType<IGroup>().ToList());
                     break;
                 case NotifyCollectionChangedAction.Remove:
                     this.targetSource.Remove(e.OldStartingIndex, e.OldItems.Count);
                     break;
                 case NotifyCollectionChangedAction.Reset:
-                    // clear current list, unregister all sections, unbind all view models
-                    // iterate over all items, register each section and full reload (binding as we go)
-                    //this.ReloadSection(sectionIndex);
+                    // clear current list, unregister all groups, unbind all view models
+                    // iterate over all items, register each group and full reload (binding as we go)
+                    //this.ReloadGroup(sectionIndex);
                     this.targetSource.Load(this.sourceList);
                     break;
                 default:
@@ -144,10 +144,10 @@ namespace Mobile.Mvvm.ViewModel.Dialog
             }           
         }
 
-        private void HandleSectionRowsChanged(object sender, NotifyCollectionChangedEventArgs e)
+        private void HandleGroupRowsChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
-            var section = this.FindSectionFromRows(sender);
-            if (section == null)
+            var group = this.FindGroupFromRows(sender);
+            if (group == null)
             {
                 return;
             }
@@ -155,10 +155,10 @@ namespace Mobile.Mvvm.ViewModel.Dialog
             switch (e.Action) 
             {
                 case NotifyCollectionChangedAction.Add:
-                    this.targetSource.Insert(section, e.NewStartingIndex, e.NewItems.OfType<IViewModel>().ToList());
+                    this.targetSource.Insert(group, e.NewStartingIndex, e.NewItems.OfType<IViewModel>().ToList());
                     break;
                 case NotifyCollectionChangedAction.Remove:
-                    this.targetSource.Remove(section, e.OldStartingIndex, e.OldItems.Count);
+                    this.targetSource.Remove(group, e.OldStartingIndex, e.OldItems.Count);
                     break;
                 case NotifyCollectionChangedAction.Reset:
                     this.targetSource.Load(this.sourceList);
@@ -168,7 +168,7 @@ namespace Mobile.Mvvm.ViewModel.Dialog
             }           
         }
 
-        private ISection FindSectionFromRows(object rows)
+        private IGroup FindGroupFromRows(object rows)
         {
             return this.sourceList.FirstOrDefault(x => x.Rows == rows);
         }

@@ -1,5 +1,5 @@
 // --------------------------------------------------------------------------------------------------------------------
-// <copyright file="SectionExtensions.cs" company="sgmunn">
+// <copyright file="IGroupSource.cs" company="sgmunn">
 //   (c) sgmunn 2013  
 //
 //   Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated 
@@ -21,38 +21,22 @@
 namespace Mobile.Mvvm.ViewModel.Dialog
 {
     using System;
-
-    public static class SectionExtensions
+    using System.Collections.Generic;
+    
+    public interface IGroupSource
     {
-        public static int ViewModelCount(this ISection section)
-        {
-            return section.Rows.Count + (section.Header != null ? 1 : 0) + (section.Footer != null ? 1 : 0);
-        }
+        // clears all sections and unbinds the UI
+        void Clear();
 
-        /// <summary>
-        /// Gets the view model for the given index, taking into account Heade and Footer
-        /// </summary>
-        public static IViewModel ViewModelAtIndex(this ISection section, int index)
-        {
-            if (index == 0 && section.Header != null)
-            {
-                return section.Header;
-            }
+        // performs a clear and reload with the given source
+        void Load(IList<IGroup> sourceList);
 
-            // reduce the index by one if there is a header, row 0 is index 1 in this case
-            var rowIndex = index + (section.Header != null ? -1 : 0);
-            if (rowIndex >= section.Rows.Count)
-            {
-                // assume footer for anything past the number of rows
-                if (section.Footer != null)
-                {
-                    return section.Footer;
-                }
+        void Insert(int index, IList<IGroup> groups);
 
-                throw new ArgumentOutOfRangeException("index");
-            }
+        void Remove(int index, int count);
 
-            return section.Rows[rowIndex];
-        }
+        void Insert(IGroup group, int index, IList<IViewModel> rows);
+
+        void Remove(IGroup group, int index, int count);
     }
 }

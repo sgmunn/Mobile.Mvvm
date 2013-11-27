@@ -1,5 +1,5 @@
 // --------------------------------------------------------------------------------------------------------------------
-// <copyright file="ISection.cs" company="sgmunn">
+// <copyright file="GroupExtensions.cs" company="sgmunn">
 //   (c) sgmunn 2013  
 //
 //   Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated 
@@ -21,15 +21,38 @@
 namespace Mobile.Mvvm.ViewModel.Dialog
 {
     using System;
-    using System.Collections.Generic;
 
-    public interface ISection
+    public static class GroupExtensions
     {
-        IViewModel Header { get; set; }
+        public static int ViewModelCount(this IGroup group)
+        {
+            return group.Rows.Count + (group.Header != null ? 1 : 0) + (group.Footer != null ? 1 : 0);
+        }
 
-        IViewModel Footer { get; set; }
+        /// <summary>
+        /// Gets the view model for the given index, taking into account Heade and Footer
+        /// </summary>
+        public static IViewModel ViewModelAtIndex(this IGroup group, int index)
+        {
+            if (index == 0 && group.Header != null)
+            {
+                return group.Header;
+            }
 
-        IList<IViewModel> Rows { get; }
+            // reduce the index by one if there is a header, row 0 is index 1 in this case
+            var rowIndex = index + (group.Header != null ? -1 : 0);
+            if (rowIndex >= group.Rows.Count)
+            {
+                // assume footer for anything past the number of rows
+                if (group.Footer != null)
+                {
+                    return group.Footer;
+                }
+
+                throw new ArgumentOutOfRangeException("index");
+            }
+
+            return group.Rows[rowIndex];
+        }
     }
 }
-

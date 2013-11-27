@@ -7,13 +7,13 @@ namespace SampleViewModels
 {
     public class TestCommandRowViewModel : StringViewModel, ITapCommand
     {
-        private SectionViewModel section;
+        private GroupViewModel group;
 
-        public TestCommandRowViewModel(SectionViewModel section, string caption) : base(caption)
+        public TestCommandRowViewModel(GroupViewModel group, string caption) : base(caption)
         {
-            this.section = section;   
+            this.group = group;   
             this.TapCommand = new DelegateCommand(() => {
-                this.section.Rows.Add(new StringViewModel("added"));
+                this.group.Rows.Add(new StringViewModel("added"));
             });
         }
 

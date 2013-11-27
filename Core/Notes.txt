@@ -1,3 +1,8 @@
+- Activity state management example and best practice
+  -- load / save view model to fake data store
+  -- not just view model "data" state, but enabled / disabled properties as well
+  -- things that might be consider transient state -- which is what OnSave... is supposed to be for
+
 
 - custom layout inflator for android, apply bindings from the view axml
 - complex property paths
@@ -50,11 +55,29 @@
     not sure of the best way to go, on the face of it, a simple wrapper for UITableViewCell would probably do
     the reason is that UITableViewCell, being a "built in" UIxxx control, gets GC'd before the iOS native 
     object and is re-instantiated whenever it needs to be. Because we have weak references everywhere
-    our bindings get broken. Stron references fix that, but we have to clean up properly.
+    our bindings get broken. Strong references fix that, but we have to clean up properly.
     If we have a wrapper class, our managed object stays around for as long as the native object exists
     
     I might just go for the wrapper classes as it will give the basis of the dialog style views
 
+
+- Activity - this is a root
+    owns a RootViewModelContext
+    fragments have a binding context that links to the root?
+
+    OnCreate
+        create UI, create view model, bind
+        start load task, if not already, and continue with the load of the UI
+        load task must be cancellable, so that the UI update isn't done if we navigate away
+        can extend this to one for each fragment
+
+    OnPause
+        save data from view model to persistent state
+        cancel load task
+
+    - load needs to realise if can be reused, or if it needs to re-execute
+      cases: activity only, activity and fragment (retain, non retain, add to back stack etc)
+      switch activity, keep activities, don't keep activities.
 
 
 

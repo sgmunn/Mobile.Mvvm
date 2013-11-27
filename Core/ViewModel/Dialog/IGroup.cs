@@ -1,5 +1,5 @@
 // --------------------------------------------------------------------------------------------------------------------
-// <copyright file="SectionViewModel.cs" company="sgmunn">
+// <copyright file="IGroup.cs" company="sgmunn">
 //   (c) sgmunn 2013  
 //
 //   Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated 
@@ -22,41 +22,14 @@ namespace Mobile.Mvvm.ViewModel.Dialog
 {
     using System;
     using System.Collections.Generic;
-    using System.Collections.ObjectModel;
 
-    public class SectionViewModel : ViewModelBase, ISection
+    public interface IGroup
     {
-        public SectionViewModel()
-        {
-            this.Rows = new ObservableCollection<IViewModel>();
-        }
+        IViewModel Header { get; set; }
 
-        public IViewModel Header 
-        {
-            get
-            {
-                return (IViewModel)this.GetPropertyValue("Header");
-            }
+        IViewModel Footer { get; set; }
 
-            set
-            {
-                this.SetPropertyValue("Header", value);
-            }
-        }
-
-        public IViewModel Footer
-        {
-            get
-            {
-                return (IViewModel)this.GetPropertyValue("Footer");
-            }
-
-            set
-            {
-                this.SetPropertyValue("Footer", value);
-            }
-        }
-
-        public IList<IViewModel> Rows { get; private set; }
+        IList<IViewModel> Rows { get; }
     }
 }
+

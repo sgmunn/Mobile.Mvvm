@@ -1,5 +1,5 @@
 // --------------------------------------------------------------------------------------------------------------------
-// <copyright file="SectionedListSource.cs" company="sgmunn">
+// <copyright file="GroupedListSource.cs" company="sgmunn">
 //   (c) sgmunn 2013  
 //
 //   Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated 
@@ -27,24 +27,24 @@ namespace Mobile.Mvvm.ViewModel.Dialog
     using MonoTouch.UIKit;
     using Mobile.Mvvm.DataBinding;
 
-    public class SectionedListSource: UITableViewSource, ISectionSource, IBindingContext
+    public class GroupedListSource: UITableViewSource, IGroupSource, IBindingContext
     {
-        private readonly List<ISection> sections;
+        private readonly List<IGroup> groups;
 
-        private readonly SectionSynchroniser sync;
+        private readonly GroupSourceSynchroniser sync;
 
         private readonly List<IDataTemplate> templates;
 
         private UITableView tableView;
 
-        public SectionedListSource() : this(Enumerable.Empty<IDataTemplate>())
+        public GroupedListSource() : this(Enumerable.Empty<IDataTemplate>())
         {
         }
         
-        public SectionedListSource(IEnumerable<IDataTemplate> templates)
+        public GroupedListSource(IEnumerable<IDataTemplate> templates)
         {
-            this.sections = new List<ISection>();
-            this.sync = new SectionSynchroniser(this);
+            this.groups = new List<IGroup>();
+            this.sync = new GroupSourceSynchroniser(this);
             this.Bindings = new BindingScope();
             this.InjectedProperties = new InjectionScope();
             this.AddAnimation = UITableViewRowAnimation.Automatic;
@@ -86,7 +86,7 @@ namespace Mobile.Mvvm.ViewModel.Dialog
 
         public IInjectionScope InjectedProperties { get; private set; }
 
-        public void Bind(IList<ISection> source)
+        public void Bind(IList<IGroup> source)
         {
             this.sync.Bind(source);
         }
@@ -100,81 +100,81 @@ namespace Mobile.Mvvm.ViewModel.Dialog
         {
             this.Bindings.ClearBindings();
             this.InjectedProperties.Clear();
-            this.sections.Clear();
+            this.groups.Clear();
             this.ReloadView();
         }
 
-        public void Load(IList<ISection> sourceList)
+        public void Load(IList<IGroup> sourceList)
         {
             this.Bindings.ClearBindings();
             this.InjectedProperties.Clear();
-            this.sections.Clear();
+            this.groups.Clear();
             if (sourceList != null)
             {
-                this.sections.AddRange(sourceList);
+                this.groups.AddRange(sourceList);
             }
 
             this.ReloadView();
         }
 
-        public void Insert(int index, IList<ISection> newSections)
+        public void Insert(int index, IList<IGroup> newGroups)
         {
-            this.sections.InsertRange(index, newSections);
+            this.groups.InsertRange(index, newGroups);
             // lazy, just reload
             this.ReloadView();
         }
 
         public void Remove(int index, int count)
         {
-            this.sections.RemoveRange(index, count);
+            this.groups.RemoveRange(index, count);
             // lazy, just reload
             this.ReloadView();
         }
 
-        public void Insert(ISection section, int index, IList<IViewModel> rows)
+        public void Insert(IGroup group, int index, IList<IViewModel> rows)
         {
             // just update the table view
-            var sectionIndex = this.sections.IndexOf(section);
+            var groupIndex = this.groups.IndexOf(group);
             var paths = new NSIndexPath[rows.Count];
             for (int i = 0; i < rows.Count; i++)
             {
-                paths[i] = NSIndexPath.FromRowSection(index + i, sectionIndex);
+                paths[i] = NSIndexPath.FromRowSection(index + i, groupIndex);
             }
 
             this.TableView.InsertRows(paths, this.AddAnimation);
         }
 
-        public void Remove(ISection section, int index, int count)
+        public void Remove(IGroup group, int index, int count)
         {
             // just update the table view
-            var sectionIndex = this.sections.IndexOf(section);
+            var groupIndex = this.groups.IndexOf(group);
             var paths = new NSIndexPath[count];
             for (int i = 0; i < count; i++)
             {
-                paths [i] = NSIndexPath.FromRowSection(index + i, sectionIndex);
+                paths [i] = NSIndexPath.FromRowSection(index + i, groupIndex);
             }
 
             this.TableView.DeleteRows(paths, this.RemoveAnimation);
         }
         
-        public override string TitleForHeader(UITableView tableView, int section)
+        public override string TitleForHeader(UITableView tableView, int group)
         {
-            return this.sections[section].Header != null ? this.sections[section].Header.ToString() : null;
+            return this.groups[group].Header != null ? this.groups[group].Header.ToString() : null;
         }
 
-        public override string TitleForFooter(UITableView tableView, int section)
+        public override string TitleForFooter(UITableView tableView, int group)
         {
-            return this.sections[section].Footer != null ? this.sections[section].Footer.ToString() : null;
+            return this.groups[group].Footer != null ? this.groups[group].Footer.ToString() : null;
         }
 
         public override int NumberOfSections(UITableView tableView)
         {
-            return this.sections.Count;
+            return this.groups.Count;
         }
 
-        public override int RowsInSection(UITableView tableview, int section)
+        public override int RowsInSection(UITableView tableview, int group)
         {
-            return this.sections[section].Rows.Count;
+            return this.groups[group].Rows.Count;
         }
 
         public override UITableViewCell GetCell(UITableView tableView, MonoTouch.Foundation.NSIndexPath indexPath)
@@ -207,7 +207,7 @@ namespace Mobile.Mvvm.ViewModel.Dialog
 
         protected IViewModel ViewModelForIndexPath(NSIndexPath indexPath)
         {
-            return this.sections[indexPath.Section].Rows[indexPath.Row];
+            return this.groups[indexPath.Section].Rows[indexPath.Row];
         }
 
         protected virtual void ReloadView()

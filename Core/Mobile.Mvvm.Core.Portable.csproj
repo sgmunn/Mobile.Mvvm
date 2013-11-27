@@ -87,10 +87,6 @@
     <Compile Include="ViewModel\ITapCommand.cs" />
     <Compile Include="ViewModel\ILongTapCommand.cs" />
     <Compile Include="ViewModel\ViewModelExtensions.cs" />
-    <Compile Include="ViewModel\Dialog\ISection.cs" />
-    <Compile Include="ViewModel\Dialog\ISectionSource.cs" />
-    <Compile Include="ViewModel\Dialog\SectionSynchroniser.cs" />
-    <Compile Include="ViewModel\Dialog\SectionViewModel.cs" />
     <Compile Include="ViewModel\Dialog\CaptionedValueViewModel_T.cs" />
     <Compile Include="ViewModel\IDataTemplate.cs" />
     <Compile Include="ViewModel\DataTemplateExtensions.cs" />
@@ -98,6 +94,10 @@
     <Compile Include="DataBinding\BindingParser.cs" />
     <Compile Include="ViewModel\DataTemplateBase.cs" />
     <Compile Include="DataBinding\WeakCommandBinding.cs" />
+    <Compile Include="ViewModel\Dialog\IGroup.cs" />
+    <Compile Include="ViewModel\Dialog\IGroupSource.cs" />
+    <Compile Include="ViewModel\Dialog\GroupSourceSynchroniser.cs" />
+    <Compile Include="ViewModel\Dialog\GroupViewModel.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <ItemGroup>

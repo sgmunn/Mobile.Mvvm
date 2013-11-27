@@ -45,7 +45,7 @@
   <ItemGroup>
     <Compile Include="ViewModel\RootViewModelContext.cs" />
     <Compile Include="ViewModel\DataTemplate.cs" />
-    <Compile Include="ViewModel\Dialog\SectionedListSource.cs" />
+    <Compile Include="ViewModel\Dialog\GroupedListSource.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Core\Mobile.Mvvm.Core.Portable.csproj">

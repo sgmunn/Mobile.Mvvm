@@ -1,5 +1,5 @@
 // --------------------------------------------------------------------------------------------------------------------
-// <copyright file="SectionedListSource.cs" company="sgmunn">
+// <copyright file="GroupedListSource.cs" company="sgmunn">
 //   (c) sgmunn 2013  
 //
 //   Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated 
@@ -30,11 +30,11 @@ namespace Mobile.Mvvm.ViewModel.Dialog
     using Android.Views.Animations;
     using Mobile.Mvvm.DataBinding;
 
-    public class SectionedListSource : BaseAdapter<ISection>, ISectionSource, IBindingContext
+    public class GroupedListSource : BaseAdapter<IGroup>, IGroupSource, IBindingContext
     {
-        private readonly List<ISection> sections;
+        private readonly List<IGroup> groups;
 
-        private readonly SectionSynchroniser sync;
+        private readonly GroupSourceSynchroniser sync;
 
         private readonly Context context;
         
@@ -44,16 +44,16 @@ namespace Mobile.Mvvm.ViewModel.Dialog
 
         private ListView listView;
 
-        public SectionedListSource(Context context) : this(context, Enumerable.Empty<IDataTemplate>())
+        public GroupedListSource(Context context) : this(context, Enumerable.Empty<IDataTemplate>())
         {
         }
         
-        public SectionedListSource(Context context, IEnumerable<IDataTemplate> templates)
+        public GroupedListSource(Context context, IEnumerable<IDataTemplate> templates)
         {
             this.templates = templates.ToList();
             this.context = context;
-            this.sections = new List<ISection>();
-            this.sync = new SectionSynchroniser(this);
+            this.groups = new List<IGroup>();
+            this.sync = new GroupSourceSynchroniser(this);
             this.Bindings = new BindingScope();
             this.InjectedProperties = new InjectionScope();
         }
@@ -92,7 +92,7 @@ namespace Mobile.Mvvm.ViewModel.Dialog
 
         public IInjectionScope InjectedProperties { get; private set; }
 
-        public void Bind(IList<ISection> source)
+        public void Bind(IList<IGroup> source)
         {
             this.sync.Bind(source);
         }
@@ -106,38 +106,38 @@ namespace Mobile.Mvvm.ViewModel.Dialog
         {
             this.Bindings.ClearBindings();
             this.InjectedProperties.Clear();
-            this.sections.Clear();
+            this.groups.Clear();
             this.ReloadView();
         }
 
-        public void Load(IList<ISection> sourceList)
+        public void Load(IList<IGroup> sourceList)
         {
             this.Bindings.ClearBindings();
             this.InjectedProperties.Clear();
-            this.sections.Clear();
+            this.groups.Clear();
             if (sourceList != null)
             {
-                this.sections.AddRange(sourceList);
+                this.groups.AddRange(sourceList);
             }
 
             this.ReloadView();
         }
 
-        public void Insert(int index, IList<ISection> newSections)
+        public void Insert(int index, IList<IGroup> newGroups)
         {
-            this.sections.InsertRange(index, newSections);
+            this.groups.InsertRange(index, newGroups);
             // lazy, just reload
             this.ReloadView();
         }
 
         public void Remove(int index, int count)
         {
-            this.sections.RemoveRange(index, count);
+            this.groups.RemoveRange(index, count);
             // lazy, just reload
             this.ReloadView();
         }
 
-        public virtual void Insert(ISection section, int index, IList<IViewModel> rows)
+        public virtual void Insert(IGroup group, int index, IList<IViewModel> rows)
         {
             //Animation anim = AnimationUtils.LoadAnimation(this.context, Android.Resource.Animation.FadeIn);
 
@@ -149,7 +149,7 @@ namespace Mobile.Mvvm.ViewModel.Dialog
             //};
         }
 
-        public virtual void Remove(ISection section, int index, int count)
+        public virtual void Remove(IGroup group, int index, int count)
         {
             this.NotifyDataSetChanged();
         }
@@ -184,15 +184,15 @@ namespace Mobile.Mvvm.ViewModel.Dialog
         {
             get
             {
-                return this.sections.Sum(x => x.ViewModelCount());
+                return this.groups.Sum(x => x.ViewModelCount());
             }
         }
 
-        public override ISection this[int index]
+        public override IGroup this[int index]
         {
             get
             {
-                return this.sections[index];
+                return this.groups[index];
             }
         }
 
@@ -200,20 +200,20 @@ namespace Mobile.Mvvm.ViewModel.Dialog
         {
             if (position == 0)
             {
-                return this.sections[0].ViewModelAtIndex(0);
+                return this.groups[0].ViewModelAtIndex(0);
             }
 
             int count = 0;
-            foreach (var section in this.sections)
+            foreach (var group in this.groups)
             {
-                if (position < count + section.ViewModelCount())
+                if (position < count + group.ViewModelCount())
                 {
                     // it's here somewhere
-                    return section.ViewModelAtIndex(position - count);
+                    return group.ViewModelAtIndex(position - count);
                 }
                 else
                 {
-                    count += section.ViewModelCount();
+                    count += group.ViewModelCount();
                 }
             }
 

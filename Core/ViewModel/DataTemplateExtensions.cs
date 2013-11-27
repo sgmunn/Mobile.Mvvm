@@ -24,10 +24,10 @@ namespace Mobile.Mvvm.ViewModel
     using System.Collections.Generic;
     using System.ComponentModel;
     
-    //    this.RegisterTemplate("TableViewCell_ISectionRoot")
+    //    this.RegisterTemplate("TableViewCell_IGroupRoot")
     //        .Creates((id) => new TableViewCell(UITableViewCellStyle.Default, id))
     //            .WhenInitializing<TableViewCell>((view) => view.Accessory = UITableViewCellAccessory.DisclosureIndicator)
-    //            .WhenBinding<ISectionRoot, TableViewCell>((vm, view) => view.Text = vm.ToString());
+    //            .WhenBinding<IGroupRoot, TableViewCell>((vm, view) => view.Text = vm.ToString());
 
     public static class DataTemplateExtensions
     {

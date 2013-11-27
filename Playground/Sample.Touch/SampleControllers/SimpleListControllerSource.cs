@@ -17,18 +17,18 @@ namespace Sample.Touch.SampleControllers
             return 1;
         }
 
-        public override int RowsInSection(UITableView tableview, int section)
+        public override int RowsInSection(UITableView tableview, int group)
         {
-            // TODO: return the actual number of items in the section
+            // TODO: return the actual number of items in the group
             return 1;
         }
 
-        public override string TitleForHeader(UITableView tableView, int section)
+        public override string TitleForHeader(UITableView tableView, int group)
         {
             return "Header";
         }
 
-        public override string TitleForFooter(UITableView tableView, int section)
+        public override string TitleForFooter(UITableView tableView, int group)
         {
             return "Footer";
         }

@@ -94,16 +94,16 @@ namespace Sample.Touch.SampleControllers
 
     public class SimpleListControllerController : UITableViewController
     {
-        private SectionedListSource source;
-        private IList<ISection> sections;
+        private GroupedListSource source;
+        private readonly IList<IGroup> groups;
 
         public SimpleListControllerController() : base (UITableViewStyle.Grouped)
         {
-            this.sections = new ObservableCollection<ISection>();
+            this.groups = new ObservableCollection<IGroup>();
 
-            var section1 = new SectionViewModel();
+            var section1 = new GroupViewModel();
             section1.Header = new StringViewModel("Header");
-            this.sections.Add(section1);
+            this.groups.Add(section1);
 
             section1.Rows.Add(new TestCommandRowViewModel(section1, "Add"));
             section1.Rows.Add(new StringElementViewModel("update") { TapCommand = new DelegateCommand(() => {
@@ -112,16 +112,16 @@ namespace Sample.Touch.SampleControllers
             section1.Rows.Add(new StringViewModel("item 1"));
             section1.Rows.Add(new StringViewModel("item 2"));
 
-            this.sections.Add(new SectionViewModel());
-            this.sections[1].Rows.Add(new StringViewModel("item 1"));
-            this.sections[1].Rows.Add(new StringViewModel("item 2"));
-            this.sections[1].Rows.Add(new StringViewModel("item 3"));
+            this.groups.Add(new GroupViewModel());
+            this.groups[1].Rows.Add(new StringViewModel("item 1"));
+            this.groups[1].Rows.Add(new StringViewModel("item 2"));
+            this.groups[1].Rows.Add(new StringViewModel("item 3"));
             
-            this.sections.Add(new SectionViewModel());
-            this.sections[2].Header = new StringViewModel("Header");
+            this.groups.Add(new GroupViewModel());
+            this.groups[2].Header = new StringViewModel("Header");
             for (int i = 0; i < 100; i++)
             {
-                this.sections[2].Rows.Add(new StringViewModel("item " + i.ToString()));
+                this.groups[2].Rows.Add(new StringViewModel("item " + i.ToString()));
             }
 
 //            this.NavigationItem.RightBarButtonItem = new UIBarButtonItem(UIBarButtonSystemItem.Add, (s,e) => {
@@ -140,14 +140,14 @@ namespace Sample.Touch.SampleControllers
         public override void ViewDidLoad()
         {
             base.ViewDidLoad();
-            this.source = new SectionedListSource(DialogDataTemplates.DefaultTemplates());
+            this.source = new GroupedListSource(DialogDataTemplates.DefaultTemplates());
             this.source.TableView = this.TableView;
 
             
             // Register the TableView's data source
             this.TableView.Source = this.source;
 
-            this.source.Bind(this.sections);
+            this.source.Bind(this.groups);
         }
     }
 }
