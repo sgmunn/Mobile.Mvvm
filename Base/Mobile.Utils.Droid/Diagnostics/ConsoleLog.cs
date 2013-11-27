@@ -1,5 +1,5 @@
 // --------------------------------------------------------------------------------------------------------------------
-// <copyright file="Log.cs" company="sgmunn">
+// <copyright file="ConsoleLog.cs" company="sgmunn">
 //   (c) sgmunn 2013  
 //
 //   Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated 
@@ -17,45 +17,24 @@
 //   IN THE SOFTWARE.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
+using Android.Graphics;
 
 namespace Mobile.Utils.Diagnostics
 {
     using System;
 
-    public interface ILog
+    public sealed class ConsoleLog : ILog
     {
-        void Write(string message);
-        void Write(string message, params object[] args);
-    }
-    
-    public class NullLog : ILog
-    {
+        public static readonly ILog Instance = new ConsoleLog();
+
         public void Write(string message)
         {
+            Console.Write(message);
         }
 
         public void Write(string message, params object[] args)
         {
-        }
-    }
-
-    public static class Log
-    {
-        private static ILog logger = new NullLog();
-
-        public static void Set(ILog log)
-        {
-            logger = log;
-        }
-
-        public static void Write(string message)
-        {
-            logger.Write(message);
-        }
-
-        public static void Write(string message, params object[] args)
-        {
-            logger.Write(message, args);
+            Console.Write(message, args);
         }
     }
 }

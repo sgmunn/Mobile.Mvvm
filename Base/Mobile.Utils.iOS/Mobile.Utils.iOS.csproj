@@ -51,5 +51,6 @@
   <ItemGroup>
     <Compile Include="Diagnostics\TouchLog.cs" />
     <Compile Include="Tasks\UIThreadScheduler.cs" />
+    <Compile Include="Diagnostics\ConsoleLog.cs" />
   </ItemGroup>
 </Project>

@@ -45,6 +45,7 @@
     <Compile Include="Resources\Resource.designer.cs" />
     <Compile Include="Diagnostics\DroidLog.cs" />
     <Compile Include="Tasks\UIThreadScheduler.cs" />
+    <Compile Include="Diagnostics\ConsoleLog.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\AboutResources.txt" />
