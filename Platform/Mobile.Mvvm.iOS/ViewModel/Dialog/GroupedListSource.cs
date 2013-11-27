@@ -157,14 +157,14 @@ namespace Mobile.Mvvm.ViewModel.Dialog
             this.TableView.DeleteRows(paths, this.RemoveAnimation);
         }
         
-        public override string TitleForHeader(UITableView tableView, int group)
+        public override string TitleForHeader(UITableView tableView, int section)
         {
-            return this.groups[group].Header != null ? this.groups[group].Header.ToString() : null;
+            return this.groups[section].Header != null ? this.groups[section].Header.ToString() : null;
         }
 
-        public override string TitleForFooter(UITableView tableView, int group)
+        public override string TitleForFooter(UITableView tableView, int section)
         {
-            return this.groups[group].Footer != null ? this.groups[group].Footer.ToString() : null;
+            return this.groups[section].Footer != null ? this.groups[section].Footer.ToString() : null;
         }
 
         public override int NumberOfSections(UITableView tableView)
@@ -172,9 +172,9 @@ namespace Mobile.Mvvm.ViewModel.Dialog
             return this.groups.Count;
         }
 
-        public override int RowsInSection(UITableView tableview, int group)
+        public override int RowsInSection(UITableView tableview, int section)
         {
-            return this.groups[group].Rows.Count;
+            return this.groups[section].Rows.Count;
         }
 
         public override UITableViewCell GetCell(UITableView tableView, MonoTouch.Foundation.NSIndexPath indexPath)
