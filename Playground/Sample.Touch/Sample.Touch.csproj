@@ -98,6 +98,7 @@
     <Compile Include="SampleControllers\SimpleListControllerController.cs" />
     <Compile Include="SampleControllers\SimpleListControllerCell.cs" />
     <Compile Include="SampleControllers\SimpleListControllerSource.cs" />
+    <Compile Include="MenuController.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

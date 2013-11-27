@@ -95,34 +95,9 @@ namespace Sample.Touch.SampleControllers
     public class SimpleListControllerController : UITableViewController
     {
         private GroupedListSource source;
-        private readonly IList<IGroup> groups;
 
         public SimpleListControllerController() : base (UITableViewStyle.Grouped)
         {
-            this.groups = new ObservableCollection<IGroup>();
-
-            var section1 = new GroupViewModel();
-            section1.Header = new CaptionViewModel("Header");
-            this.groups.Add(section1);
-
-            section1.Rows.Add(new TestCommandRowViewModel(section1, "Add"));
-            section1.Rows.Add(new StringElementViewModel("update") { TapCommand = new DelegateCommand(() => {
-                    ((CaptionViewModel)section1.Rows[1]).Caption = "Updated!";
-                }) });
-            section1.Rows.Add(new CaptionViewModel("item 1"));
-            section1.Rows.Add(new CaptionViewModel("item 2"));
-
-            this.groups.Add(new GroupViewModel());
-            this.groups[1].Rows.Add(new CaptionViewModel("item 1"));
-            this.groups[1].Rows.Add(new CaptionViewModel("item 2"));
-            this.groups[1].Rows.Add(new CaptionViewModel("item 3"));
-            
-            this.groups.Add(new GroupViewModel());
-            this.groups[2].Header = new CaptionViewModel("Header");
-            for (int i = 0; i < 100; i++)
-            {
-                this.groups[2].Rows.Add(new CaptionViewModel("item " + i.ToString()));
-            }
 
 //            this.NavigationItem.RightBarButtonItem = new UIBarButtonItem(UIBarButtonSystemItem.Add, (s,e) => {
 //                this.sections[0].Rows.Add(new RowViewModel());
@@ -147,7 +122,7 @@ namespace Sample.Touch.SampleControllers
             // Register the TableView's data source
             this.TableView.Source = this.source;
 
-            this.source.Bind(this.groups);
+            this.source.Bind(SimpleListViewModel.GetViewModel());
         }
     }
 }

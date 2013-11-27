@@ -144,55 +144,21 @@ namespace Sample.Droid.SampleActivities
     public class SimpleListActivity : ListActivity
     {
         private GroupedListSource source;
-        private IList<IGroup> groups;
 
-        protected override void OnCreate(Bundle bundle)
+        protected override void OnCreate(Bundle savedInstanceState)
         {
-            base.OnCreate(bundle);
+            base.OnCreate(savedInstanceState);
 
             Android.Views.LayoutInflater.From(this).Factory = MyFactory.Default;
-
-
-            this.groups = new ObservableCollection<IGroup>();
-
-            var section1 = new GroupViewModel();
-            section1.Header = new CaptionViewModel("Header 1");
-            this.groups.Add(section1);
-
-            section1.Rows.Add(new TestCommandRowViewModel(section1, "add"));
-            section1.Rows.Add(new StringElementViewModel("update") { TapCommand = new DelegateCommand(() => {
-                    ((CaptionViewModel)section1.Rows[1]).Caption = "Updated!";
-                }) });
-            section1.Rows.Add(new CaptionViewModel("item 1"));
-            section1.Rows.Add(new CaptionViewModel("item 2"));
-
-            this.groups.Add(new GroupViewModel());
-            this.groups[1].Rows.Add(new CaptionViewModel("item 1"));
-            this.groups[1].Rows.Add(new CaptionViewModel("item 2"));
-            this.groups[1].Rows.Add(new CaptionViewModel("item 3"));
-            
-            this.groups[1].Header = new CaptionViewModel("Header 2");
-            this.groups[1].Footer = new CaptionViewModel("Footer 2");
-
-            this.groups.Add(new GroupViewModel());
-            this.groups[2].Header = new CaptionViewModel("Header 3");
-            for (int i = 0; i < 100; i++)
-            {
-                this.groups[2].Rows.Add(new CaptionViewModel("item " + i.ToString()));
-            }
 
             // view did load equivalent
             this.source = new GroupedListSource(this, DialogDataTemplates.DefaultTemplates(this));
             this.source.ListView = this.ListView;
 
-
             // Register the TableView's data source
             this.ListView.Adapter = this.source;
 
-            this.source.Bind(this.groups);
-
-
-            // Create your application here
+            this.source.Bind(SimpleListViewModel.GetViewModel());
         }
     }
 
