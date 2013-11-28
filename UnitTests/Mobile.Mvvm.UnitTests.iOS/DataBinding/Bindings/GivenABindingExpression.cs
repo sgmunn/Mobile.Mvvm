@@ -16,7 +16,9 @@ namespace Mobile.Mvvm.UnitTests.Bindings
 
         protected virtual IBindingExpression GetExpression()
         {
-            return new WeakBindingExpression(this.Target, "PropertyA", this.Source, this.Binding).Bind();
+            var binding = new WeakBindingExpression(this.Target, "PropertyA", this.Source, this.Binding);
+            binding.Bind();
+            return binding;
         }
     }
 }

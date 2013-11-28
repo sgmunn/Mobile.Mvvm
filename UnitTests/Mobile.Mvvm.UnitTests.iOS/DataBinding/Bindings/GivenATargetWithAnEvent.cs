@@ -21,7 +21,8 @@ namespace Mobile.Mvvm.UnitTests.Bindings
         {
             this.SetUp();
             var binding = new Binding("Property1");
-            var expression = new EventTriggeredBindingExpression<EventTargetObject, EventArgs>(this.Target, "PropertyA", "PropertyChanged", this.Source, binding).Bind();
+            var expression = new EventTriggeredBindingExpression<EventTargetObject, EventArgs>(this.Target, "PropertyA", "PropertyChanged", this.Source, binding);
+            expression.Bind();
 
             this.Target.PropertyA = Guid.NewGuid().ToString();
 
@@ -33,7 +34,8 @@ namespace Mobile.Mvvm.UnitTests.Bindings
         {
             this.SetUp();
             var binding = new Binding("Property1");
-            var expression = new EventTriggeredBindingExpression<EventTargetObject, EventArgs>(this.Target, "PropertyA", "PropertyChanged", this.Source, binding).Bind();
+            var expression = new EventTriggeredBindingExpression<EventTargetObject, EventArgs>(this.Target, "PropertyA", "PropertyChanged", this.Source, binding);
+            expression.Bind();
 
             expression.Dispose();
 

@@ -52,7 +52,10 @@ namespace Mobile.Mvvm.UnitTests.Bindings
         
         protected override IBindingExpression GetExpression()
         {
-            return new BindingExpression(this.Target, "PropertyA", this.Source, this.Binding).Bind();
+            var binding = new BindingExpression(this.Target, "PropertyA", this.Source, this.Binding);
+            binding.Bind();
+
+            return binding;
         }
 
     }

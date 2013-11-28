@@ -13,7 +13,8 @@ namespace Mobile.Mvvm.UnitTests.Bindings
             base.SetUp();
             this.Binding = new Binding("Property2");
             this.Binding.Converter = BooleanToStringConverter.Instance;
-            this.Expression = new WeakBindingExpression(this.Target, "PropertyA", this.Source, this.Binding).Bind();
+            this.Expression = new WeakBindingExpression(this.Target, "PropertyA", this.Source, this.Binding);
+            this.Expression.Bind();
         }
         
         [Test]
