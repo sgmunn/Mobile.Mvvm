@@ -71,8 +71,7 @@ namespace Mobile.Mvvm.DataBinding
         {
             foreach (var exp in expressions)
             {
-                exp.Bind();
-                this.exresssions.Add(exp);
+                this.Add(exp);
             }
         }        
 
@@ -85,9 +84,9 @@ namespace Mobile.Mvvm.DataBinding
 
         public void ClearBindings()
         {
-            foreach (var expression in exresssions)
+            foreach (var bindable in this.bindables)
             {
-                expression.Dispose();
+                bindable.Dispose();
             }
 
             this.exresssions.Clear();
