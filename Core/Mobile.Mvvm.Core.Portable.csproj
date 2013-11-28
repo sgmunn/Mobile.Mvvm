@@ -105,7 +105,7 @@
     <Compile Include="ViewModel\Dialog\HeaderElementViewModel.cs" />
     <Compile Include="ViewModel\Dialog\CaptionedViewModelPropertyWrapper.cs" />
     <Compile Include="ViewModel\ViewModelLoader.cs" />
-    <Compile Include="RootViewModelContextExtensions.cs" />
+    <Compile Include="BindingContextExtensions.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <ItemGroup>

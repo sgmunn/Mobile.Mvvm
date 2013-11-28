@@ -1,5 +1,5 @@
 // --------------------------------------------------------------------------------------------------------------------
-// <copyright file="RootViewModelContextExtensions.cs" company="sgmunn">
+// <copyright file="BindingContextExtensions.cs" company="sgmunn">
 //   (c) sgmunn 2013  
 //
 //   Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated 
@@ -21,27 +21,25 @@
 namespace Mobile.Mvvm
 {
     using System;
-    using System.Collections.Generic;
-    using System.Linq;
     using Mobile.Mvvm.DataBinding;
     using Mobile.Mvvm.ViewModel;
 
-    public static class RootViewModelContextExtensions
+    public static class BindingContextExtensions
     {
-        public static void Bind(this IRootViewModelContext viewModelContext, object target, string targetProperty, object viewModel, string viewModelProperty)
+        public static void Bind(this IBindingContext bindingContext, object target, string targetProperty, object viewModel, string viewModelProperty)
         {
-            viewModelContext.Bindings.AddBinding(target, targetProperty, viewModel, viewModelProperty);
+            bindingContext.Bindings.AddBinding(target, targetProperty, viewModel, viewModelProperty);
         }
 
-        public static void Bind(this IRootViewModelContext viewModelContext, object target, string targetProperty, string targetEventName, object viewModel, string viewModelProperty)
+        public static void Bind(this IBindingContext bindingContext, object target, string targetProperty, string targetEventName, object viewModel, string viewModelProperty)
         {
-            viewModelContext.Bindings.AddEventTriggeredBinding(target, targetProperty, targetEventName, viewModel, viewModelProperty);
+            bindingContext.Bindings.AddEventTriggeredBinding(target, targetProperty, targetEventName, viewModel, viewModelProperty);
         }
 
-        public static void Bind(this IRootViewModelContext viewModelContext, object target, string commandEvent, string enabledProperty, ICommand command)
+        public static void Bind(this IBindingContext bindingContext, object target, string commandEvent, string enabledProperty, ICommand command)
         {
             var binding = new WeakCommandBinding(target, commandEvent, enabledProperty, command);
-            viewModelContext.Bindings.Add(binding);
+            bindingContext.Bindings.Add(binding);
         }
     }
     
