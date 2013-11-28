@@ -57,8 +57,7 @@ namespace Mobile.Mvvm
         public static IBindingExpression AddBinding(this IBindingScope scope, object target, string propertyName, IPropertyAccessor propertyAccessor, object source, Binding binding)
         {
             var expression = new WeakBindingExpression(target, propertyName, propertyAccessor, source, binding);
-            expression.Bind();
-            scope.AddBinding(expression);
+            scope.Add(expression);
             return expression;
         }
         
@@ -68,7 +67,7 @@ namespace Mobile.Mvvm
         public static IBindingExpression[] AddBindings(this IBindingScope scope, object target, object source, string bindingExpression)
         {
             var expressions = BindingParser.Default.Parse(bindingExpression, target, source);
-            scope.AddBinding(expressions);
+            scope.Add(expressions);
             return expressions;
         }
 
@@ -78,8 +77,7 @@ namespace Mobile.Mvvm
         public static IBindingExpression AddBinding(this IBindingScope scope, object target, string propertyName, object source, Binding binding)
         {
             var expression = new WeakBindingExpression(target, propertyName, source, binding);
-            expression.Bind();
-            scope.AddBinding(expression);
+            scope.Add(expression);
             return expression;
         }
         
@@ -111,12 +109,12 @@ namespace Mobile.Mvvm
             // don't remove all bindings, just the ones we replaced
             foreach (var expression in bindingExpressions)
             {
-                scope.RemoveBinding(expression);
+                scope.Remove(expression);
             }
 
             foreach (var expression in newExpressions)
             {
-                scope.AddBinding(expression);
+                scope.Add(expression);
             }
         }
         
@@ -129,7 +127,7 @@ namespace Mobile.Mvvm
 
             foreach (var expression in bindingExpressions)
             {
-                scope.RemoveBinding(expression);
+                scope.Remove(expression);
             }
         }
 
@@ -158,8 +156,7 @@ namespace Mobile.Mvvm
         public static IBindingExpression AddEventTriggeredBinding(this IBindingScope scope, object target, string targetPropertyName, string eventName, object source, string sourcePropertyName)
         {
             var expression = new EventTriggeredBindingExpression(target, targetPropertyName, eventName, source, new Binding(sourcePropertyName));
-            expression.Bind();
-            scope.AddBinding(expression);
+            scope.Add(expression);
             return expression;
         }
     }

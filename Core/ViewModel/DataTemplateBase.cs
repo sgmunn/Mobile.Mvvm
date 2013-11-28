@@ -142,7 +142,7 @@ namespace Mobile.Mvvm.ViewModel
             if (!string.IsNullOrEmpty(this.BindingExpression))
             {
                 var exp = BindingParser.Default.Parse(this.BindingExpression, view, viewModel);
-                context.Bindings.AddBinding(exp);
+                context.Bindings.Add(exp);
             }
         }
 

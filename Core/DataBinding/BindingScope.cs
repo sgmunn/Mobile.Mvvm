@@ -22,18 +22,20 @@ namespace Mobile.Mvvm.DataBinding
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
 
     public sealed class BindingScope : IBindingScope
     {
-        private readonly List<IBindingExpression> exresssions;
         private readonly List<IBindable> bindables;
 
         public BindingScope()
         {
-            this.exresssions = new List<IBindingExpression>();
             this.bindables = new List<IBindable>();
         }
 
+        /// <summary>
+        /// Adds the binding and binds it.
+        /// </summary>
         public void Add(IBindable bindable)
         {
             if (bindable == null)
@@ -43,64 +45,48 @@ namespace Mobile.Mvvm.DataBinding
 
             this.bindables.Add(bindable);
             bindable.Bind();
+        }
 
-            var expression = bindable as IBindingExpression;
-            if (expression != null)
+        public void Remove(IBindable bindable)
+        {
+            if (bindable == null)
             {
-                this.exresssions.Add(expression);
+                throw new ArgumentNullException("bindable");
             }
+
+            bindable.Dispose();
+            this.bindables.Remove(bindable);
         }
 
         /// <summary>
-        /// Adds the binding expression and binds the expression.
+        /// Adds the bindings and binds them.
         /// </summary>
-        public void AddBinding(IBindingExpression expression)
+        public void Add(IBindable[] bindables)
         {
-            if (expression == null)
-            {
-                throw new ArgumentNullException("expression");
-            }
-
-            this.Add(expression);
-        }        
-        
-        /// <summary>
-        /// Adds the binding expressions and binds the expressions.
-        /// </summary>
-        public void AddBinding(IBindingExpression[] expressions)
-        {
-            foreach (var exp in expressions)
+            foreach (var exp in bindables)
             {
                 this.Add(exp);
             }
         }        
 
-        public void RemoveBinding(IBindingExpression expression)
-        {
-            expression.Dispose();
-            this.exresssions.Remove(expression);
-            this.bindables.Remove(expression);
-        }        
-
-        public void ClearBindings()
+        public void Clear()
         {
             foreach (var bindable in this.bindables)
             {
                 bindable.Dispose();
             }
 
-            this.exresssions.Clear();
             this.bindables.Clear();
         }        
 
         public IBindingExpression[] GetBindingExpressions()
         {
-            return this.exresssions.ToArray();
+            return this.bindables.OfType<IBindingExpression>().ToArray();
         }        
 
         public void Dispose()
         {
-            this.ClearBindings();
+            this.Clear();
         }       
     }
 }

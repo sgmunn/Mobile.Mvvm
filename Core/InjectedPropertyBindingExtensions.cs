@@ -66,7 +66,7 @@ namespace Mobile.Mvvm
             var scope = target.GetBindingScopeOrDefault();
 
             var expression = new WeakBindingExpression(target, propertyName, source, binding);
-            scope.AddBinding(expression);
+            scope.Add(expression);
             return expression;
         }
     }

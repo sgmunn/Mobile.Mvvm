@@ -98,7 +98,7 @@ namespace Mobile.Mvvm.ViewModel.Dialog
 
         public void Clear()
         {
-            this.Bindings.ClearBindings();
+            this.Bindings.Clear();
             this.InjectedProperties.Clear();
             this.groups.Clear();
             this.ReloadView();
@@ -106,7 +106,7 @@ namespace Mobile.Mvvm.ViewModel.Dialog
 
         public void Load(IList<IGroup> sourceList)
         {
-            this.Bindings.ClearBindings();
+            this.Bindings.Clear();
             this.InjectedProperties.Clear();
             this.groups.Clear();
             if (sourceList != null)

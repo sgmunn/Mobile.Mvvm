@@ -58,7 +58,7 @@ namespace Mobile.Mvvm.DataBinding
         {
             if (e.OldValue != null)
             {
-                ((IBindingScope)e.OldValue).ClearBindings();
+                ((IBindingScope)e.OldValue).Clear();
             }
         }
     }
