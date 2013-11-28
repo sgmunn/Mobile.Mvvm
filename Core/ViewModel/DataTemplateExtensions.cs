@@ -17,7 +17,6 @@
 //   IN THE SOFTWARE.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
-using System.Reflection;
 
 namespace Mobile.Mvvm.ViewModel
 {
@@ -67,7 +66,7 @@ namespace Mobile.Mvvm.ViewModel
                 var cell = getConvertView(template.Id);
                 if (cell != null && template.ViewType != null)
                 {
-                    if (!template.ViewType.GetTypeInfo().IsAssignableFrom(cell.GetType().GetTypeInfo()))
+                    if (!template.ViewType.IsAssignableFrom(cell.GetType()))
                     {
                         cell = null;
                     }

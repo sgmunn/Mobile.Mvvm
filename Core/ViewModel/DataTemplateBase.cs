@@ -17,7 +17,6 @@
 //   IN THE SOFTWARE.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
-using System.Reflection;
 
 namespace Mobile.Mvvm.ViewModel
 {
@@ -85,7 +84,7 @@ namespace Mobile.Mvvm.ViewModel
                 return TemplateMatch.Exact;
             }
 
-            if (this.ViewModelType.GetTypeInfo().IsAssignableFrom(viewModel.GetType().GetTypeInfo()))
+            if (this.ViewModelType.IsAssignableFrom(viewModel.GetType()))
             {
                 if (this.filter != null && this.filter((TViewModel)viewModel))
                 {
