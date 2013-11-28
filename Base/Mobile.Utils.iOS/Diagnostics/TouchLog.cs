@@ -33,6 +33,16 @@ namespace Mobile.Utils.Diagnostics
         {
             Console.WriteLine(message, args);
         }
+
+        public void Debug(string message)
+        {
+            Console.WriteLine(message);
+        }
+
+        public void Debug(string message, params object[] args)
+        {
+            Console.WriteLine(message, args);
+        }
     }
 }
 
