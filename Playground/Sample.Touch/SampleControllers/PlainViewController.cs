@@ -66,10 +66,11 @@ namespace Sample.Touch.SampleControllers
             this.viewModelContext = new RootViewModelContext(this, this.viewModel);
 
             this.viewModelContext.Bind(label1, "Text", this.viewModel, "Property1");
+            this.viewModelContext.Bind(label2, "Text", this.viewModel, "Property1");
             this.viewModelContext.Bind(field1, "Text", "Ended", this.viewModel, "Property1");
-
-            //this.viewModelContext.Bind(this.button1, "Click", "Enabled", this.viewModel.TestCommand);
-            //this.viewModelContext.Bind(this.button2, "Click", "Enabled", this.viewModel.TestCommand2);
+           
+            this.viewModelContext.Bind(this.button1, "TouchUpInside", "Enabled", this.viewModel.TestCommand);
+            this.viewModelContext.Bind(this.button2, "TouchUpInside", "Enabled", this.viewModel.TestCommand2);
         }
 
         private void UpdateViewModel(string x)
