@@ -32,8 +32,6 @@ namespace Sample.Droid.SampleActivities
 
         private Button button2;
 
-        private ICommandBinding binding;
-
         private ViewModelLoader<string> loader;
 
         public override void OnCreate(Bundle savedInstanceState)

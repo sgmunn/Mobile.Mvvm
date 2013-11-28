@@ -114,6 +114,10 @@
       <Project>{006A5EBF-B149-405D-B866-05426D08AFFF}</Project>
       <Name>SampleViewModels</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\Base\Mobile.Utils.iOS\Mobile.Utils.iOS.csproj">
+      <Project>{72B38D4A-74D3-4741-91A3-22D85D84EFB8}</Project>
+      <Name>Mobile.Utils.iOS</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <InterfaceDefinition Include="SampleControllers\PlainViewController.xib" />

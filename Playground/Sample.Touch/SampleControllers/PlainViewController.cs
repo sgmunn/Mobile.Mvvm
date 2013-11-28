@@ -5,12 +5,19 @@ using MonoTouch.UIKit;
 using Mobile.Mvvm;
 using Mobile.Mvvm.ViewModel;
 using SampleViewModels;
+using System.Threading.Tasks;
+using System.Threading;
+using Mobile.Utils.Tasks;
 
 namespace Sample.Touch.SampleControllers
 {
     public partial class PlainViewController : UIViewController
     {
+        private SimpleViewModel viewModel;
+
         private IRootViewModelContext viewModelContext;
+
+        private ViewModelLoader<string> loader;
 
         public PlainViewController() : base ("PlainViewController", null)
         {
@@ -27,15 +34,58 @@ namespace Sample.Touch.SampleControllers
         public override void ViewDidLoad()
         {
             base.ViewDidLoad();
-
-            var vm = new SimpleViewModel();
-            this.viewModelContext = new RootViewModelContext(this, vm);
-
-            vm.Property1 = "Hello";
-
-            this.viewModelContext.Bindings.AddBinding(this.label1, "Text", this.viewModelContext.ViewModel, "Property1");
-
-            this.viewModelContext.Bindings.AddEventTriggeredBinding(this.field1, "Text", "Ended", this.viewModelContext.ViewModel, "Property1");
+            this.viewModel = new SimpleViewModel();
+            this.loader = new ViewModelLoader<string>(this.GetHelloWorld, this.UpdateViewModel, new UIThreadScheduler());
         }
+
+        public override void ViewWillAppear(bool animated)
+        {
+            base.ViewWillAppear(animated);
+            this.BindViewModel();
+            this.loader.Load();
+        }
+
+        public override void ViewDidDisappear(bool animated)
+        {
+            this.loader.Cancel();
+            this.viewModelContext.Dispose();
+
+            base.ViewDidDisappear(animated);
+        }
+
+        private void BindViewModel()
+        {
+            this.viewModelContext = new RootViewModelContext(this, this.viewModel);
+
+            this.viewModelContext.Bind(label1, "Text", this.viewModel, "Property1");
+            this.viewModelContext.Bind(field1, "Text", "Ended", this.viewModel, "Property1");
+
+            //this.viewModelContext.Bind(this.button1, "Click", "Enabled", this.viewModel.TestCommand);
+            //this.viewModelContext.Bind(this.button2, "Click", "Enabled", this.viewModel.TestCommand2);
+        }
+
+        private void UpdateViewModel(string x)
+        {
+            //this.RunOnUiThread(() => {
+            Console.WriteLine("update UI thread {0}", System.Threading.Thread.CurrentThread.ManagedThreadId);
+            ((SimpleViewModel)this.viewModelContext.ViewModel).Property1 = x;
+            //});
+        }
+
+        private async Task<string> GetHelloWorld(CancellationToken cancel)
+        {
+            Console.WriteLine("get data thread {0}", System.Threading.Thread.CurrentThread.ManagedThreadId);
+            await Task.Delay(3000).ConfigureAwait(false);
+
+            if (cancel.IsCancellationRequested)
+            {
+                Console.WriteLine("cancelled");
+                return "xx";
+            }
+
+            Console.WriteLine(">> get data thread {0}", System.Threading.Thread.CurrentThread.ManagedThreadId);
+            return "hello world";
+        }
+
     }
 }
