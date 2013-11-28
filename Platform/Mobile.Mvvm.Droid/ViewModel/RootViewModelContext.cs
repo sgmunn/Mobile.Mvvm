@@ -36,5 +36,18 @@ namespace Mobile.Mvvm.ViewModel
 
         // custom inflater like MvxAndroidBindingContext
     }
+
+    public class RootViewModelContext<TViewModel> : RootViewModelContextBase<TViewModel>
+    {
+        public RootViewModelContext(Context context, TViewModel viewModel) 
+            : base(viewModel)
+        {
+            this.Context = context;
+        }
+
+        public Context Context { get; private set; }
+
+        // custom inflater like MvxAndroidBindingContext
+    }
 }
 

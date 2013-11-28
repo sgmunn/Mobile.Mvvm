@@ -22,8 +22,12 @@ namespace Mobile.Mvvm.ViewModel
 {
     using System;
 
-    public interface IRootViewModelContext : IBindingContext
+    public interface IRootViewModelContext : IRootViewModelContext<IViewModel>
     {
-        IViewModel ViewModel { get; }
+    }
+
+    public interface IRootViewModelContext<TViewModel> : IBindingContext
+    {
+        TViewModel ViewModel { get; }
     }
 }

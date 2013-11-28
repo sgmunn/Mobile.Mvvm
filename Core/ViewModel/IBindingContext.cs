@@ -23,7 +23,7 @@ namespace Mobile.Mvvm.ViewModel
     using System;
     using Mobile.Mvvm.DataBinding;
 
-    public interface IBindingContext
+    public interface IBindingContext : IDisposable
     {
         IBindingScope Bindings { get; }
 
