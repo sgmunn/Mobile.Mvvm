@@ -1,5 +1,5 @@
 // --------------------------------------------------------------------------------------------------------------------
-// <copyright file="RootViewModelContext.cs" company="sgmunn">
+// <copyright file="ViewModelContext.cs" company="sgmunn">
 //   (c) sgmunn 2013  
 //
 //   Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated 
@@ -21,17 +21,17 @@
 namespace Mobile.Mvvm.ViewModel
 {
     using System;
-    using MonoTouch.UIKit;
+    using Android.Content;
 
-    public class RootViewModelContext : RootViewModelContextBase
+    public class ViewModelContext : ViewModelContextBase
     {
-        public RootViewModelContext(UIViewController context, IViewModel viewModel) 
+        public ViewModelContext(Context context, IViewModel viewModel) 
             : base(viewModel)
         {
             this.Context = context;
         }
 
-        public UIViewController Context { get; private set; }
+        public Context Context { get; private set; }
     }
-    
 }
+

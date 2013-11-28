@@ -15,7 +15,7 @@ namespace Sample.Touch.SampleControllers
     {
         private SimpleViewModel viewModel;
 
-        private IRootViewModelContext viewModelContext;
+        private ViewModelContext bindingContext;
 
         private ViewModelLoader<string> loader;
 
@@ -56,28 +56,28 @@ namespace Sample.Touch.SampleControllers
         public override void ViewDidDisappear(bool animated)
         {
             this.loader.Cancel();
-            this.viewModelContext.Dispose();
+            this.bindingContext.Dispose();
 
             base.ViewDidDisappear(animated);
         }
 
         private void BindViewModel()
         {
-            this.viewModelContext = new RootViewModelContext(this, this.viewModel);
+            this.bindingContext = new ViewModelContext(this, this.viewModel);
 
-            this.viewModelContext.Bind(label1, "Text", this.viewModel, "Property1");
-            this.viewModelContext.Bind(label2, "Text", this.viewModel, "Property1");
-            this.viewModelContext.Bind(field1, "Text", "Ended", this.viewModel, "Property1");
+            this.bindingContext.Bind(label1, "Text", this.viewModel, "Property1");
+            this.bindingContext.Bind(label2, "Text", this.viewModel, "Property1");
+            this.bindingContext.Bind(field1, "Text", "Ended", this.viewModel, "Property1");
            
-            this.viewModelContext.Bind(this.button1, "TouchUpInside", "Enabled", this.viewModel.TestCommand);
-            this.viewModelContext.Bind(this.button2, "TouchUpInside", "Enabled", this.viewModel.TestCommand2);
+            this.bindingContext.Bind(this.button1, "TouchUpInside", "Enabled", this.viewModel.TestCommand);
+            this.bindingContext.Bind(this.button2, "TouchUpInside", "Enabled", this.viewModel.TestCommand2);
         }
 
         private void UpdateViewModel(string x)
         {
             //this.RunOnUiThread(() => {
             Console.WriteLine("update UI thread {0}", System.Threading.Thread.CurrentThread.ManagedThreadId);
-            ((SimpleViewModel)this.viewModelContext.ViewModel).Property1 = x;
+            ((SimpleViewModel)this.bindingContext.ViewModel).Property1 = x;
             //});
         }
 

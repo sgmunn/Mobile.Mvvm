@@ -1,5 +1,5 @@
 // --------------------------------------------------------------------------------------------------------------------
-// <copyright file="RootViewModelContextBase.cs" company="sgmunn">
+// <copyright file="ViewModelContextBase.cs" company="sgmunn">
 //   (c) sgmunn 2013  
 //
 //   Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated 
@@ -25,9 +25,9 @@ namespace Mobile.Mvvm.ViewModel
     /// <summary>
     /// Defines a context for a view model, bindings and injected properties.
     /// </summary>
-    public abstract class RootViewModelContextBase : BindingContextBase, IRootViewModelContext
+    public abstract class ViewModelContextBase : BindingContextBase, IRootViewModelContext
     {
-        protected RootViewModelContextBase(IViewModel viewModel)
+        protected ViewModelContextBase(IViewModel viewModel)
         {
             this.ViewModel = viewModel;
         }

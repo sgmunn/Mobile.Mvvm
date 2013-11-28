@@ -43,10 +43,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Resources\Resource.designer.cs" />
-    <Compile Include="ViewModel\RootViewModelContext.cs" />
     <Compile Include="ViewModel\DataTemplate.cs" />
     <Compile Include="ViewModel\Dialog\GroupedListSource.cs" />
     <Compile Include="ViewModel\Dialog\GroupExtensions.cs" />
+    <Compile Include="Views\SampleLayoutInflator.cs" />
+    <Compile Include="ViewModel\ViewModelContext.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\AboutResources.txt" />
@@ -58,6 +59,7 @@
   <ItemGroup>
     <Folder Include="ViewModel\" />
     <Folder Include="ViewModel\Dialog\" />
+    <Folder Include="Views\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Core\Mobile.Mvvm.Core.Portable.csproj">

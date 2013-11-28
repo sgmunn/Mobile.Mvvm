@@ -17,6 +17,9 @@ using Mobile.Mvvm.DataBinding;
 using Android.Util;
 using System.Threading;
 using System.Collections.Concurrent;
+using Android.Support.V4.App;
+using Mobile.Utils.Tasks;
+using System.Threading.Tasks;
 
 namespace Sample.Droid.SampleActivities
 {
@@ -99,68 +102,94 @@ namespace Sample.Droid.SampleActivities
         }
     }
 
-
-    public class MyFactory : Java.Lang.Object, LayoutInflater.IFactory
+    public class SimpleListFragment : Android.Support.V4.App.ListFragment
     {
-        private readonly ConcurrentDictionary<string, string> bindings;
+        ////private SimpleViewModel viewModel;
 
-        public static MyFactory Default = new MyFactory();
-
-        public MyFactory()
-        {
-            this.bindings = new ConcurrentDictionary<string, string>();    
-        }
-
-        public string BindingForId(int id)
-        {
-            var key = "@" + id.ToString();  
-            if (this.bindings.ContainsKey(key))
-            {
-                return this.bindings[key];
-            }
-
-            return string.Empty;
-        }
-
-        public View OnCreateView(string name, Context context, Android.Util.IAttributeSet attrs)
-        {
-            var x = attrs.GetAttributeValue("http://schemas.android.com/apk/res/android", "id");
-            //Console.WriteLine("id = {0}", x);
-            
-            var y = attrs.GetAttributeValue("http://schemas.mvvm.mobile.com/android", "bind");
-            //Console.WriteLine("bind = {0}", y);
-
-            if (!string.IsNullOrEmpty(x) && !string.IsNullOrEmpty(y))
-            {
-                this.bindings.TryAdd(x, y);
-            }
-
-            return null;
-        }
-    }
-
-
-    [Activity (Label = "SimpleListActivity")]            
-    public class SimpleListActivity : ListActivity
-    {
+        // this is a binding context
         private GroupedListSource source;
 
-        protected override void OnCreate(Bundle savedInstanceState)
+        private ViewModelLoader<string> loader;
+
+        public override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
 
-            Android.Views.LayoutInflater.From(this).Factory = MyFactory.Default;
-
-            // view did load equivalent
-            this.source = new GroupedListSource(this, DialogDataTemplates.DefaultTemplates(this));
-            this.source.ListView = this.ListView;
-
-            // Register the TableView's data source
-            this.ListView.Adapter = this.source;
-
-            this.source.Bind(SimpleListViewModel.GetViewModel());
+            ////this.viewModel = new SimpleViewModel();
         }
+
+        public override Android.Views.View OnCreateView(Android.Views.LayoutInflater inflater, Android.Views.ViewGroup container, Bundle savedInstanceState)
+        {
+            this.source = new GroupedListSource(this.Activity, DialogDataTemplates.DefaultTemplates(this.Activity));
+
+            // we can either put this here or in will appear, depending on what we need to do with loading for the VM.
+            this.loader = new ViewModelLoader<string>(this.GetHelloWorld, this.UpdateViewModel, new UIThreadScheduler());
+
+            return base.OnCreateView(inflater, container, savedInstanceState);
+        }
+
+        public override void OnPause()
+        {
+            this.loader.Cancel();
+            this.source.Dispose();
+            base.OnPause();
+        }
+
+        public override void OnResume()
+        {
+            base.OnResume();
+            this.BindViewModel();
+            this.loader.Load();
+        }
+
+        private void BindViewModel()
+        {
+            this.source.ListView = this.ListView;
+        }
+
+        private void UpdateViewModel(string x)
+        {
+            //this.RunOnUiThread(() => {
+            Console.WriteLine("update UI thread {0}", System.Threading.Thread.CurrentThread.ManagedThreadId);
+
+            // do this here so that we get the indeterminate progress
+            this.ListAdapter = this.source;
+            var data = SimpleListViewModel.GetViewModel();
+            this.source.Bind(data);
+
+            // ((SimpleViewModel)this.viewModelContext.ViewModel).Property1 = x;
+            //});
+        }
+
+        private async Task<string> GetHelloWorld(CancellationToken cancel)
+        {
+            Console.WriteLine("get data thread {0}", System.Threading.Thread.CurrentThread.ManagedThreadId);
+            await Task.Delay(3000).ConfigureAwait(false);
+
+            if (cancel.IsCancellationRequested)
+            {
+                Console.WriteLine("cancelled");
+                return "xx";
+            }
+
+            Console.WriteLine(">> get data thread {0}", System.Threading.Thread.CurrentThread.ManagedThreadId);
+            return "hello world";
+        }
+
     }
 
+    [Activity (Label = "SimpleListActivity")]            
+    public class SimpleListActivity : FragmentActivity
+    {
+        protected override void OnCreate(Bundle savedInstanceState)
+        {
+            base.OnCreate(savedInstanceState);
+            this.SetContentView(Resource.Layout.EmptyFrameLayout);
+
+            this.SupportFragmentManager.BeginTransaction()
+                .Replace(Resource.Id.content, new SimpleListFragment())
+                .Commit();
+        }
+    }
 }
 

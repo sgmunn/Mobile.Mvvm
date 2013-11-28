@@ -78,7 +78,6 @@
     <Compile Include="DataBinding\A.cs" />
     <Compile Include="DataBinding\EventTriggeredBindingExpression.cs" />
     <Compile Include="ViewModel\IRootViewModelContext.cs" />
-    <Compile Include="ViewModel\RootViewModelContextBase.cs" />
     <Compile Include="ViewModel\IBindingContext.cs" />
     <Compile Include="ICommand.cs" />
     <Compile Include="DelegateCommand.cs" />
@@ -106,6 +105,7 @@
     <Compile Include="ViewModel\Dialog\CaptionedViewModelPropertyWrapper.cs" />
     <Compile Include="ViewModel\ViewModelLoader.cs" />
     <Compile Include="BindingContextExtensions.cs" />
+    <Compile Include="ViewModel\ViewModelContextBase.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <ItemGroup>

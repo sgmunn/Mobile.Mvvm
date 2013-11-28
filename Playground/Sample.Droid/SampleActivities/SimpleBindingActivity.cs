@@ -22,7 +22,7 @@ namespace Sample.Droid.SampleActivities
     {
         private SimpleViewModel viewModel;
 
-        private IRootViewModelContext viewModelContext;
+        private ViewModelContext bindingContext;
 
         private TextView label1;
 
@@ -51,20 +51,15 @@ namespace Sample.Droid.SampleActivities
             this.button2 = view.FindViewById<Button>(Resource.Id.button2);
 
             // we can either put this here or in will appear, depending on what we need to do with loading for the VM.
-              this.loader = new ViewModelLoader<string>(this.GetHelloWorld, this.UpdateViewModel, new UIThreadScheduler());
+            this.loader = new ViewModelLoader<string>(this.GetHelloWorld, this.UpdateViewModel, new UIThreadScheduler());
 
             return view;
-        }
-
-        public override void OnAttach(Android.App.Activity activity)
-        {
-            base.OnAttach(activity);
         }
 
         public override void OnPause()
         {
             this.loader.Cancel();
-            this.viewModelContext.Dispose();
+            this.bindingContext.Dispose();
             base.OnPause();
         }
 
@@ -77,20 +72,20 @@ namespace Sample.Droid.SampleActivities
 
         private void BindViewModel()
         {
-            this.viewModelContext = new RootViewModelContext(this.Activity, this.viewModel);
+            this.bindingContext = new ViewModelContext(this.Activity, this.viewModel);
 
-            this.viewModelContext.Bind(label1, "Text", this.viewModel, "Property1");
-            this.viewModelContext.Bind(field1, "Text", "TextChanged", this.viewModel, "Property1");
+            this.bindingContext.Bind(label1, "Text", this.viewModel, "Property1");
+            this.bindingContext.Bind(field1, "Text", "TextChanged", this.viewModel, "Property1");
 
-            this.viewModelContext.Bind(this.button1, "Click", "Enabled", this.viewModel.TestCommand);
-            this.viewModelContext.Bind(this.button2, "Click", "Enabled", this.viewModel.TestCommand2);
+            this.bindingContext.Bind(this.button1, "Click", "Enabled", this.viewModel.TestCommand);
+            this.bindingContext.Bind(this.button2, "Click", "Enabled", this.viewModel.TestCommand2);
         }
 
         private void UpdateViewModel(string x)
         {
             //this.RunOnUiThread(() => {
             Console.WriteLine("update UI thread {0}", System.Threading.Thread.CurrentThread.ManagedThreadId);
-            ((SimpleViewModel)this.viewModelContext.ViewModel).Property1 = x;
+            ((SimpleViewModel)this.bindingContext.ViewModel).Property1 = x;
             //});
         }
 
@@ -110,10 +105,8 @@ namespace Sample.Droid.SampleActivities
         }
     }
 
-
-
-    [Activity (Label = "PlainActivity")]            
-    public class PlainActivity : FragmentActivity
+    [Activity (Label = "Simple Binding")]            
+    public class SimpleBindingActivity : FragmentActivity
     {
         protected override void OnCreate(Bundle savedInstanceState)
         {

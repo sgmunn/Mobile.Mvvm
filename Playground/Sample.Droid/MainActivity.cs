@@ -1,8 +1,6 @@
 using System;
 using Android.App;
 using Android.Content;
-using Android.Runtime;
-using Android.Views;
 using Android.Widget;
 using Android.OS;
 using Sample.Droid.SampleActivities;
@@ -20,8 +18,6 @@ namespace Sample.Droid
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
-            
-            Android.Views.LayoutInflater.From(this).Factory = MyFactory.Default;
 
             // Set our view from the "main" layout resource
             this.SetContentView(Resource.Layout.Main);
@@ -30,7 +26,7 @@ namespace Sample.Droid
             // and attach an event to it
             this.FindViewById<Button>(Resource.Id.button1).Click += delegate
             {
-                var intent = new Intent(this, typeof(PlainActivity));
+                var intent = new Intent(this, typeof(SimpleBindingActivity));
                 this.StartActivity(intent);
             };
 

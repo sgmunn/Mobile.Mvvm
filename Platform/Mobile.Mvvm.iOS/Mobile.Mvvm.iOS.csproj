@@ -43,9 +43,9 @@
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
-    <Compile Include="ViewModel\RootViewModelContext.cs" />
     <Compile Include="ViewModel\DataTemplate.cs" />
     <Compile Include="ViewModel\Dialog\GroupedListSource.cs" />
+    <Compile Include="ViewModel\ViewModelContext.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Core\Mobile.Mvvm.Core.Portable.csproj">
