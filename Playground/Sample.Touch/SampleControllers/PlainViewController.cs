@@ -36,6 +36,12 @@ namespace Sample.Touch.SampleControllers
             base.ViewDidLoad();
             this.viewModel = new SimpleViewModel();
             this.loader = new ViewModelLoader<string>(this.GetHelloWorld, this.UpdateViewModel, new UIThreadScheduler());
+
+            // 
+            this.NavigationItem.RightBarButtonItem = new UIBarButtonItem(UIBarButtonSystemItem.Play, (s, e) =>
+            {
+                    this.NavigationController.PushViewController(new SimpleListController(), true);
+            });
         }
 
         public override void ViewWillAppear(bool animated)
