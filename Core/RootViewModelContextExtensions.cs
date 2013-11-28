@@ -1,5 +1,5 @@
 // --------------------------------------------------------------------------------------------------------------------
-// <copyright file="RootViewModelContext.cs" company="sgmunn">
+// <copyright file="RootViewModelContextExtensions.cs" company="sgmunn">
 //   (c) sgmunn 2013  
 //
 //   Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated 
@@ -18,20 +18,31 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace Mobile.Mvvm.ViewModel
+namespace Mobile.Mvvm
 {
     using System;
-    using Android.Content;
+    using System.Collections.Generic;
+    using System.Linq;
+    using Mobile.Mvvm.DataBinding;
+    using Mobile.Mvvm.ViewModel;
 
-    public class RootViewModelContext : RootViewModelContextBase
+    public static class RootViewModelContextExtensions
     {
-        public RootViewModelContext(Context context, IViewModel viewModel) 
-            : base(viewModel)
+        public static void Bind(this IRootViewModelContext viewModelContext, object target, string targetProperty, object viewModel, string viewModelProperty)
         {
-            this.Context = context;
+            viewModelContext.Bindings.AddBinding(target, targetProperty, viewModel, viewModelProperty);
         }
 
-        public Context Context { get; private set; }
-    }
-}
+        public static void Bind(this IRootViewModelContext viewModelContext, object target, string targetProperty, string targetEventName, object viewModel, string viewModelProperty)
+        {
+            viewModelContext.Bindings.AddEventTriggeredBinding(target, targetProperty, targetEventName, viewModel, viewModelProperty);
+        }
 
+        public static void Bind(this IRootViewModelContext viewModelContext, object target, string commandEvent, string enabledProperty, ICommand command)
+        {
+            var binding = new WeakCommandBinding(target, commandEvent, enabledProperty, command);
+            viewModelContext.Bindings.Add(binding);
+        }
+    }
+    
+}

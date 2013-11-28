@@ -34,7 +34,7 @@ namespace Mobile.Mvvm.DataBinding
 //        string TargetEventName { get; }
 //    }
 
-    public interface IBindingExpression : IDisposable
+    public interface IBindingExpression : IBindable
     {
         /// <summary>
         /// Gets the target of the binding
@@ -64,7 +64,7 @@ namespace Mobile.Mvvm.DataBinding
         /// <summary>
         /// Sets up the binding and updates target
         /// </summary>
-        IBindingExpression Bind();
+        //void Bind();
 
         /// <summary>
         /// Updates the target object from the source object.

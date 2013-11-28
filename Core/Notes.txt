@@ -1,3 +1,12 @@
+# Binding from layout
+
+It is possible for us to bind from layout if we have our own LayoutInflator that records what the binding are
+for each view and we then pass that off to a bind method. I'm not so worried by that for now but can be an area
+of research later on.
+
+
+
+
 - Activity state management example and best practice
   -- load / save view model to fake data store
   -- not just view model "data" state, but enabled / disabled properties as well

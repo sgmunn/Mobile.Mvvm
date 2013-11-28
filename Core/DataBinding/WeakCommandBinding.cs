@@ -26,10 +26,14 @@ namespace Mobile.Mvvm.DataBinding
 {
     using System;
 
-    public interface ICommandBinding : IDisposable
+    public interface IBindable : IDisposable
+    {
+        void Bind();
+    }
+
+    public interface ICommandBinding : IBindable
     {
         void ExecuteCommand();
-        void Bind();
     }
 
     

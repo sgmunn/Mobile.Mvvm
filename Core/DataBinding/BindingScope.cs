@@ -26,10 +26,29 @@ namespace Mobile.Mvvm.DataBinding
     public sealed class BindingScope : IBindingScope
     {
         private readonly List<IBindingExpression> exresssions;
+        private readonly List<IBindable> bindables;
 
         public BindingScope()
         {
             this.exresssions = new List<IBindingExpression>();
+            this.bindables = new List<IBindable>();
+        }
+
+        public void Add(IBindable bindable)
+        {
+            if (bindable == null)
+            {
+                throw new ArgumentNullException("bindable");
+            }
+
+            this.bindables.Add(bindable);
+            bindable.Bind();
+
+            var expression = bindable as IBindingExpression;
+            if (expression != null)
+            {
+                this.exresssions.Add(expression);
+            }
         }
 
         /// <summary>
@@ -42,8 +61,7 @@ namespace Mobile.Mvvm.DataBinding
                 throw new ArgumentNullException("expression");
             }
 
-            expression.Bind();
-            this.exresssions.Add(expression);
+            this.Add(expression);
         }        
         
         /// <summary>
@@ -62,6 +80,7 @@ namespace Mobile.Mvvm.DataBinding
         {
             expression.Dispose();
             this.exresssions.Remove(expression);
+            this.bindables.Remove(expression);
         }        
 
         public void ClearBindings()
@@ -72,6 +91,7 @@ namespace Mobile.Mvvm.DataBinding
             }
 
             this.exresssions.Clear();
+            this.bindables.Clear();
         }        
 
         public IBindingExpression[] GetBindingExpressions()

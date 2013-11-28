@@ -36,5 +36,7 @@ namespace Mobile.Mvvm.DataBinding
         void RemoveBinding(IBindingExpression expression);
         void ClearBindings();
         IBindingExpression[] GetBindingExpressions();
+
+        void Add(IBindable bindable);
     }
 }

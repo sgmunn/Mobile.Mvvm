@@ -12,6 +12,9 @@ using Android.Util;
 using System.Threading;
 using Mobile.Utils.Tasks;
 using Android.Support.V4.App;
+using Android.Views;
+using System.Collections.Concurrent;
+using Android.Content;
 
 namespace Sample.Droid.SampleActivities
 {
@@ -19,7 +22,7 @@ namespace Sample.Droid.SampleActivities
     {
         private SimpleViewModel viewModel;
 
-        private IRootViewModelContext<SimpleViewModel> viewModelContext;
+        private IRootViewModelContext viewModelContext;
 
         private TextView label1;
 
@@ -75,20 +78,13 @@ namespace Sample.Droid.SampleActivities
 
         private void BindViewModel()
         {
-            this.viewModelContext = new RootViewModelContext<SimpleViewModel>(this.Activity, this.viewModel);
+            this.viewModelContext = new RootViewModelContext(this.Activity, this.viewModel);
 
-            this.viewModelContext.Bindings.AddBinding(label1, "Text", this.viewModel, "Property1");
+            this.viewModelContext.Bind(label1, "Text", this.viewModel, "Property1");
+            this.viewModelContext.Bind(field1, "Text", "TextChanged", this.viewModel, "Property1");
 
-            this.viewModelContext.Bindings.AddEventTriggeredBinding(field1, "Text", "TextChanged", this.viewModel, "Property1");
-
-            // the idea here is to be able to bind, Click to an command and Enabled to CanExecute
-            //this.button1.Click += (sender, e) => vm.TestCommand.Execute();
-            //this.button1.Enabled = vm.TestCommand.GetCanExecute();
-            this.binding = new WeakCommandBinding(this.button1, "Click", "Enabled", this.viewModel.TestCommand);
-            this.binding.Bind();
-
-            this.binding = new WeakCommandBinding(this.button2, "Click", "Enabled", this.viewModel.TestCommand2);
-            this.binding.Bind();
+            this.viewModelContext.Bind(this.button1, "Click", "Enabled", this.viewModel.TestCommand);
+            this.viewModelContext.Bind(this.button2, "Click", "Enabled", this.viewModel.TestCommand2);
         }
 
         private void UpdateViewModel(string x)
@@ -113,7 +109,6 @@ namespace Sample.Droid.SampleActivities
             Console.WriteLine(">> get data thread {0}", System.Threading.Thread.CurrentThread.ManagedThreadId);
             return "hello world";
         }
-
     }
 
 

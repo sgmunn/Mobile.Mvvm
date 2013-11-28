@@ -138,7 +138,7 @@ namespace Mobile.Mvvm.DataBinding
         /// <summary>
         /// Sets up the binding and updates target
         /// </summary>
-        public IBindingExpression Bind()
+        public void Bind()
         {
             var s = this.Source;
 
@@ -146,7 +146,7 @@ namespace Mobile.Mvvm.DataBinding
             this.RegisterForPropertyChangesOnTarget();
 
             this.UpdateTarget(s);
-            return this;
+            //return this;
         }
         
         /// <summary>

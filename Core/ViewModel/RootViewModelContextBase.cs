@@ -25,23 +25,13 @@ namespace Mobile.Mvvm.ViewModel
     /// <summary>
     /// Defines a context for a view model, bindings and injected properties.
     /// </summary>
-    public abstract class RootViewModelContextBase : RootViewModelContextBase<IViewModel>
+    public abstract class RootViewModelContextBase : BindingContextBase, IRootViewModelContext
     {
-        protected RootViewModelContextBase(IViewModel viewModel) : base(viewModel)
-        {
-        }
-    }
-
-    /// <summary>
-    /// Defines a context for a view model, bindings and injected properties.
-    /// </summary>
-    public abstract class RootViewModelContextBase<TViewModel> : BindingContextBase, IRootViewModelContext<TViewModel>
-    {
-        protected RootViewModelContextBase(TViewModel viewModel)
+        protected RootViewModelContextBase(IViewModel viewModel)
         {
             this.ViewModel = viewModel;
         }
 
-        public TViewModel ViewModel { get; private set; }
+        public IViewModel ViewModel { get; private set; }
     }
 }
