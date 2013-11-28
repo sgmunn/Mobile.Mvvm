@@ -35,6 +35,8 @@ namespace Sample.Touch.SampleControllers
         {
             base.ViewDidLoad();
             this.viewModel = new SimpleViewModel();
+
+            // we can either put this here or in will appear, depending on what we need to do with loading for the VM.
             this.loader = new ViewModelLoader<string>(this.GetHelloWorld, this.UpdateViewModel, new UIThreadScheduler());
 
             // 

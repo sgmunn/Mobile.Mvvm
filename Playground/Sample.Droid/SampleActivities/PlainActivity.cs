@@ -50,7 +50,8 @@ namespace Sample.Droid.SampleActivities
             this.button1 = view.FindViewById<Button>(Resource.Id.button1);
             this.button2 = view.FindViewById<Button>(Resource.Id.button2);
 
-            this.loader = new ViewModelLoader<string>(this.GetHelloWorld, this.UpdateViewModel, new UIThreadScheduler());
+            // we can either put this here or in will appear, depending on what we need to do with loading for the VM.
+              this.loader = new ViewModelLoader<string>(this.GetHelloWorld, this.UpdateViewModel, new UIThreadScheduler());
 
             return view;
         }
