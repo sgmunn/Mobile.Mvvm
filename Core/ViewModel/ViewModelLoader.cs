@@ -34,6 +34,8 @@ namespace Mobile.Mvvm.ViewModel
 
         private readonly TaskScheduler scheduler;
 
+        private Task loadTask;
+
         public ViewModelLoader(Func<CancellationToken, Task<TData>> loader, Action<TData> updater)
         {
             this.loader = loader;
@@ -51,12 +53,21 @@ namespace Mobile.Mvvm.ViewModel
 
         public virtual Task Load()
         {
-            if (this.scheduler != null)
+            if (this.loadTask != null)
             {
-                return this.loader(this.cancellation.Token).ContinueWith(this.UpdateViewModel, this.cancellation.Token, TaskContinuationOptions.NotOnCanceled, this.scheduler);
+                return this.loadTask;
             }
 
-            return this.loader(this.cancellation.Token).ContinueWith(this.UpdateViewModel, this.cancellation.Token);
+            if (this.scheduler != null)
+            {
+                this.loadTask = this.loader(this.cancellation.Token).ContinueWith(this.UpdateViewModel, this.cancellation.Token, TaskContinuationOptions.NotOnCanceled, this.scheduler);
+            }
+            else
+            {
+                this.loadTask = this.loader(this.cancellation.Token).ContinueWith(this.UpdateViewModel, this.cancellation.Token);
+            }
+
+            return this.loadTask;
         }
 
         public virtual void UpdateViewModel(Task<TData> task)
