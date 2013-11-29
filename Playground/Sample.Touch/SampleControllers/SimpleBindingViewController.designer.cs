@@ -10,7 +10,7 @@ using System.CodeDom.Compiler;
 namespace Sample.Touch.SampleControllers
 {
 	[Register ("PlainViewController")]
-	partial class PlainViewController
+	partial class SimpleBindingViewController
 	{
 		[Outlet]
 		MonoTouch.UIKit.UIButton button1 { get; set; }

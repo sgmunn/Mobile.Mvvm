@@ -8,10 +8,12 @@ using SampleViewModels;
 using System.Threading.Tasks;
 using System.Threading;
 using Mobile.Utils.Tasks;
+using Mobile.Mvvm.UI;
+using Mobile.Utils;
 
 namespace Sample.Touch.SampleControllers
 {
-    public partial class PlainViewController : UIViewController
+    public partial class SimpleBindingViewController : UIViewController
     {
         private SimpleViewModel viewModel;
 
@@ -19,7 +21,7 @@ namespace Sample.Touch.SampleControllers
 
         private ViewModelLoader<string> loader;
 
-        public PlainViewController() : base ("PlainViewController", null)
+        public SimpleBindingViewController() : base ("PlainViewController", null)
         {
         }
 

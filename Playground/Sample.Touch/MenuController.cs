@@ -37,7 +37,7 @@ namespace Sample.Touch
             groups.Add(section1);
 
             section1.Rows.Add(new StringElementViewModel("Simple Binding") { TapCommand = new DelegateCommand(() => {
-                this.NavigationController.PushViewController(new PlainViewController(), true);
+                this.NavigationController.PushViewController(new SimpleBindingViewController(), true);
             }) });
 
             section1.Rows.Add(new StringElementViewModel("Simple List") { TapCommand = new DelegateCommand(() => {
@@ -46,6 +46,10 @@ namespace Sample.Touch
 
             section1.Rows.Add(new StringElementViewModel("Wrapped View Model Binding To List") { TapCommand = new DelegateCommand(() => {
                 this.NavigationController.PushViewController(new SimpleViewModelController(), true);
+            }) });
+
+            section1.Rows.Add(new StringElementViewModel("Widget Samples") { TapCommand = new DelegateCommand(() => {
+                this.NavigationController.PushViewController(new WidgetSampleController(), true);
             }) });
 
 

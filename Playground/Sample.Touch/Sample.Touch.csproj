@@ -91,14 +91,15 @@
   <ItemGroup>
     <Compile Include="Main.cs" />
     <Compile Include="AppDelegate.cs" />
-    <Compile Include="SampleControllers\PlainViewController.cs" />
-    <Compile Include="SampleControllers\PlainViewController.designer.cs">
-      <DependentUpon>PlainViewController.cs</DependentUpon>
-    </Compile>
     <Compile Include="SampleControllers\SimpleListControllerCell.cs" />
     <Compile Include="SampleControllers\SimpleListControllerSource.cs" />
     <Compile Include="MenuController.cs" />
     <Compile Include="SampleControllers\SimpleListController.cs" />
+    <Compile Include="SampleControllers\WidgetSampleController.cs" />
+    <Compile Include="SampleControllers\SimpleBindingViewController.cs" />
+    <Compile Include="SampleControllers\SimpleBindingViewController.designer.cs">
+      <DependentUpon>SimpleBindingViewController.cs</DependentUpon>
+    </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
@@ -117,6 +118,10 @@
     <ProjectReference Include="..\..\Base\Mobile.Utils.iOS\Mobile.Utils.iOS.csproj">
       <Project>{72B38D4A-74D3-4741-91A3-22D85D84EFB8}</Project>
       <Name>Mobile.Utils.iOS</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Base\Mobile.Utils.Portable\Mobile.Utils.Portable.csproj">
+      <Project>{502C0CAA-31C1-478F-878A-7002D76FE461}</Project>
+      <Name>Mobile.Utils.Portable</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

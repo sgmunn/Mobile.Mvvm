@@ -40,12 +40,14 @@
     <Folder Include="Resources\" />
     <Folder Include="ViewModel\" />
     <Folder Include="ViewModel\Dialog\" />
+    <Folder Include="UI\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
     <Compile Include="ViewModel\DataTemplate.cs" />
     <Compile Include="ViewModel\Dialog\GroupedListSource.cs" />
     <Compile Include="ViewModel\ViewModelContext.cs" />
+    <Compile Include="UI\AlertMessageDisplay.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Core\Mobile.Mvvm.Core.Portable.csproj">
