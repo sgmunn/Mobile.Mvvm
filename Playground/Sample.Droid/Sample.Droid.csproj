@@ -51,6 +51,7 @@
     <Compile Include="SampleActivities\SimpleListActivity.cs" />
     <Compile Include="SampleActivities\SimpleViewModelActivity.cs" />
     <Compile Include="SampleActivities\SimpleBindingActivity.cs" />
+    <Compile Include="SampleActivities\WidgetSampleActivity.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\AboutResources.txt" />
@@ -63,6 +64,7 @@
     <AndroidResource Include="Resources\drawable\Icon.png" />
     <AndroidResource Include="Resources\layout\PlainActivityLayout.axml" />
     <AndroidResource Include="Resources\layout\EmptyFrameLayout.axml" />
+    <AndroidResource Include="Resources\layout\WidgetSample.axml" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Novell\Novell.MonoDroid.CSharp.targets" />
   <ItemGroup>

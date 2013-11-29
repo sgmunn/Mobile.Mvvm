@@ -19,4 +19,9 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:text="Binding list to a VM" />
+    <Button
+        android:id="@+id/button4"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="Widget Sample" />
 </LinearLayout>

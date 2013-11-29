@@ -104,8 +104,6 @@ namespace Sample.Droid.SampleActivities
 
     public class SimpleListFragment : Android.Support.V4.App.ListFragment
     {
-        ////private SimpleViewModel viewModel;
-
         // this is a binding context
         private GroupedListSource source;
 
@@ -114,8 +112,6 @@ namespace Sample.Droid.SampleActivities
         public override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
-
-            ////this.viewModel = new SimpleViewModel();
         }
 
         public override Android.Views.View OnCreateView(Android.Views.LayoutInflater inflater, Android.Views.ViewGroup container, Bundle savedInstanceState)
@@ -149,16 +145,12 @@ namespace Sample.Droid.SampleActivities
 
         private void UpdateViewModel(string x)
         {
-            //this.RunOnUiThread(() => {
             Console.WriteLine("update UI thread {0}", System.Threading.Thread.CurrentThread.ManagedThreadId);
 
             // do this here so that we get the indeterminate progress
             this.ListAdapter = this.source;
             var data = SimpleListViewModel.GetViewModel();
             this.source.Bind(data);
-
-            // ((SimpleViewModel)this.viewModelContext.ViewModel).Property1 = x;
-            //});
         }
 
         private async Task<string> GetHelloWorld(CancellationToken cancel)
@@ -186,9 +178,13 @@ namespace Sample.Droid.SampleActivities
             base.OnCreate(savedInstanceState);
             this.SetContentView(Resource.Layout.EmptyFrameLayout);
 
-            this.SupportFragmentManager.BeginTransaction()
-                .Replace(Resource.Id.content, new SimpleListFragment())
-                .Commit();
+            var fragment = this.SupportFragmentManager.FindFragmentByTag("content");
+            if (fragment == null)
+            {
+                this.SupportFragmentManager.BeginTransaction()
+                    .Replace(Resource.Id.content, new SimpleListFragment(), "content")
+                    .Commit();
+            }
         }
     }
 }

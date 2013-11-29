@@ -39,6 +39,27 @@ namespace SampleViewModels
             set
             {
                 this.SetPropertyValue("Property1", value);
+                if (value == "xxx")
+                {
+                    this.Property1Error = "Sorry, this value is invalid";
+                }
+                else
+                {
+                    this.Property1Error = null;
+                }
+            }
+        }
+
+        public string Property1Error
+        {
+            get
+            {
+                return (string)this.GetPropertyValue("Property1Error");
+            }
+
+            set
+            {
+                this.SetPropertyValue("Property1Error", value);
             }
         }
 

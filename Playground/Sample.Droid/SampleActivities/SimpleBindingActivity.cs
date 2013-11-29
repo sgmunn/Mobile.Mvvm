@@ -15,6 +15,7 @@ using Android.Support.V4.App;
 using Android.Views;
 using System.Collections.Concurrent;
 using Android.Content;
+using Mobile.Mvvm.UI;
 
 namespace Sample.Droid.SampleActivities
 {
@@ -77,22 +78,25 @@ namespace Sample.Droid.SampleActivities
             this.bindingContext.Bind(label1, "Text", this.viewModel, "Property1");
             this.bindingContext.Bind(field1, "Text", "TextChanged", this.viewModel, "Property1");
 
+            // TODO: when we have property path bindings working, we can bind to Errors[Property1] for example
+            this.bindingContext.Bind(field1, "Error", this.viewModel, "Property1Error");
+
             this.bindingContext.Bind(this.button1, "Click", "Enabled", this.viewModel.TestCommand);
             this.bindingContext.Bind(this.button2, "Click", "Enabled", this.viewModel.TestCommand2);
         }
 
         private void UpdateViewModel(string x)
         {
-            //this.RunOnUiThread(() => {
             Console.WriteLine("update UI thread {0}", System.Threading.Thread.CurrentThread.ManagedThreadId);
             ((SimpleViewModel)this.bindingContext.ViewModel).Property1 = x;
-            //});
         }
 
         private async Task<string> GetHelloWorld(CancellationToken cancel)
         {
-            Console.WriteLine("get data thread {0}", System.Threading.Thread.CurrentThread.ManagedThreadId);
+            Console.WriteLine("1st get data thread {0}", System.Threading.Thread.CurrentThread.ManagedThreadId);
             await Task.Delay(3000).ConfigureAwait(false);
+
+            Console.WriteLine("2nd get data thread {0}", System.Threading.Thread.CurrentThread.ManagedThreadId);
 
             if (cancel.IsCancellationRequested)
             {
@@ -113,9 +117,13 @@ namespace Sample.Droid.SampleActivities
             base.OnCreate(savedInstanceState);
             this.SetContentView(Resource.Layout.EmptyFrameLayout);
 
-            this.SupportFragmentManager.BeginTransaction()
-                .Replace(Resource.Id.content, new SimpleBindingFragment())
-                .Commit();
+            var fragment = this.SupportFragmentManager.FindFragmentByTag("content");
+            if (fragment == null)
+            {
+                this.SupportFragmentManager.BeginTransaction()
+                    .Replace(Resource.Id.content, new SimpleBindingFragment(), "content")
+                    .Commit();
+            }
         }
     }
 }

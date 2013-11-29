@@ -48,6 +48,7 @@
     <Compile Include="ViewModel\Dialog\GroupExtensions.cs" />
     <Compile Include="Views\SampleLayoutInflator.cs" />
     <Compile Include="ViewModel\ViewModelContext.cs" />
+    <Compile Include="UI\AlertDialogMessageDisplay.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\AboutResources.txt" />
@@ -60,6 +61,7 @@
     <Folder Include="ViewModel\" />
     <Folder Include="ViewModel\Dialog\" />
     <Folder Include="Views\" />
+    <Folder Include="UI\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Core\Mobile.Mvvm.Core.Portable.csproj">
