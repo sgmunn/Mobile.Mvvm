@@ -5,6 +5,10 @@ for each view and we then pass that off to a bind method. I'm not so worried by 
 of research later on.
 
 
+# Inline Error display
+
+For Android, we can simply bind "Error" on a text edit to a property on the view model
+For iOS, we can either build our own widget or we can inject something like Mxv IErrorDisplay
 
 
 - Activity state management example and best practice
