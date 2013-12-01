@@ -14,6 +14,7 @@
     <MonoAndroidResourcePrefix>Resources</MonoAndroidResourcePrefix>
     <MonoAndroidAssetsPrefix>Assets</MonoAndroidAssetsPrefix>
     <AssemblyName>Mobile.Mvvm.Droid</AssemblyName>
+    <TargetFrameworkVersion>v4.2</TargetFrameworkVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -27,7 +28,6 @@
     <ConsolePause>false</ConsolePause>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>full</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release</OutputPath>
     <ErrorReport>prompt</ErrorReport>
@@ -48,7 +48,7 @@
     <Compile Include="ViewModel\Dialog\GroupExtensions.cs" />
     <Compile Include="Views\SampleLayoutInflator.cs" />
     <Compile Include="ViewModel\ViewModelContext.cs" />
-    <Compile Include="UI\AlertDialogMessageDisplay.cs" />
+    <Compile Include="App\AlertDialogMessageDisplay.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\AboutResources.txt" />
@@ -61,7 +61,7 @@
     <Folder Include="ViewModel\" />
     <Folder Include="ViewModel\Dialog\" />
     <Folder Include="Views\" />
-    <Folder Include="UI\" />
+    <Folder Include="App\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Core\Mobile.Mvvm.Core.Portable.csproj">

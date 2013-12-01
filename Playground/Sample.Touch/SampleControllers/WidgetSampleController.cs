@@ -24,7 +24,7 @@ using Mobile.Mvvm.ViewModel.Dialog;
 using System.Collections.Generic;
 using Mobile.Mvvm;
 using Sample.Touch.SampleControllers;
-using Mobile.Mvvm.UI;
+using Mobile.Mvvm.App;
 using Mobile.Utils;
 
 namespace Sample.Touch.SampleControllers

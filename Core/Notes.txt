@@ -10,6 +10,19 @@ of research later on.
 For Android, we can simply bind "Error" on a text edit to a property on the view model
 For iOS, we can either build our own widget or we can inject something like Mxv IErrorDisplay
 
+# Message display
+
+We have an interface for displaying simple messages to the user and acting upon an "Ok" / "Cancel" choice. This interface 
+can be passed into a view model.
+
+
+dialog and view model binding support
+date time picker
+menus - need to work out the best approach for android.
+navigation
+
+
+
 
 - Activity state management example and best practice
   -- load / save view model to fake data store

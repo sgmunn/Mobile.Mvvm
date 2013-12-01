@@ -106,16 +106,16 @@
     <Compile Include="ViewModel\ViewModelLoader.cs" />
     <Compile Include="BindingContextExtensions.cs" />
     <Compile Include="ViewModel\ViewModelContextBase.cs" />
-    <Compile Include="UI\IMessageDisplay.cs" />
-    <Compile Include="UI\MessageDisplayParams.cs" />
-    <Compile Include="UI\MessageDisplay.cs" />
+    <Compile Include="App\IMessageDisplay.cs" />
+    <Compile Include="App\MessageDisplayParams.cs" />
+    <Compile Include="App\MessageDisplay.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <ItemGroup>
     <Folder Include="ViewModel\" />
     <Folder Include="DataBinding\" />
     <Folder Include="ViewModel\Dialog\" />
-    <Folder Include="UI\" />
+    <Folder Include="App\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Notes.txt" />

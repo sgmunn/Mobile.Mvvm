@@ -8,7 +8,7 @@ using SampleViewModels;
 using System.Threading.Tasks;
 using System.Threading;
 using Mobile.Utils.Tasks;
-using Mobile.Mvvm.UI;
+using Mobile.Mvvm.App;
 using Mobile.Utils;
 
 namespace Sample.Touch.SampleControllers

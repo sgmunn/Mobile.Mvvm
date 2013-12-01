@@ -15,7 +15,7 @@ using Android.Support.V4.App;
 using Android.Views;
 using System.Collections.Concurrent;
 using Android.Content;
-using Mobile.Mvvm.UI;
+using Mobile.Mvvm.App;
 
 namespace Sample.Droid.SampleActivities
 {

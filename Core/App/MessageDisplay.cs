@@ -1,5 +1,5 @@
 // --------------------------------------------------------------------------------------------------------------------
-// <copyright file="IMessageDisplay.cs" company="sgmunn">
+// <copyright file="MessageDisplay.cs" company="sgmunn">
 //   (c) sgmunn 2013  
 //
 //   Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated 
@@ -18,24 +18,38 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace Mobile.Mvvm.UI
+namespace Mobile.Mvvm.App
 {
     using System;
 
-    public interface IMessageDisplay
+    public abstract class MessageDisplay : IMessageDisplay
     {
-        /// <summary>
-        /// Displays a message to the user and blocks the UI for the user to respond
-        /// </summary>
-        void DisplayMessage(string title, string message);
+        public void DisplayMessage(string title, string message)
+        {
+            this.DisplayMessage(new MessageDisplayParams(title, message));
+        }
 
-        void DisplayMessage(string title, string message, Action positiveAction);
+        public void DisplayMessage(string title, string message, Action positiveAction)
+        {
+            this.DisplayMessage(new MessageDisplayParams(title, message).OnPositiveSelected(positiveAction));
+        }
 
-        void DisplayMessage(string title, string message, Action positiveAction, Action negativeAction);
+        public void DisplayMessage(string title, string message, Action positiveAction, Action negativeAction)
+        {
+            this.DisplayMessage(new MessageDisplayParams(title, message).OnPositiveSelected(positiveAction).OnNegativeSelected(negativeAction));
+        }
 
-        void DisplayMessage(MessageDisplayParams messageParams);
+        public virtual void DisplayMessage(MessageDisplayParams messageParams)
+        {
+        }
 
-        void DisplayToast(string message, bool quick);
+        public void DisplayToast(string message, bool quick)
+        {
+            this.DisplayToast(new MessageDisplayParams(null, message), quick);
+        }
+
+        public virtual void DisplayToast(MessageDisplayParams messageParams, bool quick)
+        {
+        }
     }
 }
-
