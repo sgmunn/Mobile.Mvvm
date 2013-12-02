@@ -52,6 +52,8 @@
     <Compile Include="IStateBundle.cs" />
     <Compile Include="StateBundle.cs" />
     <Compile Include="IPersistentState.cs" />
+    <Compile Include="ObjectExtensions.cs" />
+    <Compile Include="PropertyBag.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <ItemGroup>

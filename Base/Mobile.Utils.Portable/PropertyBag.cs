@@ -18,7 +18,7 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace Mobile.Mvvm.ViewModel
+namespace Mobile.Utils
 {
     using System;
     using System.Collections.Generic;
@@ -47,7 +47,7 @@ namespace Mobile.Mvvm.ViewModel
                 return;
             }
 
-            if ((current == null && value != null) || !current.Equals(value))
+            if (!current.SafeEquals(value))
             {
                 this.bag[propertyName] = value;
                 if (this.onPropertySet != null)
