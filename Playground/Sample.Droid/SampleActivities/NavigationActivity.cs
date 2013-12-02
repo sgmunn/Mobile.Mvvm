@@ -38,7 +38,8 @@ namespace Sample.Droid.SampleActivities
 
             var b = new AlertDialog.Builder(this.Activity)
                     //.setIcon(R.drawable.alert_dialog_icon)
-                .SetTitle("new title");
+                .SetTitle("new title")
+                .SetNegativeButton("Cancel", (s,e) => {});
 //                    .setPositiveButton(R.string.alert_dialog_ok,
 //                        new DialogInterface.OnClickListener() {
 //                            public void onClick(DialogInterface dialog, int whichButton) {

@@ -4,49 +4,54 @@ It is possible for us to bind from layout if we have our own LayoutInflator that
 for each view and we then pass that off to a bind method. I'm not so worried by that for now but can be an area
 of research later on.
 
-
 # Inline Error display
 
 For Android, we can simply bind "Error" on a text edit to a property on the view model
 For iOS, we can either build our own widget or we can inject something like Mxv IErrorDisplay
 
-# Message display
+# Message Display
 
 We have an interface for displaying simple messages to the user and acting upon an "Ok" / "Cancel" choice. This interface 
 can be passed into a view model.
 
+# Navigation Service
 
-dialog and view model binding support
-date time picker
-menus - need to work out the best approach for android.
-navigation
+We have an interface that allows a simple push / pop based navigation model as well as a modal dialog option. We might want to 
+enhance this as we go. Additionally, we can pass simple string arguments to the target of the navigation.
+
+# Binding to Dialogs
+
+As dialogs are essentially Fragments or ViewControllers, we use the same binding technique that we would use for any other view.
+
+# Menus
+
+No direct support for menus as yet. Our strategy this menus at the moment would be to invoke commands on the view model and to
+update enabled states based on those ICommands.
+
+# Activity / Fragment Lifecycle
+
+Load and bind the view model in OnResume, save / unbind in OnPause.
+Remember that it is not just the view model's underlying data that is saved, but transient state like a button enabled state etc.
 
 
 
 
-- Activity state management example and best practice
-  -- load / save view model to fake data store
-  -- not just view model "data" state, but enabled / disabled properties as well
-  -- things that might be consider transient state -- which is what OnSave... is supposed to be for
 
+# TODO's
 
-- custom layout inflator for android, apply bindings from the view axml
+- date time picker
 - complex property paths
 - look at support for $parent, $root in property paths
     this will require that binding scopes or contexts have a notion of a parent scope 
     we can use this notion for injected properties as well.
-
 - need to get converter binding expressions parsed
     need to register binding converters, type mapper etc
     need to parse binding parameter, basic types I guess (int, decimal, string)
-    
-- time to start using this in an application
-    berry app maybe?
+- custom layout inflator for android, apply bindings from the view axml
+- ?? injection scopes need to have parent scopes so that you can get the injected value of an object regardless of where that value was added.
 
 
-- injection scopes need to have parent scopes so that you can get the injected value of an object regardless of where that value was added.
-
-- need a mechanism to bind a button to a command
+# Other Thoughts
 
 - binding parser, like mvvm cross or ko
     - focus on being able to do the standard stuff + converters
@@ -73,10 +78,6 @@ navigation
     - our binding scope gives us a way of grouping bindings together for lifetime management purposes
     - for this to work, we need a way to link view models in a parent - child chain
 
-- need to support more complex property paths, eg TextLabel.Text
-
-- need to support having bindings in the view axml for android, as this will be the preferred mechanism
-
 - for iOS, we need to have either strong bindings or create our own stubb classes
     not sure of the best way to go, on the face of it, a simple wrapper for UITableViewCell would probably do
     the reason is that UITableViewCell, being a "built in" UIxxx control, gets GC'd before the iOS native 
@@ -87,23 +88,6 @@ navigation
     I might just go for the wrapper classes as it will give the basis of the dialog style views
 
 
-- Activity - this is a root
-    owns a RootViewModelContext
-    fragments have a binding context that links to the root?
-
-    OnCreate
-        create UI, create view model, bind
-        start load task, if not already, and continue with the load of the UI
-        load task must be cancellable, so that the UI update isn't done if we navigate away
-        can extend this to one for each fragment
-
-    OnPause
-        save data from view model to persistent state
-        cancel load task
-
-    - load needs to realise if can be reused, or if it needs to re-execute
-      cases: activity only, activity and fragment (retain, non retain, add to back stack etc)
-      switch activity, keep activities, don't keep activities.
 
 
 
