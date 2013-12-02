@@ -9,56 +9,10 @@ using SampleViewModels;
 using Mobile.Mvvm.ViewModel.Dialog;
 using Mobile.Mvvm;
 using Mobile.Mvvm.DataBinding;
+using Mobile.Mvvm.Controls;
 
 namespace Sample.Touch.SampleControllers
 {
-    public class TableViewCell : UITableViewCell
-    {
-        private string text;
-
-        public TableViewCell(string reuseIdentifer)
-            : base(UITableViewCellStyle.Default, reuseIdentifer)
-        {
-        }
-        
-        public TableViewCell(UITableViewCellStyle style, string reuseIdentifer)
-            : base(style, reuseIdentifer)
-        {
-        }
-
-        ~TableViewCell()
-        {
-            Console.WriteLine("~TableViewCell {0}", this.GetType().Name);
-        }
-
-        public string Text
-        {
-            get
-            {
-                return this.text;
-            }
-
-            set
-            {
-                if (value != this.text)
-                {
-                    this.text = value;
-                    this.TextChanged(value);
-                }
-            }
-        }
-
-        protected virtual void TextChanged(string newValue)
-        {
-            this.TextLabel.Text = newValue;
-            // this.LayoutSubviews();
-            //this.SetNeedsDisplay();
-        }
-    }
-
-
-
-
     public static class DialogDataTemplates
     {
         public static IEnumerable<IDataTemplate> DefaultTemplates()

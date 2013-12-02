@@ -41,6 +41,7 @@
     <Folder Include="ViewModel\" />
     <Folder Include="ViewModel\Dialog\" />
     <Folder Include="App\" />
+    <Folder Include="Controls\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
@@ -50,6 +51,7 @@
     <Compile Include="App\AlertMessageDisplay.cs" />
     <Compile Include="App\NavigationService.cs" />
     <Compile Include="App\INavigationTarget.cs" />
+    <Compile Include="Controls\TableViewCell.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Core\Mobile.Mvvm.Core.Portable.csproj">
