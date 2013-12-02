@@ -43,7 +43,7 @@ namespace Mobile.Utils
                     {
                         formatter.Serialize(stream, value);
                         stream.Position = 0;
-                        var bytes = stream.GetBuffer();
+                        var bytes = stream.ToArray();
                         var array = new NSMutableArray();
                         foreach (var b in bytes)
                         {

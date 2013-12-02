@@ -44,7 +44,7 @@ namespace Mobile.Utils
                         formatter.Serialize(stream, value);
                         stream.Position = 0;
 
-                        bundle.PutByteArray(kv.Key, stream.GetBuffer());
+                        bundle.PutByteArray(kv.Key, stream.ToArray());
                     }
                 }
             }
