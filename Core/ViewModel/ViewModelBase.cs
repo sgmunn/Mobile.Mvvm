@@ -89,9 +89,9 @@ namespace Mobile.Mvvm.ViewModel
             this.properties.SetProperty(propertyName, value);
         }
         
-        protected object GetPropertyValue(string propertyName, object defaultValue = null)
+        protected T GetPropertyValue<T>(string propertyName, T defaultValue = default(T))
         {
-            return this.properties.GetProperty(propertyName, defaultValue);
+            return (T)this.properties.GetProperty(propertyName, defaultValue);
         }
 
         protected virtual void NotifyPropertyChanged(string propertyName)
@@ -106,7 +106,18 @@ namespace Mobile.Mvvm.ViewModel
 
     public abstract class ViewModelBase<TData> : ViewModelBase, ILoadable<TData>
     {
-        public bool IsLoaded { get; private set; }
+        public bool IsLoaded
+        {
+            get
+            {
+                return this.GetPropertyValue<bool>("IsLoaded", false);
+            }
+
+            private set
+            {
+                this.SetPropertyValue("IsLoaded", value);
+            }
+        }
 
         public virtual void Load(TData data)
         {

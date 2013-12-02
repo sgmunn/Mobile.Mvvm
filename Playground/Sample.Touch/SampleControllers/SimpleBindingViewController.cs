@@ -77,18 +77,8 @@ namespace Sample.Touch.SampleControllers
 
         private void UpdateViewModel(string x)
         {
-            //this.RunOnUiThread(() => {
             Console.WriteLine("update UI thread {0}", System.Threading.Thread.CurrentThread.ManagedThreadId);
             ((SimpleViewModel)this.bindingContext.ViewModel).Property1 = x;
-
-
-            var dict = new NSMutableDictionary();
-            this.viewModel.SaveState().SaveToDictionary(dict);
-
-            this.viewModel.RestoreState(dict.ToStateBundle());
-
-
-            //});
         }
 
         private async Task<string> GetHelloWorld(CancellationToken cancel)

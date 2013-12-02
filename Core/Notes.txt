@@ -39,7 +39,16 @@ Loading a view model has 2 parts to it. The first is loading the underlying data
 The second part that can be loaded is the UI state associated with the view model, what aspects of the customer are being viewed, or an uncommited 
 change to the customer for example.
 
-ILoadable<T> loads a view model with the underlying data for the view model, by implementing this we can use a view model loader to 
+ILoadable<T> loads a view model with the underlying data for the view model, by implementing this we can use a view model loader to automatically load
+the data into the view model. 
+
+# View Model State Persistence
+
+A view model can persist whatever state it needs to between user sesssions - in Android this could be rotation, launching another activity etc, in iOS we might persist state
+for when the app is terminated in the background.
+
+A view model can persist a portion of it's state, if that makes sense or, what is perhaps more useful, all of it's properties. Doing so would reduce the need to use
+the view model loader, especially if that is an expensive operation.
 
 
 

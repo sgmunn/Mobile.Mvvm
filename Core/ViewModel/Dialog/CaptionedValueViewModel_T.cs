@@ -47,7 +47,7 @@ namespace Mobile.Mvvm.ViewModel.Dialog
         {
             get
             {
-                return (T)this.GetPropertyValue("Value");
+                return this.GetPropertyValue<T>("Value");
             }
 
             set

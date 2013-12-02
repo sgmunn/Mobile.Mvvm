@@ -35,7 +35,7 @@ namespace Mobile.Mvvm.ViewModel.Dialog
         {
             get
             {
-                return (IViewModel)this.GetPropertyValue("Header");
+                return this.GetPropertyValue<IViewModel>("Header");
             }
 
             set
@@ -48,7 +48,7 @@ namespace Mobile.Mvvm.ViewModel.Dialog
         {
             get
             {
-                return (IViewModel)this.GetPropertyValue("Footer");
+                return this.GetPropertyValue<IViewModel>("Footer");
             }
 
             set

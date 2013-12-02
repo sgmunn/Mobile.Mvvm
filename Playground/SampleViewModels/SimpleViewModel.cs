@@ -32,7 +32,7 @@ namespace SampleViewModels
         {
             get
             {
-                return (string)this.GetPropertyValue("Property1");
+                return this.GetPropertyValue<string>("Property1");
             }
 
             set
@@ -53,7 +53,7 @@ namespace SampleViewModels
         {
             get
             {
-                return (string)this.GetPropertyValue("Property1Error");
+                return this.GetPropertyValue<string>("Property1Error");
             }
 
             set
@@ -66,7 +66,7 @@ namespace SampleViewModels
         {
             get
             {
-                return (string)this.GetPropertyValue("Property2");
+                return this.GetPropertyValue<string>("Property2");
             }
 
             set
@@ -79,7 +79,7 @@ namespace SampleViewModels
         {
             get
             {
-                return (bool)this.GetPropertyValue("BoolProperty1");
+                return this.GetPropertyValue<bool>("BoolProperty1");
             }
 
             set
@@ -92,7 +92,7 @@ namespace SampleViewModels
         {
             get
             {
-                return (bool)this.GetPropertyValue("CommandDisabled", false);
+                return this.GetPropertyValue<bool>("CommandDisabled", false);
             }
 
             set
