@@ -17,6 +17,7 @@
 //   IN THE SOFTWARE.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
+using Mobile.Utils.Diagnostics;
 
 namespace Mobile.Utils
 {
@@ -55,10 +56,78 @@ namespace Mobile.Utils
 //            return Attribute.GetCustomAttributes(member, inherit).OfType<T>();
 //        }
 //        
+
         public static PropertyInfo GetPropertyInfo(this object instance, string propertyName)
         {
-            ////return instance.GetType().GetProperty(propertyName);
-            return instance.GetType().GetTypeInfo().GetDeclaredProperty(propertyName);
+            return instance.GetType().GetProperty(propertyName);
+        }
+
+        /// <summary>
+        /// Provides a GetMethod compatible version that recurses up to base types 
+        /// </summary>
+        public static MethodInfo GetMethod(this Type type, string name)
+        {
+            var typeInfo = type.GetTypeInfo();
+            var info = typeInfo.GetDeclaredMethod(name);
+
+            if (info == null)
+            {
+                if (typeInfo.BaseType == null)
+                {
+                    return null;
+                }
+
+                return GetMethod(typeInfo.BaseType, name);
+            }
+
+            return info;
+        }
+
+        /// <summary>
+        /// Provides a GetProperty compatible version that recurses up to base types 
+        /// </summary>
+        public static PropertyInfo GetProperty(this Type type, string name)
+        {
+            var typeInfo = type.GetTypeInfo();
+            var info = typeInfo.GetDeclaredProperty(name);
+
+            if (info == null)
+            {
+                if (typeInfo.BaseType == null)
+                {
+                    return null;
+                }
+
+                return GetProperty(typeInfo.BaseType, name);
+            }
+
+            return info;
+        }
+
+        // TODO: test isStatic
+        public static EventInfo GetEvent(this Type type, string name, bool isStatic)
+        {
+            var typeInfo = type.GetTypeInfo();
+            var info = typeInfo.GetDeclaredEvent(name);
+
+            if (info == null)
+            {
+                type = typeInfo.BaseType;
+                if (type == null)
+                {
+                    return null;
+                }
+
+                return GetEvent(type, name, isStatic);
+            }
+
+            return info;
+        }
+
+        public static bool IsAssignableFrom(this Type type, Type otherType)
+        {
+            var typeInfo = type.GetTypeInfo();
+            return typeInfo.IsAssignableFrom(otherType.GetTypeInfo());
         }
     }
 }

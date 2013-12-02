@@ -22,6 +22,7 @@ namespace Mobile.Mvvm.ViewModel
 {
     using System;
     using System.Collections.Generic;
+    using Mobile.Utils;
     using Mobile.Mvvm.DataBinding;
 
     public abstract class DataTemplateBase<TView, TViewModel> : IDataTemplate

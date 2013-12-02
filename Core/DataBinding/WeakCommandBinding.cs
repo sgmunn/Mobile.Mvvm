@@ -17,14 +17,14 @@
 //   IN THE SOFTWARE.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
-using System.ComponentModel;
-using Mobile.Utils.Disposables;
-using Mobile.Utils.Reflection;
-using System.Reflection;
 
 namespace Mobile.Mvvm.DataBinding
 {
     using System;
+    using Mobile.Utils;
+    using Mobile.Utils.Disposables;
+    using Mobile.Utils.Reflection;
+    using System.Reflection;
 
     public interface IBindable : IDisposable
     {

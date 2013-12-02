@@ -91,8 +91,7 @@ namespace Mobile.Utils.Reflection
 
             delegateType = psa[0].ParameterType;
 
-            ////var invokeMethod = delegateType.GetMethod("Invoke");
-            var invokeMethod = delegateType.GetTypeInfo().GetDeclaredMethod("Invoke");
+            var invokeMethod = delegateType.GetMethod("Invoke");
 
             var parameters = invokeMethod.GetParameters();
 
@@ -183,8 +182,7 @@ namespace Mobile.Utils.Reflection
 
             delegateType = psa[0].ParameterType;
 
-            ////var invokeMethod = delegateType.GetMethod("Invoke");
-            var invokeMethod = delegateType.GetTypeInfo().GetDeclaredMethod("Invoke");
+            var invokeMethod = delegateType.GetMethod("Invoke");
 
             var parameters = invokeMethod.GetParameters();
 
@@ -210,7 +208,7 @@ namespace Mobile.Utils.Reflection
         public static EventInfo GetEventEx(this Type type, string name, bool isStatic)
         {
             ////return type.GetEvent(name, isStatic ? BindingFlags.Public | BindingFlags.Static : BindingFlags.Public | BindingFlags.Instance);
-            return type.GetTypeInfo().GetDeclaredEvent(name);//, isStatic ? BindingFlags.Public | BindingFlags.Static : BindingFlags.Public | BindingFlags.Instance);
+            return type.GetEvent(name, isStatic);// ? BindingFlags.Public | BindingFlags.Static : BindingFlags.Public | BindingFlags.Instance);
         }
 
 //        #if CRIPPLED_REFLECTION

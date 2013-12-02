@@ -124,5 +124,5 @@ namespace Mobile.Utils
         {
             return Value.CompareTo(((Enumeration)other).Value);
         }
-    }}
-
+    }
+}
