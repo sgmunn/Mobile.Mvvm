@@ -44,7 +44,8 @@ namespace Sample.Droid
 
             this.FindViewById<Button>(Resource.Id.button4).Click += delegate
             {
-                var intent = new Intent(this, typeof(WidgetSampleActivity));
+                //var intent = new Intent(this, typeof(WidgetSampleActivity));
+                var intent = new Intent(this, typeof(NavigationActivity));
                 this.StartActivity(intent);
             };
         }

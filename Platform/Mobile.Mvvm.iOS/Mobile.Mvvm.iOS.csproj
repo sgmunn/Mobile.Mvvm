@@ -48,6 +48,8 @@
     <Compile Include="ViewModel\Dialog\GroupedListSource.cs" />
     <Compile Include="ViewModel\ViewModelContext.cs" />
     <Compile Include="App\AlertMessageDisplay.cs" />
+    <Compile Include="App\NavigationService.cs" />
+    <Compile Include="App\INavigationTarget.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Core\Mobile.Mvvm.Core.Portable.csproj">

@@ -53,6 +53,7 @@
     <Compile Include="SampleActivities\SimpleViewModelActivity.cs" />
     <Compile Include="SampleActivities\SimpleBindingActivity.cs" />
     <Compile Include="SampleActivities\WidgetSampleActivity.cs" />
+    <Compile Include="SampleActivities\NavigationActivity.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\AboutResources.txt" />
@@ -66,6 +67,10 @@
     <AndroidResource Include="Resources\layout\PlainActivityLayout.axml" />
     <AndroidResource Include="Resources\layout\EmptyFrameLayout.axml" />
     <AndroidResource Include="Resources\layout\WidgetSample.axml" />
+    <AndroidResource Include="Resources\anim\slide_in_left.xml" />
+    <AndroidResource Include="Resources\anim\slide_in_right.xml" />
+    <AndroidResource Include="Resources\anim\slide_out_left.xml" />
+    <AndroidResource Include="Resources\anim\slide_out_right.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Novell\Novell.MonoDroid.CSharp.targets" />
   <ItemGroup>
@@ -92,5 +97,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="SampleActivities\" />
+    <Folder Include="Resources\anim\" />
   </ItemGroup>
 </Project>
