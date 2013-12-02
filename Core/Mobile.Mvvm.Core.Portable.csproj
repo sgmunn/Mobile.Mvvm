@@ -42,8 +42,6 @@
     <Compile Include="ILifetime.cs" />
     <Compile Include="WeakEventWrapper.cs" />
     <Compile Include="ViewModel\ViewModelBase.cs" />
-    <Compile Include="IStateBundle.cs" />
-    <Compile Include="IPersistentState.cs" />
     <Compile Include="ILoadable.cs" />
     <Compile Include="DataBinding\Behaviour.cs" />
     <Compile Include="DataBinding\Binding.cs" />

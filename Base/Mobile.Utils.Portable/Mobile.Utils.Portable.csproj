@@ -49,6 +49,9 @@
     <Compile Include="Diagnostics\NullLog.cs" />
     <Compile Include="Diagnostics\ILog.cs" />
     <Compile Include="Actions.cs" />
+    <Compile Include="IStateBundle.cs" />
+    <Compile Include="StateBundle.cs" />
+    <Compile Include="IPersistentState.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <ItemGroup>

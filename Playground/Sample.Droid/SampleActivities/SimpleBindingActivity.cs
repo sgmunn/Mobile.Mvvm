@@ -13,66 +13,10 @@ using System.Threading;
 using Mobile.Utils.Tasks;
 using Android.Support.V4.App;
 using Android.Views;
-using System.Collections.Concurrent;
-using Android.Content;
-using Mobile.Mvvm.App;
-using System.Collections.Generic;
-using Java.Util;
-using System.Linq;
-using System.Runtime.Serialization.Formatters.Binary;
-using System.IO;
+using Mobile.Utils;
 
 namespace Sample.Droid.SampleActivities
 {
-    public static class StateBundleExtensions
-    {
-        public static void Save(this IStateBundle state, Bundle bundle)
-        {
-            var formatter = new BinaryFormatter();
-
-            foreach (var kv in state.Data.Where(x => x.Value != null))
-            {
-                var value = kv.Value;
-
-                if (value.GetType().IsSerializable)
-                {
-                    using (var stream = new MemoryStream())
-                    {
-                        formatter.Serialize(stream, value);
-                        stream.Position = 0;
-
-                        bundle.PutByteArray(kv.Key, stream.GetBuffer());
-                    }
-                }
-            }
-        }
-
-        public static IStateBundle AsStateBundle(this Bundle bundle)
-        {
-            var state = new StateBundle();
-            var formatter = new BinaryFormatter();
-
-            if (bundle != null)
-            {
-                foreach (var key in bundle.KeySet())
-                {
-                    var bytes = bundle.GetByteArray(key);
-                    if (bytes != null)
-                    {
-                        using (var stream = new MemoryStream(bytes))
-                        {
-                            var value = formatter.Deserialize(stream);
-                            state.Data[key] = value;
-                        }
-                    }
-                }
-            }
-
-            return state;
-        }
-    }
-
-
     public class SimpleBindingFragment : Android.Support.V4.App.Fragment
     {
         private SimpleViewModel viewModel;
@@ -141,7 +85,7 @@ namespace Sample.Droid.SampleActivities
         public override void OnViewStateRestored(Bundle savedInstanceState)
         {
             base.OnViewStateRestored(savedInstanceState);
-            this.viewModel.RestoreState(savedInstanceState.AsStateBundle());
+            this.viewModel.RestoreState(savedInstanceState.ToStateBundle());
             Console.WriteLine("restore instance state");
         }
 

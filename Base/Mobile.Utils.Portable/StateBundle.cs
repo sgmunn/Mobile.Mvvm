@@ -1,5 +1,5 @@
 // --------------------------------------------------------------------------------------------------------------------
-// <copyright file="IStateBundle.cs" company="sgmunn">
+// <copyright file="StateBundle.cs" company="sgmunn">
 //   (c) sgmunn 2013  
 //
 //   Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated 
@@ -18,7 +18,7 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace Mobile.Mvvm
+namespace Mobile.Utils
 {
     using System;
     using System.Collections.Generic;
@@ -31,10 +31,5 @@ namespace Mobile.Mvvm
         }
 
         public IDictionary<string, object> Data { get; private set; }
-    }
-
-    public interface IStateBundle
-    {
-        IDictionary<string, object> Data { get; }
     }
 }

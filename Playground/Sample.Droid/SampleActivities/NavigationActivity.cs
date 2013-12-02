@@ -40,31 +40,9 @@ namespace Sample.Droid.SampleActivities
                     //.setIcon(R.drawable.alert_dialog_icon)
                 .SetTitle("new title")
                 .SetNegativeButton("Cancel", (s,e) => {});
-//                    .setPositiveButton(R.string.alert_dialog_ok,
-//                        new DialogInterface.OnClickListener() {
-//                            public void onClick(DialogInterface dialog, int whichButton) {
-//                                ((FragmentAlertDialog)getActivity()).doPositiveClick();
-//                            }
-//                        }
-//                    )
-//                    .setNegativeButton(R.string.alert_dialog_cancel,
-//                        new DialogInterface.OnClickListener() {
-//                            public void onClick(DialogInterface dialog, int whichButton) {
-//                                ((FragmentAlertDialog)getActivity()).doNegativeClick();
-//                            }
-//                        }
-//                    )
-
 
             b.SetView(this.GetTheView());
-
-            var dd = b.Create();
-
-            //dd.RequestWindowFeature((int)Android.Views.WindowFeatures.);
-            return dd;
-
-            var d = base.OnCreateDialog(savedInstanceState);
-            return d;
+            return b.Create();
         }
 
         public override Android.Views.View OnCreateView(Android.Views.LayoutInflater inflater, Android.Views.ViewGroup container, Bundle savedInstanceState)

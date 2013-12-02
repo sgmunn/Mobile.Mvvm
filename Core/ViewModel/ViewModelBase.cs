@@ -22,6 +22,7 @@ namespace Mobile.Mvvm.ViewModel
 {
     using System;
     using System.ComponentModel;
+    using Mobile.Utils;
     using Mobile.Utils.Disposables;
     using Mobile.Utils.Diagnostics;
 
