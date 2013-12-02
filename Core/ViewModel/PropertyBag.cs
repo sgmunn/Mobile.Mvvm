@@ -41,7 +41,7 @@ namespace Mobile.Mvvm.ViewModel
 
         public void SetProperty(string propertyName, object value)
         {
-            var current = this.GetProperty(propertyName);
+            var current = this.GetProperty(propertyName, null);
             if (current == null && value == null)
             {
                 return;
@@ -57,7 +57,7 @@ namespace Mobile.Mvvm.ViewModel
             }
         }
 
-        public object GetProperty(string propertyName)
+        public object GetProperty(string propertyName, object defaultValue)
         {
             object result;
             if (this.bag.TryGetValue(propertyName, out result))
@@ -65,7 +65,7 @@ namespace Mobile.Mvvm.ViewModel
                 return result;
             }
 
-            return null;
+            return defaultValue;
         }
     }
 }

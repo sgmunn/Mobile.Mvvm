@@ -1,24 +1,23 @@
 using System;
 using Mobile.Mvvm.ViewModel;
 using Mobile.Mvvm;
+using Mobile.Utils;
 
 namespace SampleViewModels
 {
     public class SimpleViewModel : ViewModelBase
     {
-        private bool enabled = true;
-
         public SimpleViewModel()
         {
             this.TestCommand = new DelegateCommand(() =>
             {
                 this.Property1 = "Clicked";
 
-            }, () => this.enabled);
+                }, () => this.CommandDisabled);
 
             this.TestCommand2 = new DelegateCommand(() =>
                                                    {
-                this.enabled = !this.enabled;
+                    this.CommandDisabled = !this.CommandDisabled;
                 this.TestCommand.RaiseCanExecuteChanged();
 
             });
@@ -89,11 +88,45 @@ namespace SampleViewModels
             }
         }
 
+        public bool CommandDisabled
+        {
+            get
+            {
+                return (bool)this.GetPropertyValue("CommandDisabled", false);
+            }
+
+            set
+            {
+                this.SetPropertyValue("CommandDisabled", value);
+            }
+        }
+
         public ICommand TestCommand { get; set; }
         
         public ICommand TestCommand2 { get; set; }
 
         public ICommand TestCommand3 { get; set; }
+
+
+        public override IStateBundle SaveState()
+        {
+            var state = base.SaveState();
+
+            state.Data["CommandDisabled"] = CommandDisabled;
+            state.Data["P1"] = Property1;
+
+            return state;
+        }
+
+        public override void RestoreState(IStateBundle state)
+        {
+            base.RestoreState(state);
+            if (state.Data.Count > 0)
+            {
+                this.CommandDisabled = (bool)state.Data["CommandDisabled"];
+                this.Property1 = (string)state.Data["P1"];
+            }
+        }
     }
 }
 

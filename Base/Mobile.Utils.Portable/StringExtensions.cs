@@ -45,7 +45,14 @@ namespace Mobile.Utils
             int.TryParse(s, out v);
             return v;
         }
-        
+
+        public static bool ToBool(this string s)
+        {
+            bool v;
+            bool.TryParse(s, out v);
+            return v;
+        }
+
         public static decimal ToDecimal(this string s)
         {
             decimal v;

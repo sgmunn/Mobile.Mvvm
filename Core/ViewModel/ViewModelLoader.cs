@@ -23,6 +23,7 @@ namespace Mobile.Mvvm.ViewModel
     using System;
     using System.Threading;
     using System.Threading.Tasks;
+    using Mobile.Utils;
 
     public class ViewModelLoader<TData>
     {
@@ -79,6 +80,20 @@ namespace Mobile.Mvvm.ViewModel
         {
             this.cancellation.Cancel();
         }
+    }
+
+    public class ViewModelLoader<TData, TViewModel> : ViewModelLoader<TData>
+        where TViewModel : ILoadable<TData>
+    {
+        public ViewModelLoader(TViewModel viewModel, Func<CancellationToken, Task<TData>> loader, TaskScheduler scheduler) 
+            : base(loader, viewModel.Load, scheduler)
+        {
+            viewModel.EnsureNotNull("viewModel");
+
+            this.ViewModel = viewModel;
+        }
+
+        public TViewModel ViewModel { get; private set; }
     }
 }
 

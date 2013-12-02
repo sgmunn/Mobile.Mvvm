@@ -21,9 +21,20 @@
 namespace Mobile.Mvvm
 {
     using System;
-    
+    using System.Collections.Generic;
+
+    public sealed class StateBundle : IStateBundle
+    {
+        public StateBundle()
+        {
+            this.Data = new Dictionary<string, object>();
+        }
+
+        public IDictionary<string, object> Data { get; private set; }
+    }
+
     public interface IStateBundle
     {
-
+        IDictionary<string, object> Data { get; }
     }
 }

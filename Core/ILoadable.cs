@@ -22,9 +22,11 @@ namespace Mobile.Mvvm
 {
     using System;
 
-    public interface ILoadable
+    /// <summary>
+    /// Represents an object that can load a specific type of data
+    /// </summary>
+    public interface ILoadable<T>
     {
-        void Load(IStateBundle parameters);
-        void Load();
+        void Load(T data);
     }
 }

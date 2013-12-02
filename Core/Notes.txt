@@ -33,6 +33,13 @@ update enabled states based on those ICommands.
 Load and bind the view model in OnResume, save / unbind in OnPause.
 Remember that it is not just the view model's underlying data that is saved, but transient state like a button enabled state etc.
 
+# Loading a View Model
+
+Loading a view model has 2 parts to it. The first is loading the underlying data that drives the view model, a customer record, for example.
+The second part that can be loaded is the UI state associated with the view model, what aspects of the customer are being viewed, or an uncommited 
+change to the customer for example.
+
+ILoadable<T> loads a view model with the underlying data for the view model, by implementing this we can use a view model loader to 
 
 
 

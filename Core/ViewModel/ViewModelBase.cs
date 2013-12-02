@@ -25,7 +25,7 @@ namespace Mobile.Mvvm.ViewModel
     using Mobile.Utils.Disposables;
     using Mobile.Utils.Diagnostics;
 
-    public abstract class ViewModelBase : IViewModel, INotifyPropertyChanged, ILoadable, IPersistentState, ILifetime
+    public abstract class ViewModelBase : IViewModel, INotifyPropertyChanged, IPersistentState, ILifetime
     {
         private readonly CompositeDisposable lifetimeScope;
         
@@ -66,21 +66,13 @@ namespace Mobile.Mvvm.ViewModel
             }
         }
 
-        public virtual void Load(IStateBundle parameters)
-        {
-        }
-
-        public virtual void Load()
-        {
-            throw new NotImplementedException();
-        }
-
         public virtual void RestoreState(IStateBundle state)
         {
         }
 
-        public virtual void SaveState(IStateBundle state)
+        public virtual IStateBundle SaveState()
         {
+            return new StateBundle();
         }
 
         protected virtual void Dispose(bool disposing)
@@ -96,9 +88,9 @@ namespace Mobile.Mvvm.ViewModel
             this.properties.SetProperty(propertyName, value);
         }
         
-        protected object GetPropertyValue(string propertyName)
+        protected object GetPropertyValue(string propertyName, object defaultValue = null)
         {
-            return this.properties.GetProperty(propertyName);
+            return this.properties.GetProperty(propertyName, defaultValue);
         }
 
         protected virtual void NotifyPropertyChanged(string propertyName)
@@ -108,6 +100,16 @@ namespace Mobile.Mvvm.ViewModel
             {
                 changed(this, new PropertyChangedEventArgs(propertyName));
             }
+        }
+    }
+
+    public abstract class ViewModelBase<TData> : ViewModelBase, ILoadable<TData>
+    {
+        public bool IsLoaded { get; private set; }
+
+        public virtual void Load(TData data)
+        {
+            this.IsLoaded = true;
         }
     }
 }

@@ -16,9 +16,63 @@ using Android.Views;
 using System.Collections.Concurrent;
 using Android.Content;
 using Mobile.Mvvm.App;
+using System.Collections.Generic;
+using Java.Util;
+using System.Linq;
+using System.Runtime.Serialization.Formatters.Binary;
+using System.IO;
 
 namespace Sample.Droid.SampleActivities
 {
+    public static class StateBundleExtensions
+    {
+        public static void Save(this IStateBundle state, Bundle bundle)
+        {
+            var formatter = new BinaryFormatter();
+
+            foreach (var kv in state.Data.Where(x => x.Value != null))
+            {
+                var value = kv.Value;
+
+                if (value.GetType().IsSerializable)
+                {
+                    using (var stream = new MemoryStream())
+                    {
+                        formatter.Serialize(stream, value);
+                        stream.Position = 0;
+
+                        bundle.PutByteArray(kv.Key, stream.GetBuffer());
+                    }
+                }
+            }
+        }
+
+        public static IStateBundle AsStateBundle(this Bundle bundle)
+        {
+            var state = new StateBundle();
+            var formatter = new BinaryFormatter();
+
+            if (bundle != null)
+            {
+                foreach (var key in bundle.KeySet())
+                {
+                    var bytes = bundle.GetByteArray(key);
+                    if (bytes != null)
+                    {
+                        using (var stream = new MemoryStream(bytes))
+                        {
+                            var value = formatter.Deserialize(stream);
+                            state.Data[key] = value;
+                        }
+                    }
+                }
+            }
+
+            return state;
+        }
+    }
+
+
     public class SimpleBindingFragment : Android.Support.V4.App.Fragment
     {
         private SimpleViewModel viewModel;
@@ -35,11 +89,19 @@ namespace Sample.Droid.SampleActivities
 
         private ViewModelLoader<string> loader;
 
+        public SimpleBindingFragment()
+        {
+            // this.RetainInstance = true;
+        }
+
         public override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
 
             this.viewModel = new SimpleViewModel();
+
+            // we can either put this here or in will appear (onResume), depending on what we need to do with loading for the VM.
+            this.loader = new ViewModelLoader<string>(this.GetHelloWorld, this.UpdateViewModel, new UIThreadScheduler());
         }
 
         public override Android.Views.View OnCreateView(Android.Views.LayoutInflater inflater, Android.Views.ViewGroup container, Bundle savedInstanceState)
@@ -50,9 +112,6 @@ namespace Sample.Droid.SampleActivities
             this.field1 = view.FindViewById<EditText>(Resource.Id.editText1);
             this.button1 = view.FindViewById<Button>(Resource.Id.button1);
             this.button2 = view.FindViewById<Button>(Resource.Id.button2);
-
-            // we can either put this here or in will appear, depending on what we need to do with loading for the VM.
-            this.loader = new ViewModelLoader<string>(this.GetHelloWorld, this.UpdateViewModel, new UIThreadScheduler());
 
             return view;
         }
@@ -69,6 +128,21 @@ namespace Sample.Droid.SampleActivities
             base.OnResume();
             this.BindViewModel();
             this.loader.Load();
+        }
+
+        public override void OnSaveInstanceState(Bundle outState)
+        {
+            base.OnSaveInstanceState(outState);
+            this.viewModel.SaveState().Save(outState);
+
+            Console.WriteLine("save instance state");
+        }
+
+        public override void OnViewStateRestored(Bundle savedInstanceState)
+        {
+            base.OnViewStateRestored(savedInstanceState);
+            this.viewModel.RestoreState(savedInstanceState.AsStateBundle());
+            Console.WriteLine("restore instance state");
         }
 
         private void BindViewModel()
@@ -120,8 +194,9 @@ namespace Sample.Droid.SampleActivities
             var fragment = this.SupportFragmentManager.FindFragmentByTag("content");
             if (fragment == null)
             {
+                fragment = new SimpleBindingFragment();
                 this.SupportFragmentManager.BeginTransaction()
-                    .Replace(Resource.Id.content, new SimpleBindingFragment(), "content")
+                    .Replace(Resource.Id.content, fragment, "content")
                     .Commit();
             }
         }

@@ -25,6 +25,6 @@ namespace Mobile.Mvvm
     public interface IPersistentState
     {
         void RestoreState(IStateBundle state);
-        void SaveState(IStateBundle state);
+        IStateBundle SaveState();
     }
 }
