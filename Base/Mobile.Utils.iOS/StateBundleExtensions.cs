@@ -21,15 +21,15 @@
 namespace Mobile.Utils
 {
     using System;
-    using Android.OS;
     using System.Collections.Generic;
     using System.Linq;
     using System.Runtime.Serialization.Formatters.Binary;
     using System.IO;
+    using MonoTouch.Foundation;
 
     public static class StateBundleExtensions
     {
-        public static void SaveToBundle(this IStateBundle state, Bundle bundle)
+        public static void SaveToDictionary(this IStateBundle state, NSMutableDictionary bundle)
         {
             var formatter = new BinaryFormatter();
 
@@ -43,29 +43,43 @@ namespace Mobile.Utils
                     {
                         formatter.Serialize(stream, value);
                         stream.Position = 0;
+                        var bytes = stream.GetBuffer();
+                        var array = new NSMutableArray();
+                        foreach (var b in bytes)
+                        {
+                            array.Add(NSNumber.FromByte(b));
+                        }
 
-                        bundle.PutByteArray(kv.Key, stream.GetBuffer());
+                        bundle.Add(new NSString(kv.Key), array);
                     }
                 }
             }
         }
 
-        public static IStateBundle ToStateBundle(this Bundle bundle)
+        public static IStateBundle ToStateBundle(this NSDictionary bundle)
         {
             var state = new StateBundle();
             var formatter = new BinaryFormatter();
 
             if (bundle != null)
             {
-                foreach (var key in bundle.KeySet())
+                foreach (var key in bundle.Keys)
                 {
-                    var bytes = bundle.GetByteArray(key);
-                    if (bytes != null)
+                    var byteArray = bundle.ObjectForKey(key) as NSArray;
+                    if (byteArray != null)
                     {
-                        using (var stream = new MemoryStream(bytes))
+                        var bytes = new List<byte>();
+
+                        for (int i = 0; i < byteArray.Count; i++)
+                        {
+                            var v = byteArray.GetItem<NSNumber>(i);
+                            bytes.Add(v.ByteValue);
+                        }
+
+                        using (var stream = new MemoryStream(bytes.ToArray()))
                         {
                             var value = formatter.Deserialize(stream);
-                            state.Data[key] = value;
+                            state.Data[key.ToString()] = value;
                         }
                     }
                 }

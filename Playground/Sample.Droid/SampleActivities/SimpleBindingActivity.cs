@@ -77,7 +77,7 @@ namespace Sample.Droid.SampleActivities
         public override void OnSaveInstanceState(Bundle outState)
         {
             base.OnSaveInstanceState(outState);
-            this.viewModel.SaveState().Save(outState);
+            this.viewModel.SaveState().SaveToBundle(outState);
 
             Console.WriteLine("save instance state");
         }
