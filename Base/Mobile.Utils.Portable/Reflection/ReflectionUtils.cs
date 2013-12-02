@@ -33,7 +33,8 @@ namespace Mobile.Utils.Reflection
             #if CRIPPLED_REFLECTION
             return method.CreateDelegate(delegateType, o);
             #else
-            return Delegate.CreateDelegate(delegateType, o, method);
+            ////return Delegate.CreateDelegate(delegateType, o, method);
+            return method.CreateDelegate(delegateType, o);
             #endif
         }
         
@@ -48,8 +49,10 @@ namespace Mobile.Utils.Reflection
                 throw new InvalidOperationException(string.Format(CultureInfo.CurrentCulture, "COULD_NOT_FIND_INSTANCE_EVENT", eventName, type.FullName));
             }
 
-            addMethod = e.GetAddMethod();
-            removeMethod = e.GetRemoveMethod();
+            ////addMethod = e.GetAddMethod();
+            ////removeMethod = e.GetRemoveMethod();
+            addMethod = e.AddMethod;
+            removeMethod = e.RemoveMethod;
 
             if (addMethod == null)
             {
@@ -88,7 +91,8 @@ namespace Mobile.Utils.Reflection
 
             delegateType = psa[0].ParameterType;
 
-            var invokeMethod = delegateType.GetMethod("Invoke");
+            ////var invokeMethod = delegateType.GetMethod("Invoke");
+            var invokeMethod = delegateType.GetTypeInfo().GetDeclaredMethod("Invoke");
 
             var parameters = invokeMethod.GetParameters();
 
@@ -137,8 +141,10 @@ namespace Mobile.Utils.Reflection
                 }
             }
 
-            addMethod = e.GetAddMethod();
-            removeMethod = e.GetRemoveMethod();
+            ////addMethod = e.GetAddMethod();
+            ////removeMethod = e.GetRemoveMethod();
+            addMethod = e.AddMethod;
+            removeMethod = e.RemoveMethod;
 
             if (addMethod == null)
             {
@@ -177,7 +183,8 @@ namespace Mobile.Utils.Reflection
 
             delegateType = psa[0].ParameterType;
 
-            var invokeMethod = delegateType.GetMethod("Invoke");
+            ////var invokeMethod = delegateType.GetMethod("Invoke");
+            var invokeMethod = delegateType.GetTypeInfo().GetDeclaredMethod("Invoke");
 
             var parameters = invokeMethod.GetParameters();
 
@@ -189,7 +196,7 @@ namespace Mobile.Utils.Reflection
             ////if (!typeof(TSender).IsAssignableFrom(parameters[0].ParameterType))
             ////    throw new InvalidOperationException(string.Format(CultureInfo.CurrentCulture, "EVENT_SENDER_NOT_ASSIGNABLE", typeof(TSender).FullName));
 
-            if (!typeof(TEventArgs).IsAssignableFrom(parameters[1].ParameterType))
+            if (!typeof(TEventArgs).GetTypeInfo().IsAssignableFrom(parameters[1].ParameterType.GetTypeInfo()))
             {
                 throw new InvalidOperationException(string.Format(CultureInfo.CurrentCulture, "EVENT_ARGS_NOT_ASSIGNABLE", typeof(TEventArgs).FullName));
             }
@@ -202,7 +209,8 @@ namespace Mobile.Utils.Reflection
 
         public static EventInfo GetEventEx(this Type type, string name, bool isStatic)
         {
-            return type.GetEvent(name, isStatic ? BindingFlags.Public | BindingFlags.Static : BindingFlags.Public | BindingFlags.Instance);
+            ////return type.GetEvent(name, isStatic ? BindingFlags.Public | BindingFlags.Static : BindingFlags.Public | BindingFlags.Instance);
+            return type.GetTypeInfo().GetDeclaredEvent(name);//, isStatic ? BindingFlags.Public | BindingFlags.Static : BindingFlags.Public | BindingFlags.Instance);
         }
 
 //        #if CRIPPLED_REFLECTION

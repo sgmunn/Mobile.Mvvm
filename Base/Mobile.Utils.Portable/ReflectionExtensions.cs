@@ -57,7 +57,8 @@ namespace Mobile.Utils
 //        
         public static PropertyInfo GetPropertyInfo(this object instance, string propertyName)
         {
-           return instance.GetType().GetProperty(propertyName);
+            ////return instance.GetType().GetProperty(propertyName);
+            return instance.GetType().GetTypeInfo().GetDeclaredProperty(propertyName);
         }
     }
 }

@@ -54,7 +54,8 @@ namespace Mobile.Utils
         public static IEnumerable<T> GetAll<T>() where T : Enumeration, new()
         {
             var type = typeof(T);
-            var fields = type.GetFields(BindingFlags.Public | BindingFlags.Static | BindingFlags.DeclaredOnly);
+            ////var fields = type.GetFields(BindingFlags.Public | BindingFlags.Static | BindingFlags.DeclaredOnly);
+            var fields = type.GetTypeInfo().DeclaredFields.Where(x => x.IsPublic || x.IsStatic);
 
             foreach (var info in fields)
             {
