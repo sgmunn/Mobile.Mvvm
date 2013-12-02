@@ -208,7 +208,7 @@ namespace Mobile.Utils.Reflection
         public static EventInfo GetEventEx(this Type type, string name, bool isStatic)
         {
             ////return type.GetEvent(name, isStatic ? BindingFlags.Public | BindingFlags.Static : BindingFlags.Public | BindingFlags.Instance);
-            return type.GetEvent(name, isStatic);// ? BindingFlags.Public | BindingFlags.Static : BindingFlags.Public | BindingFlags.Instance);
+            return type.GetEvent(name);//, isStatic ? BindingFlags.Public | BindingFlags.Static : BindingFlags.Public | BindingFlags.Instance);
         }
 
 //        #if CRIPPLED_REFLECTION

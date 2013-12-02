@@ -107,5 +107,9 @@
       <Project>{8B49C0E8-21FA-498A-8262-3805D1A4962E}</Project>
       <Name>Mobile.Mvvm.UnitTests.iOS</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Mobile.Utils.UnitTests.iOS\Mobile.Utils.UnitTests.iOS.csproj">
+      <Project>{A888648D-50BE-4075-B863-DFA835FD06BA}</Project>
+      <Name>Mobile.Utils.UnitTests.iOS</Name>
+    </ProjectReference>
   </ItemGroup>
 </Project>

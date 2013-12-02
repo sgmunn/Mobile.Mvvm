@@ -10,7 +10,7 @@
     <OutputType>Library</OutputType>
     <RootNamespace>Mobile.Mvvm.UnitTests</RootNamespace>
     <IPhoneResourcePrefix>Resources</IPhoneResourcePrefix>
-    <AssemblyName>MonoKit.Core.UnitTests</AssemblyName>
+    <AssemblyName>MonoKit.Core.UnitTests.iOS</AssemblyName>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>True</DebugSymbols>

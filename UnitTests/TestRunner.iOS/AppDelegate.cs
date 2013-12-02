@@ -34,6 +34,7 @@ namespace TestRunner
             // register every tests included in the main application/assembly
             //runner.Add(System.Reflection.Assembly.GetExecutingAssembly());
             runner.Add(typeof(Mobile.Mvvm.UnitTests.Bootstrap).Assembly);
+            runner.Add(typeof(Mobile.Utils.UnitTests.Bootstrap).Assembly);
 
             window.RootViewController = new UINavigationController(runner.GetViewController());
             

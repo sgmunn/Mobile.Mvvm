@@ -17,7 +17,6 @@
 //   IN THE SOFTWARE.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
-using Mobile.Utils.Diagnostics;
 
 namespace Mobile.Utils
 {
@@ -104,8 +103,7 @@ namespace Mobile.Utils
             return info;
         }
 
-        // TODO: test isStatic
-        public static EventInfo GetEvent(this Type type, string name, bool isStatic)
+        public static EventInfo GetEvent(this Type type, string name)
         {
             var typeInfo = type.GetTypeInfo();
             var info = typeInfo.GetDeclaredEvent(name);
@@ -118,7 +116,7 @@ namespace Mobile.Utils
                     return null;
                 }
 
-                return GetEvent(type, name, isStatic);
+                return GetEvent(type, name);
             }
 
             return info;
