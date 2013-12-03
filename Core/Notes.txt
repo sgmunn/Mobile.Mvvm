@@ -57,10 +57,15 @@ the view model loader, especially if that is an expensive operation.
 
 - list data state preservation (probably along the lines of a root view model that holds filter, search criteria and maybe current position)
 - date time picker
-- complex property paths
+- complex property paths (1/2 done, need indexed properties)
+- value converters need to be registered and parsed in the binding parser
 - look at support for $parent, $root in property paths
     this will require that binding scopes or contexts have a notion of a parent scope 
     we can use this notion for injected properties as well.
+
+    has to be the first part of the expression, and the binding context has to intercept it before passing it to the binding expression
+
+
 - need to get converter binding expressions parsed
     need to register binding converters, type mapper etc
     need to parse binding parameter, basic types I guess (int, decimal, string)

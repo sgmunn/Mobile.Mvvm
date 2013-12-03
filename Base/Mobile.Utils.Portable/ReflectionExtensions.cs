@@ -17,6 +17,7 @@
 //   IN THE SOFTWARE.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
+using System.Globalization;
 
 namespace Mobile.Utils
 {
@@ -127,5 +128,174 @@ namespace Mobile.Utils
             var typeInfo = type.GetTypeInfo();
             return typeInfo.IsAssignableFrom(otherType.GetTypeInfo());
         }
+
+        public static object GetPropertyPathValue(this object obj, string propertyPath)
+        {
+            if (obj != null)
+            {
+                object targetObject;
+                var propertyInfo = obj.FindProperty(propertyPath, out targetObject);
+                if (propertyInfo != null && propertyInfo.CanRead)
+                {
+                    var path = GetLastPropertyPathComponent(propertyPath);
+                    if (IsIndexedPath(path))
+                    {
+                        var index = GetPropertyPathIndex(path);
+                        return propertyInfo.GetValue(targetObject, GetIndexers(index, propertyInfo));
+                    }
+
+                    return propertyInfo.GetValue(targetObject, null);
+                }
+            }
+
+            return null;
+        }
+
+        public static void SetPropertyPathValue(this object obj, string propertyPath, object value)
+        {
+            if (obj != null)
+            {
+                object targetObject;
+                var propertyInfo = obj.FindProperty(propertyPath, out targetObject);
+                if (propertyInfo != null && propertyInfo.CanWrite)
+                {
+                    var path = GetLastPropertyPathComponent(propertyPath);
+                    if (IsIndexedPath(path))
+                    {
+                        var index = GetPropertyPathIndex(path);
+                        propertyInfo.SetValue(targetObject, value, GetIndexers(index, propertyInfo));
+                    }
+                    else
+                    {
+                        propertyInfo.SetValue(targetObject, value, null);
+                    }
+                }
+            }
+        }
+
+        public static PropertyInfo FindProperty(this object instance, string propertyPath)
+        {
+            object inspectedObject;
+            return instance.FindProperty(propertyPath, out inspectedObject);
+        }
+
+        public static PropertyInfo FindProperty(this object instance, string propertyPath, out object inspectedObject)
+        {
+            inspectedObject = instance;
+            if (propertyPath.Contains("."))
+            {
+                var pathComponents = propertyPath.Split(new [] { "." }, StringSplitOptions.RemoveEmptyEntries);
+                if (pathComponents.Length > 1)
+                {
+                    // recurse into each level, except the last one                    
+                    foreach (var path in pathComponents.Take(pathComponents.Length - 1))
+                    {
+                        var info = GetProperty(inspectedObject, path, out inspectedObject);
+                        if (info == null)
+                        {
+                            return null;
+                        }
+
+                        if (IsIndexedPath(path))
+                        {
+                            var index = GetPropertyPathIndex(path);
+
+                            inspectedObject = info.GetValue(inspectedObject, GetIndexers(index, info));
+                        }
+                        else
+                        {
+                            inspectedObject = info.GetValue(inspectedObject);
+                        }
+                    }
+
+                    var lastPath = pathComponents.Last();
+                    return GetProperty(inspectedObject, lastPath, out inspectedObject);
+                }
+            }
+
+            return GetProperty(inspectedObject, propertyPath, out inspectedObject);
+        }
+
+        public static PropertyInfo GetProperty(object instance, string propertyName, out object inspectedObject)
+        {
+            inspectedObject = instance;
+
+            if (IsIndexedPath(propertyName))
+            {
+                var index = GetPropertyPathIndex(propertyName);
+                var indexer = GetPropertyPathIndexedPropertyName(propertyName);
+
+                inspectedObject = inspectedObject.GetType().GetProperty(indexer).GetValue(inspectedObject);
+                // only support default indexer
+                var listInfo = inspectedObject.GetType().GetProperty("Item");
+
+                if (listInfo == null)
+                {
+                    // or throw
+                    return null;
+                }
+
+                return listInfo;
+            }
+
+            return inspectedObject.GetType().GetProperty(propertyName);
+        }
+
+        public static string GetLastPropertyPathComponent(string propertyPath)
+        {
+            var pathComponents = propertyPath.Split(new [] { "." }, StringSplitOptions.RemoveEmptyEntries);
+            return pathComponents.Last();
+        }
+
+        // TODO: handle more than one index
+        public static object[] GetIndexers(int index, PropertyInfo indexer) // Get the parameters for the given property info (if it is an indexer)
+        {
+//            Match match = IndexerRegularExpression.Match(referencePart);
+//            string indexerString = match.Groups["indexer"].Success == false ? string.Empty : match.Groups["indexer"].Value; // if its not an indexing expression, we'll return an empty array
+//            string[] indexerValues = indexerString.Split(',');  // separate the parameters
+            var result = new List<object>(); // Temporary list
+
+            ParameterInfo[] indexParameters = indexer.GetIndexParameters(); // Get the parameters
+//            if (indexerValues.Length != indexParameters.Length)
+//                throw new InvalidXomlException(string.Format(CultureInfo.InvariantCulture, "{0} indexers expected in {1}, only {2} found", indexParameters.Length, referencePart, indexerValues.Length));
+
+//            for (int i = 0; i < indexParameters.Length; i++)
+            result.Add(Convert.ChangeType(index, indexParameters[0].ParameterType, CultureInfo.InvariantCulture)); // Convert and add the values
+
+            return result.ToArray();
+        }
+
+        public static bool IsIndexedPath(string path)
+        {
+            // IMPROVE: handling of how property paths are indexed - only handles single index and must be <indexer> [ <index> ]
+            return path.Contains("[") && path.Contains("]");
+        }
+
+        public static int GetPropertyPathIndex(string path)
+        {
+            // IMPROVE: handling of how property paths are indexed - only handles single index and must be <indexer> [ <index> ]
+            var pathComponents = path.Split(new [] { "[", "]" }, StringSplitOptions.RemoveEmptyEntries);
+            if (pathComponents.Length == 2)
+            {
+                int index;
+                int.TryParse(pathComponents[1], out index);
+                return index;
+            }
+
+            return -1;
+        }
+
+        public static string GetPropertyPathIndexedPropertyName(string path)
+        {
+            // IMPROVE: handling of how property paths are indexed - only handles single index and must be <indexer> [ <index> ]
+            var pathComponents = path.Split(new [] { "[", "]" }, StringSplitOptions.RemoveEmptyEntries);
+            if (pathComponents.Length == 2)
+            {
+                return pathComponents[0];
+            }
+
+            return path;
+        }
+
     }
 }

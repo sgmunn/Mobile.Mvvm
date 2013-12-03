@@ -22,7 +22,6 @@ namespace Mobile.Utils.Reflection
 {
     using System;
     using System.Reflection;
-    using System.Linq;
 
     public sealed class ReflectionPropertyAccessor : IPropertyAccessor
     {
@@ -40,8 +39,7 @@ namespace Mobile.Utils.Reflection
 
         public Type GetPropertyType(object obj)
         {
-            object targetObject;
-            var propertyInfo = GetPropertyPathInfo(obj, this.PropertyPath, out targetObject);
+            var propertyInfo = obj.FindProperty(this.PropertyPath);
             return propertyInfo.PropertyType;
         }
 
@@ -49,8 +47,7 @@ namespace Mobile.Utils.Reflection
         { 
             if (obj != null)
             {
-                object targetObject;
-                var propertyInfo = GetPropertyPathInfo(obj, this.PropertyPath, out targetObject);
+                var propertyInfo = obj.FindProperty(this.PropertyPath);
                 return (propertyInfo != null && propertyInfo.CanRead);
             }
             
@@ -61,8 +58,7 @@ namespace Mobile.Utils.Reflection
         { 
             if (obj != null)
             {
-                object targetObject;
-                var propertyInfo = GetPropertyPathInfo(obj, this.PropertyPath, out targetObject);
+                var propertyInfo = obj.FindProperty(this.PropertyPath);
                 return (propertyInfo != null && propertyInfo.CanWrite);
             }
 
@@ -73,12 +69,7 @@ namespace Mobile.Utils.Reflection
         {
             if (obj != null)
             {
-                object targetObject;
-                var propertyInfo = GetPropertyPathInfo(obj, this.PropertyPath, out targetObject);
-                if (propertyInfo != null && propertyInfo.CanRead)
-                {
-                    return propertyInfo.GetValue(targetObject, null);
-                }
+                return obj.GetPropertyPathValue(this.PropertyPath);
             }
 
             return null;
@@ -88,68 +79,8 @@ namespace Mobile.Utils.Reflection
         {
             if (obj != null)
             {
-                object targetObject;
-                var propertyInfo = GetPropertyPathInfo(obj, this.PropertyPath, out targetObject);
-                if (propertyInfo != null && propertyInfo.CanWrite)
-                {
-                    propertyInfo.SetValue(targetObject, value, null);
-                }
+                obj.SetPropertyPathValue(this.PropertyPath, value);
             }
         }
-
-        // TODO: indexed paths
-        private static PropertyInfo GetPropertyPathInfo(object instance, string propertyPath, out object inspectedObject)
-        {
-            inspectedObject = instance;
-            if (propertyPath.Contains("."))
-            {
-                var pathComponents = propertyPath.Split(new [] { "." }, StringSplitOptions.RemoveEmptyEntries);
-                if (pathComponents.Length > 1)
-                {
-                    // recurse into each level, except the last one                    
-                    foreach (var path in pathComponents.Take(pathComponents.Length - 1))
-                    {
-                        var info = GetProperty(inspectedObject, path, out inspectedObject);
-                        if (info == null)
-                        {
-                            return null;
-                        }
-
-                        inspectedObject = info.GetValue(inspectedObject);
-                    }
-
-                    return GetProperty(inspectedObject, pathComponents.Last(), out inspectedObject);
-                }
-            }
-
-            return GetProperty(inspectedObject, propertyPath, out inspectedObject);
-        }
-
-        private static PropertyInfo GetProperty(object instance, string path, out object inspectedObject)
-        {
-            inspectedObject = instance;
-
-//            // name [ index ]
-//            if (path.Contains("[") && path.Contains("]"))
-//            {
-//                var pathComponents = path.Split(new [] { "[", "]" }, StringSplitOptions.RemoveEmptyEntries);
-//                if (pathComponents.Length == 2)
-//                {
-//                    // the first part is the property, the second is the index
-//                    var info = inspectedObject.GetType().GetProperty(pathComponents[0]);
-//                    inspectedObject = info.GetValue(inspectedObject);
-//
-//                    // now we need to get an indexed value
-//                    int.TryParse(pathComponents[1], out index);
-//
-//                    return info;
-//                }
-//
-//                return null;
-//            }
-
-            return inspectedObject.GetType().GetProperty(path);
-        }
-
     }
 }
