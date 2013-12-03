@@ -140,7 +140,7 @@ namespace Mobile.Utils
                     var path = GetLastPropertyPathComponent(propertyPath);
                     if (IsIndexedPath(path))
                     {
-                        var index = GetPropertyPathIndex(path);
+                        var index = GetPropertyPathIndexParts(path);
                         return propertyInfo.GetValue(targetObject, GetIndexers(index, propertyInfo));
                     }
 
@@ -162,7 +162,7 @@ namespace Mobile.Utils
                     var path = GetLastPropertyPathComponent(propertyPath);
                     if (IsIndexedPath(path))
                     {
-                        var index = GetPropertyPathIndex(path);
+                        var index = GetPropertyPathIndexParts(path);
                         propertyInfo.SetValue(targetObject, value, GetIndexers(index, propertyInfo));
                     }
                     else
@@ -198,7 +198,7 @@ namespace Mobile.Utils
 
                         if (IsIndexedPath(path))
                         {
-                            var index = GetPropertyPathIndex(path);
+                            var index = GetPropertyPathIndexParts(path);
 
                             inspectedObject = info.GetValue(inspectedObject, GetIndexers(index, info));
                         }
@@ -222,7 +222,7 @@ namespace Mobile.Utils
 
             if (IsIndexedPath(propertyName))
             {
-                var index = GetPropertyPathIndex(propertyName);
+                var index = GetPropertyPathIndexParts(propertyName);
                 var indexer = GetPropertyPathIndexedPropertyName(propertyName);
 
                 inspectedObject = inspectedObject.GetType().GetProperty(indexer).GetValue(inspectedObject);
@@ -247,47 +247,41 @@ namespace Mobile.Utils
             return pathComponents.Last();
         }
 
-        // TODO: handle more than one index
-        public static object[] GetIndexers(int index, PropertyInfo indexer) // Get the parameters for the given property info (if it is an indexer)
+        public static object[] GetIndexers(string indexParts, PropertyInfo indexer)
         {
-//            Match match = IndexerRegularExpression.Match(referencePart);
-//            string indexerString = match.Groups["indexer"].Success == false ? string.Empty : match.Groups["indexer"].Value; // if its not an indexing expression, we'll return an empty array
-//            string[] indexerValues = indexerString.Split(',');  // separate the parameters
-            var result = new List<object>(); // Temporary list
+            var indexValues = indexParts.Split(',');
+            var result = new List<object>();
 
-            ParameterInfo[] indexParameters = indexer.GetIndexParameters(); // Get the parameters
-//            if (indexerValues.Length != indexParameters.Length)
-//                throw new InvalidXomlException(string.Format(CultureInfo.InvariantCulture, "{0} indexers expected in {1}, only {2} found", indexParameters.Length, referencePart, indexerValues.Length));
+            ParameterInfo[] indexParameters = indexer.GetIndexParameters();
 
-//            for (int i = 0; i < indexParameters.Length; i++)
-            result.Add(Convert.ChangeType(index, indexParameters[0].ParameterType, CultureInfo.InvariantCulture)); // Convert and add the values
+            for (int i = 0; i < indexParameters.Length; i++)
+                result.Add(Convert.ChangeType(indexValues[i], indexParameters[i].ParameterType, CultureInfo.InvariantCulture));
 
             return result.ToArray();
         }
 
         public static bool IsIndexedPath(string path)
         {
-            // IMPROVE: handling of how property paths are indexed - only handles single index and must be <indexer> [ <index> ]
+            // IMPROVE: handling of how property paths are indexed - must be <indexedPropertyName> [ <index> , <index> ]  with no spaces
             return path.Contains("[") && path.Contains("]");
         }
 
-        public static int GetPropertyPathIndex(string path)
+        public static string GetPropertyPathIndexParts(string path)
         {
-            // IMPROVE: handling of how property paths are indexed - only handles single index and must be <indexer> [ <index> ]
+            // IMPROVE: handling of how property paths are indexed - must be <indexedPropertyName> [ <index> , <index> ]  with no spaces
             var pathComponents = path.Split(new [] { "[", "]" }, StringSplitOptions.RemoveEmptyEntries);
             if (pathComponents.Length == 2)
             {
-                int index;
-                int.TryParse(pathComponents[1], out index);
-                return index;
+                return pathComponents[1];
             }
 
-            return -1;
+            // or throw
+            return string.Empty;
         }
 
         public static string GetPropertyPathIndexedPropertyName(string path)
         {
-            // IMPROVE: handling of how property paths are indexed - only handles single index and must be <indexer> [ <index> ]
+            // IMPROVE: handling of how property paths are indexed - must be <indexedPropertyName> [ <index> , <index> ]  with no spaces
             var pathComponents = path.Split(new [] { "[", "]" }, StringSplitOptions.RemoveEmptyEntries);
             if (pathComponents.Length == 2)
             {
