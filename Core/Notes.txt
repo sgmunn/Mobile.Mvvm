@@ -57,7 +57,6 @@ the view model loader, especially if that is an expensive operation.
 
 - list data state preservation (probably along the lines of a root view model that holds filter, search criteria and maybe current position)
 - date time picker
-- complex property paths (1/2 done, need indexed properties)
 - value converters need to be registered and parsed in the binding parser
 - look at support for $parent, $root in property paths
     this will require that binding scopes or contexts have a notion of a parent scope 

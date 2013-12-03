@@ -222,20 +222,11 @@ namespace Mobile.Utils
 
             if (IsIndexedPath(propertyName))
             {
-                var index = GetPropertyPathIndexParts(propertyName);
                 var indexer = GetPropertyPathIndexedPropertyName(propertyName);
-
                 inspectedObject = inspectedObject.GetType().GetProperty(indexer).GetValue(inspectedObject);
+
                 // only support default indexer
-                var listInfo = inspectedObject.GetType().GetProperty("Item");
-
-                if (listInfo == null)
-                {
-                    // or throw
-                    return null;
-                }
-
-                return listInfo;
+                return inspectedObject.GetType().GetProperty("Item");
             }
 
             return inspectedObject.GetType().GetProperty(propertyName);
