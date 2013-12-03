@@ -22,6 +22,7 @@ namespace Mobile.Mvvm
 {
     using System;
     using Mobile.Mvvm.DataBinding;
+    using Mobile.Utils.Reflection;
 
     public static class OneTimeBindingExtensions
     {

@@ -55,6 +55,7 @@ the view model loader, especially if that is an expensive operation.
 
 # TODO's
 
+- list data state preservation (probably along the lines of a root view model that holds filter, search criteria and maybe current position)
 - date time picker
 - complex property paths
 - look at support for $parent, $root in property paths

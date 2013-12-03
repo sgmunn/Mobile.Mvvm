@@ -23,6 +23,7 @@ namespace Mobile.Mvvm.ViewModel
     using System;
     using Mobile.Mvvm.DataBinding;
     using Mobile.Utils;
+    using Mobile.Utils.Reflection;
 
     public class ViewModelPropertyWrapper<T> : ViewModelBase
     {

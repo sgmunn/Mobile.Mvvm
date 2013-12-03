@@ -1,6 +1,7 @@
 using System;
 using NUnit.Framework;
 using Mobile.Mvvm.DataBinding;
+using Mobile.Utils.Reflection;
 
 namespace Mobile.Mvvm.UnitTests.Bindings
 {

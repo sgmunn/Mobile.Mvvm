@@ -24,6 +24,7 @@ namespace Mobile.Mvvm
     using System.Collections.Generic;
     using System.Linq;
     using Mobile.Mvvm.DataBinding;
+    using Mobile.Utils.Reflection;
 
     public static class BindingScopeExtensions
     {

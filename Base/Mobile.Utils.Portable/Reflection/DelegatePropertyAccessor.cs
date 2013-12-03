@@ -18,7 +18,7 @@
 //  </copyright>
 //  --------------------------------------------------------------------------------------------------------------------
 
-namespace Mobile.Mvvm.DataBinding
+namespace Mobile.Utils.Reflection
 {
     using System;
 

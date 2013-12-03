@@ -22,6 +22,7 @@ namespace Mobile.Mvvm.DataBinding
 {
     using System;
     using System.ComponentModel;
+    using Mobile.Utils.Reflection;
 
     /// <summary>
     /// An instance of a Binding between two objects that uses weak references between target and source

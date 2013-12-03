@@ -40,11 +40,13 @@
   <ItemGroup>
     <Folder Include="Resources\" />
     <Folder Include="Reflection\" />
+    <Folder Include="Reflection\ComplexPaths\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
     <Compile Include="Bootstrap.cs" />
     <Compile Include="Reflection\GetEventTest.cs" />
+    <Compile Include="Reflection\ComplexPaths\ReflectionPropertyAccessorSpec.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Base\Mobile.Utils.Portable\Mobile.Utils.Portable.csproj">

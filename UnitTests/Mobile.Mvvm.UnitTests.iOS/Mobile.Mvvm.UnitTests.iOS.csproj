@@ -62,6 +62,7 @@
     <Compile Include="Bootstrap.cs" />
     <Compile Include="DataBinding\Bindings\GivenATargetWithAnEvent.cs" />
     <Compile Include="DataBinding\Bindings\EventTargetObject.cs" />
+    <Compile Include="DataBinding\Bindings\ComplexPaths\GivenABindingThatIsTwoWay.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="DataBinding\" />
@@ -69,11 +70,16 @@
     <Folder Include="DataBinding\Bindings\" />
     <Folder Include="Runtime\" />
     <Folder Include="Reactive\" />
+    <Folder Include="DataBinding\Bindings\ComplexPaths\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Core\Mobile.Mvvm.Core.Portable.csproj">
       <Project>{0E78EB4F-B89D-485C-88A0-3B69B232BD36}</Project>
       <Name>Mobile.Mvvm.Core.Portable</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Base\Mobile.Utils.Portable\Mobile.Utils.Portable.csproj">
+      <Project>{502C0CAA-31C1-478F-878A-7002D76FE461}</Project>
+      <Name>Mobile.Utils.Portable</Name>
     </ProjectReference>
   </ItemGroup>
 </Project>
