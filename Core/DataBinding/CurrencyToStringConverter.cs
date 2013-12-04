@@ -27,8 +27,8 @@ namespace Mobile.Mvvm.DataBinding
     /// </summary>
     public sealed class CurrencyToStringConverter : IValueConverter
     {
-        public static IValueConverter Instance = new CurrencyToStringConverter();
-        
+        public readonly static IValueConverter Instance = new CurrencyToStringConverter();
+
         private CurrencyToStringConverter()
         {
         }

@@ -27,7 +27,7 @@ namespace Mobile.Mvvm.DataBinding
     /// </summary>
     public sealed class DecimalToStringConverter : IValueConverter
     {
-        public static IValueConverter Instance = new DecimalToStringConverter();
+        public readonly static IValueConverter Instance = new DecimalToStringConverter();
 
         private DecimalToStringConverter()
         {
@@ -35,6 +35,11 @@ namespace Mobile.Mvvm.DataBinding
 
         public object Convert (object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {
+            if (parameter != null)
+            {
+                return ((decimal)value).ToString((string)parameter);
+            }
+
             return value.ToString();
         }
 

@@ -24,7 +24,7 @@ namespace Mobile.Mvvm.DataBinding
  
     public sealed class DateTimeToStringConverter : IValueConverter
     {
-        public static IValueConverter Instance = new DateTimeToStringConverter();
+        public readonly static IValueConverter Instance = new DateTimeToStringConverter();
 
         private DateTimeToStringConverter()
         {

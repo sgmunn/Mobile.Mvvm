@@ -23,10 +23,10 @@ namespace Sample.Touch.SampleControllers
             // a DataTemplate is the description of a single view type to a single view model type
             // therefore it needs to be a generic class <TView, TViewModel>
             
-            yield return new DataTemplate<TableViewCell, StringWrapperElementViewModel>("c1", "Text: Value")
+            yield return new DataTemplate<TableViewCell, StringWrapperElementViewModel>("c1", "Text : Value")
                 .OnCreate((id) => new TableViewCell(UITableViewCellStyle.Default, id));
 
-            yield return new DataTemplate<TableViewCell, CaptionViewModel>("c1", "Text: Caption")
+            yield return new DataTemplate<TableViewCell, CaptionViewModel>("c1", "Text : Caption")
                     .OnCreate((id) => new TableViewCell(UITableViewCellStyle.Default, id));
 
 //            yield return new DataTemplate("c1")

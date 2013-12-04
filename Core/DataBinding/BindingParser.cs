@@ -17,29 +17,47 @@
 //   IN THE SOFTWARE.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
-using System;
-using System.Collections.Generic;
+using Mobile.Utils.Diagnostics;
 
 namespace Mobile.Mvvm.DataBinding
 {
-    public interface IBindingParser
-    {
-        /// <summary>
-        /// Parses the given expression and returns a binding expression against source and target
-        /// </summary>
-        IBindingExpression[] Parse(string expression, object target, object source);
-    }
-
+    using System;
+    using System.Collections.Generic;
 
     /// <summary>
     /// Parses binding strings into binding expressions
     /// </summary>
     public class BindingParser : IBindingParser
     {
+        public readonly static Dictionary<string, IValueConverter> RegisteredConverters = new Dictionary<string, IValueConverter>();
+
         public static IBindingParser Default = new BindingParser();
 
         public BindingParser()
         {
+        }
+
+        public static void RegisterConverter(IValueConverter converter, string name = null)
+        {
+            if (RegisteredConverters.ContainsValue(converter))
+            {
+                return;
+            }
+
+            if (name == null)
+            {
+                name = converter.GetType().Name.Replace("Converter", string.Empty);
+            }
+
+            int count = 1;
+            var key = name;
+            while (RegisteredConverters.ContainsKey(key))
+            {
+                key = string.Format("{0}_{1}", name, count);
+                count++;
+            }
+
+            RegisteredConverters.Add(key, converter);
         }
 
         /// <summary>
@@ -75,8 +93,8 @@ namespace Mobile.Mvvm.DataBinding
                 return null;
             }
 
-            var targetProperty = tokens[0].Trim();
-            var bindingMode = this.ModeFromToken(tokens[1].Trim());
+            var targetProperty = tokens[0];
+            var bindingMode = this.ModeFromToken(tokens[1]);
 
             var sourceProperty = string.Empty;
             IValueConverter converter = null;
@@ -88,9 +106,9 @@ namespace Mobile.Mvvm.DataBinding
             }
             else
             {
-                converter = ConverterFromToken(tokens[2].Trim());
-                sourceProperty = tokens[3].Trim();
-                convertParam = tokens[4].Trim();
+                converter = ConverterFromToken(tokens[2]);
+                sourceProperty = tokens[3];
+                convertParam = tokens[4];
             }
 
             var binding = new Binding(sourceProperty);
@@ -116,7 +134,14 @@ namespace Mobile.Mvvm.DataBinding
         
         private IValueConverter ConverterFromToken(string converter)
         {
-            throw new NotImplementedException();
+            if (RegisteredConverters.ContainsKey(converter))
+            {
+                return RegisteredConverters[converter];
+            }
+
+            Log.Debug("Converter {0} was not registered", converter);
+
+            return null;
         }
         
         private object ConverterParamFromToken(string converterParam)
@@ -158,7 +183,7 @@ namespace Mobile.Mvvm.DataBinding
             }
 
             // the first half is the targetProperty
-            tokens.Add(halves[0]);
+            tokens.Add(halves[0].Trim());
             tokens.Add(bindingMode);
 
             // the second half is either a propertyname or a converter expression
@@ -166,8 +191,10 @@ namespace Mobile.Mvvm.DataBinding
             {
                 tokens.AddRange(this.TokeniseConverterExpression(halves[1]));
             }
-
-            tokens.Add(halves[1]);
+            else
+            {
+                tokens.Add(halves[1].Trim());
+            }
 
             return tokens;
         }
@@ -183,13 +210,15 @@ namespace Mobile.Mvvm.DataBinding
                 return tokens;
             }
 
-            tokens.Add(halves[0]);
+            tokens.Add(halves[0].Trim());
 
             var propertyAndParam = halves[1].Split(new [] { "," }, StringSplitOptions.RemoveEmptyEntries);
-            if (halves.Length == 1)
+            if (propertyAndParam.Length == 1)
             {
                 // just loose the trailing )
-                tokens.Add(halves[1].Replace(")", string.Empty));
+                tokens.Add(halves[1].Replace(")", string.Empty).Trim());
+                tokens.Add(null);
+
                 return tokens;
             }
 
@@ -198,9 +227,9 @@ namespace Mobile.Mvvm.DataBinding
             if (halves.Length == 2)
             {
                 // propertyName first
-                tokens.Add(propertyAndParam[0]);
+                tokens.Add(propertyAndParam[0].Trim());
                 // converterParam, loose the ) again
-                tokens.Add(propertyAndParam[1].Replace(")", string.Empty));
+                tokens.Add(propertyAndParam[1].Replace(")", string.Empty).Trim());
             }
 
             return tokens;

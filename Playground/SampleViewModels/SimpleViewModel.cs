@@ -9,6 +9,8 @@ namespace SampleViewModels
     {
         public SimpleViewModel()
         {
+            this.DecimalProperty1 = 123.4m;
+
             this.TestCommand = new DelegateCommand(() =>
             {
                 this.Property1 = "Clicked";
@@ -98,6 +100,19 @@ namespace SampleViewModels
             set
             {
                 this.SetPropertyValue("CommandDisabled", value);
+            }
+        }
+
+        public decimal DecimalProperty1
+        {
+            get
+            {
+                return this.GetPropertyValue<decimal>("DecimalProperty1", 0);
+            }
+
+            set
+            {
+                this.SetPropertyValue("DecimalProperty1", value);
             }
         }
 

@@ -104,6 +104,7 @@
     <Compile Include="App\MessageDisplayParams.cs" />
     <Compile Include="App\MessageDisplay.cs" />
     <Compile Include="App\INavigationService.cs" />
+    <Compile Include="DataBinding\IBindingParser.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <ItemGroup>

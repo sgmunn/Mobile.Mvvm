@@ -49,8 +49,8 @@ namespace Sample.Droid.SampleActivities
 
 
             yield return new DataTemplate<View, StringWrapperElementViewModel>(inflator, Android.Resource.Layout.SimpleListItem2)
-                    .BindChildView(Android.Resource.Id.Text2, "Text: Value")
-                    .BindChildView(Android.Resource.Id.Text1, "Text: Caption")
+                    .BindChildView(Android.Resource.Id.Text2, "Text : Value")
+                    .BindChildView(Android.Resource.Id.Text1, "Text : Caption")
                     ;
 
             yield return new DataTemplate<View, CaptionViewModel>(inflator, Android.Resource.Layout.SimpleListItem1)

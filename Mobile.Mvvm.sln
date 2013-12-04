@@ -258,7 +258,7 @@ Global
 		{FD6905A1-0D75-4187-BAA0-5DDD03E9B346} = {BBB6979B-026A-486E-AF4D-43574E21ABDE}
 	EndGlobalSection
 	GlobalSection(MonoDevelopProperties) = preSolution
-		StartupItem = UnitTests\TestRunner.iOS\TestRunner.iOS.csproj
+		StartupItem = Playground\Sample.Touch\Sample.Touch.csproj
 		Policies = $0
 		$0.DotNetNamingPolicy = $1
 		$1.DirectoryNamespaceAssociation = PrefixedHierarchical

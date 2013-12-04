@@ -26,6 +26,11 @@ namespace Mobile.Mvvm
 
     public static class BindingContextExtensions
     {
+        public static void Bind(this IBindingContext bindingContext, object target, object viewModel, string expression)
+        {
+            bindingContext.Bindings.AddBindings(target, viewModel, expression);
+        }
+
         public static void Bind(this IBindingContext bindingContext, object target, string targetProperty, object viewModel, string viewModelProperty)
         {
             bindingContext.Bindings.AddBinding(target, targetProperty, viewModel, viewModelProperty);

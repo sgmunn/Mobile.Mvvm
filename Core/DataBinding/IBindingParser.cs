@@ -1,6 +1,6 @@
 // --------------------------------------------------------------------------------------------------------------------
-// <copyright file="BooleanToStringConverter.cs" company="sgmunn">
-//   (c) sgmunn 2012  
+// <copyright file="IBindingParser.cs" company="sgmunn">
+//   (c) sgmunn 2013  
 //
 //   Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated 
 //   documentation files (the "Software"), to deal in the Software without restriction, including without limitation 
@@ -9,7 +9,7 @@
 //
 //   The above copyright notice and this permission notice shall be included in all copies or substantial portions of 
 //   the Software.
-// 
+//
 //   THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO 
 //   THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE 
 //   AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF 
@@ -21,37 +21,12 @@
 namespace Mobile.Mvvm.DataBinding
 {
     using System;
- 
-    /// <summary>
-    /// Boolean to string converter.
-    /// </summary>
-    public sealed class BooleanToStringConverter : IValueConverter
+
+    public interface IBindingParser
     {
-        public readonly static IValueConverter Instance = new BooleanToStringConverter();
-
-        private BooleanToStringConverter()
-        {
-        }
-
-        public object Convert (object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
-        {
-            return value.ToString();
-        }
-
-        public object ConvertBack (object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
-        {
-            if ((string)value == "1")
-            {
-                return true;
-            }
-
-            if ((string)value == "0")
-            {
-                return false;
-            }
-            
-            return System.Convert.ToBoolean((string)value);
-        }
+        /// <summary>
+        /// Parses the given expression and returns a binding expression against source and target
+        /// </summary>
+        IBindingExpression[] Parse(string expression, object target, object source);
     }
 }
-
