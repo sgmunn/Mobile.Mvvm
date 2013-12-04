@@ -1,14 +1,17 @@
 
 using System;
 using NUnit.Framework;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Mobile.Utils.UnitTests.Reflection
 {
     public class EventTest
     {
+        #pragma warning disable 67
         public event EventHandler InstanceName;
 
         public static event EventHandler StaticName;
+        #pragma warning restore 67
     }
 
 
