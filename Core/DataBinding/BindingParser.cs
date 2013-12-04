@@ -17,23 +17,23 @@
 //   IN THE SOFTWARE.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
-using Mobile.Utils.Diagnostics;
 
 namespace Mobile.Mvvm.DataBinding
 {
     using System;
     using System.Collections.Generic;
+    using Mobile.Utils.Diagnostics;
 
     /// <summary>
     /// Parses binding strings into binding expressions
     /// </summary>
-    public class BindingParser : IBindingParser
+    public sealed class BindingParser : IBindingParser
     {
         public readonly static Dictionary<string, IValueConverter> RegisteredConverters = new Dictionary<string, IValueConverter>();
 
         public static IBindingParser Default = new BindingParser();
 
-        public BindingParser()
+        private BindingParser()
         {
         }
 

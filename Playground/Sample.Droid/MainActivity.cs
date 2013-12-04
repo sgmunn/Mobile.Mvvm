@@ -4,6 +4,7 @@ using Android.Content;
 using Android.Widget;
 using Android.OS;
 using Sample.Droid.SampleActivities;
+using Mobile.Mvvm;
 
 namespace Sample.Droid
 {
@@ -12,6 +13,7 @@ namespace Sample.Droid
     {
         static MainActivity()
         {
+            MvvmCore.Init();
             Mobile.Utils.Diagnostics.Log.Init(Mobile.Utils.Diagnostics.ConsoleLog.Instance);
         }
 

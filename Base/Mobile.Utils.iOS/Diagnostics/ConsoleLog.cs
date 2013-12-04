@@ -24,6 +24,12 @@ namespace Mobile.Utils.Diagnostics
 
     public sealed class ConsoleLog : ILog
     {
+        public static readonly ILog Instance = new ConsoleLog();
+
+        private ConsoleLog()
+        {
+        }
+
         public void Write(string message)
         {
             Console.Write(message);

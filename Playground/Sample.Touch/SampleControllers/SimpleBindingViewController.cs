@@ -10,6 +10,7 @@ using System.Threading;
 using Mobile.Utils.Tasks;
 using Mobile.Mvvm.App;
 using Mobile.Utils;
+using Mobile.Mvvm.DataBinding;
 
 namespace Sample.Touch.SampleControllers
 {
@@ -67,12 +68,12 @@ namespace Sample.Touch.SampleControllers
         {
             this.bindingContext = new ViewModelContext(this, this.viewModel);
 
-            this.bindingContext.Bind(label1, this.viewModel, "Text: DecimalToString ( DecimalProperty1, C )");
-            this.bindingContext.Bind(field1, this.viewModel, "Text: Property1");
+            //this.bindingContext.Bind(label1, this.viewModel, "Text: DecimalToString ( DecimalProperty1, C )");
+            //this.bindingContext.Bind(field1, this.viewModel, "Text: Property1");
 
-            //this.bindingContext.Bind(label1, "Text", this.viewModel, "Property1");
-            //this.bindingContext.Bind(label2, "Text", this.viewModel, "Property2");
-            //this.bindingContext.Bind(field1, "Text", "Ended", this.viewModel, "Property1");
+            this.bindingContext.Bind(label1, "Text", this.viewModel, "Property1");
+            this.bindingContext.Bind(label2, "Text", this.viewModel, "Property2");
+            this.bindingContext.Bind(field1, "Text", "Ended", this.viewModel, "Property1");
            
             this.bindingContext.Bind(this.button1, "TouchUpInside", "Enabled", this.viewModel.TestCommand);
             this.bindingContext.Bind(this.button2, "TouchUpInside", "Enabled", this.viewModel.TestCommand2);

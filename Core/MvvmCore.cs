@@ -1,5 +1,5 @@
 // --------------------------------------------------------------------------------------------------------------------
-// <copyright file="ConsoleLog.cs" company="sgmunn">
+// <copyright file="MvvmCore.cs" company="sgmunn">
 //   (c) sgmunn 2013  
 //
 //   Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated 
@@ -18,40 +18,28 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace Mobile.Utils.Diagnostics
+namespace Mobile.Mvvm
 {
     using System;
+    using Mobile.Mvvm.DataBinding;
 
-    public sealed class ConsoleLog : ILog
+    public static class MvvmCore
     {
-        public static readonly ILog Instance = new ConsoleLog();
-
-        private ConsoleLog()
+        public static void Init()
         {
+            // IMPROVE: do we really want to have this?
+
+            RegisterValueConverters();
         }
 
-        public void Write(string message)
+        private static void RegisterValueConverters()
         {
-            Console.Write(message);
-        }
-
-        public void Write(string message, params object[] args)
-        {
-            Console.Write(message, args);
-        }
-
-        public void Debug(string message)
-        {
-            #if DEBUG
-            Console.Write(message);
-            #endif
-        }
-
-        public void Debug(string message, params object[] args)
-        {
-            #if DEBUG
-            Console.Write(message, args);
-            #endif
+            // built in's
+            BindingParser.RegisterConverter(BooleanToStringConverter.Instance);
+            BindingParser.RegisterConverter(CurrencyToStringConverter.Instance);
+            BindingParser.RegisterConverter(DateTimeToStringConverter.Instance);
+            BindingParser.RegisterConverter(DecimalToStringConverter.Instance);
         }
     }
 }
+
