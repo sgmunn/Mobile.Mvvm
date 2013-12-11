@@ -48,10 +48,4 @@
     <Compile Include="Reflection\GetEventTest.cs" />
     <Compile Include="Reflection\ComplexPaths\ReflectionPropertyAccessorSpec.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\Base\Mobile.Utils.Portable\Mobile.Utils.Portable.csproj">
-      <Project>{502C0CAA-31C1-478F-878A-7002D76FE461}</Project>
-      <Name>Mobile.Utils.Portable</Name>
-    </ProjectReference>
-  </ItemGroup>
 </Project>

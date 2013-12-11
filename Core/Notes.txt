@@ -55,12 +55,9 @@ the view model loader, especially if that is an expensive operation.
 
 # TODO's
 
-- Strategy for bootstrapping and registration of types, converters etc.
 - Logging of error's and and exceptions in the framework, binding issues etc.
 - list data state preservation (probably along the lines of a root view model that holds filter, search criteria and maybe current position)
 - date time picker
-- value converters need to be registered and parsed in the binding parser
-    -- need to register them all 
 - look at support for $parent, $root in property paths
     this will require that binding scopes or contexts have a notion of a parent scope 
     we can use this notion for injected properties as well.
