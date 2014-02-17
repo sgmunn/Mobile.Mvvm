@@ -13,7 +13,7 @@ namespace SampleViewModels
             var groups = new ObservableCollection<IGroup>();
 
             var section1 = new GroupViewModel();
-            section1.Header = new CaptionViewModel("Header 1");
+            section1.Header = new HeaderElementViewModel("Header 1");
             groups.Add(section1);
 
             section1.Rows.Add(new TestCommandRowViewModel(section1, "add"));
@@ -28,7 +28,7 @@ namespace SampleViewModels
             groups[1].Rows.Add(new CaptionViewModel("item 3"));
             groups[1].Rows.Add(new CaptionViewModel("item 2"));
 
-            groups[1].Header = new CaptionViewModel("Header 2");
+            groups[1].Header = new HeaderElementViewModel("Header 2");
             groups[1].Footer = new CaptionViewModel("Footer 2");
 
             groups.Add(new GroupViewModel());

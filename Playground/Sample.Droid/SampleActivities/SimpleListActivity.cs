@@ -54,7 +54,10 @@ namespace Sample.Droid.SampleActivities
                     ;
 
             yield return new DataTemplate<View, CaptionViewModel>(inflator, Android.Resource.Layout.SimpleListItem1)
-                .BindChildView(Android.Resource.Id.Text1, "Text: Caption");
+                    .BindChildView(Android.Resource.Id.Text1, "Text: Caption");
+
+            yield return new DataTemplate<View, HeaderElementViewModel>(inflator, Android.Resource.Layout.SimpleListItem2)
+                    .BindChildView(Android.Resource.Id.Text2, "Text: Caption");
 
              //   .OnCreate((id, viewGroup) => inflator.Inflate(id, viewGroup, false))
 
@@ -148,15 +151,16 @@ namespace Sample.Droid.SampleActivities
             Console.WriteLine("update UI thread {0}", System.Threading.Thread.CurrentThread.ManagedThreadId);
 
             // do this here so that we get the indeterminate progress
-            this.ListAdapter = this.source;
             var data = SimpleListViewModel.GetViewModel();
             this.source.Bind(data);
+            // set list adapter after binding so that we can calculate the number of different views that will be returned in the source
+            this.ListAdapter = this.source;
         }
 
         private async Task<string> GetHelloWorld(CancellationToken cancel)
         {
             Console.WriteLine("get data thread {0}", System.Threading.Thread.CurrentThread.ManagedThreadId);
-            await Task.Delay(3000).ConfigureAwait(false);
+            await Task.Delay(1000).ConfigureAwait(false);
 
             if (cancel.IsCancellationRequested)
             {
