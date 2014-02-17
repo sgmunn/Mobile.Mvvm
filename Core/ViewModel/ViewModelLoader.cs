@@ -73,7 +73,10 @@ namespace Mobile.Mvvm.ViewModel
 
         public virtual void UpdateViewModel(Task<TData> task)
         {
-            this.updater(task.Result);
+            if (!task.IsCanceled)
+            {
+                this.updater(task.Result);
+            }
         }
 
         public virtual void Cancel()
