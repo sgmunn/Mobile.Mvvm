@@ -54,5 +54,33 @@ namespace Mobile.Mvvm.ViewModel.Dialog
 
             return group.Rows[rowIndex];
         }
+
+        public static bool IsHeaderOrFooterAtIndex(this IGroup group, int index)
+        {
+            if (index == 0)
+            {
+                if (group.Header != null)
+                {
+                    return true;
+                }
+
+                if (group.Rows.Count == 0 && group.Footer != null)
+                {
+                    return true;
+                }
+            }
+
+            var rowIndex = index + (group.Header != null ? -1 : 0);
+            if (rowIndex >= group.Rows.Count)
+            {
+                // assume footer for anything past the number of rows
+                if (group.Footer != null)
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
     }
 }

@@ -188,6 +188,34 @@ namespace Mobile.Mvvm.ViewModel.Dialog
             }
         }
 
+        public override int GetItemViewType(int position)
+        {
+            if (this.templates.Count > 0)
+            {
+                var row = this.ViewModelForPosition(position);
+                var template = row.GetTemplate(this.templates);
+                return this.templates.IndexOf(template);
+            }
+
+            return base.GetItemViewType(position);
+        }
+
+        public override int ViewTypeCount
+        {
+            get
+            {
+                // naive implementation here
+                // assume that the most number of templates that could be returned are in the list of templates
+                // that we were told about
+                if (this.templates.Count > 0)
+                {
+                    return this.templates.Count;
+                }
+
+                return base.ViewTypeCount;
+            }
+        }
+
         public override IGroup this[int index]
         {
             get
@@ -198,26 +226,8 @@ namespace Mobile.Mvvm.ViewModel.Dialog
 
         public IViewModel ViewModelForPosition(int position)
         {
-            if (position == 0)
-            {
-                return this.groups[0].ViewModelAtIndex(0);
-            }
-
-            int count = 0;
-            foreach (var group in this.groups)
-            {
-                if (position < count + group.ViewModelCount())
-                {
-                    // it's here somewhere
-                    return group.ViewModelAtIndex(position - count);
-                }
-                else
-                {
-                    count += group.ViewModelCount();
-                }
-            }
-
-            throw new ArgumentOutOfRangeException("position");
+            bool isHeaderOrFooter;
+            return this.ViewModelForPosition(position, out isHeaderOrFooter);
         }
 
         public override bool IsEnabled(int position)
@@ -229,7 +239,10 @@ namespace Mobile.Mvvm.ViewModel.Dialog
                 return cmd.GetCanExecute();
             }
 
-            return true;
+            // items are enabled by default, unless they are a header or footer
+            bool isHeaderOrFooter;
+            this.ViewModelForPosition(position, out isHeaderOrFooter);
+            return !isHeaderOrFooter;
         }
 
         public override bool AreAllItemsEnabled()
@@ -262,6 +275,32 @@ namespace Mobile.Mvvm.ViewModel.Dialog
         {
             var row = this.ViewModelForPosition(e.Position);
             row.ExecuteLongTapCommand();
+        }
+
+        private IViewModel ViewModelForPosition(int position, out bool isHeaderOrFooter)
+        {
+            if (position == 0)
+            {
+                isHeaderOrFooter = this.groups[0].IsHeaderOrFooterAtIndex(0);
+                return this.groups[0].ViewModelAtIndex(0);
+            }
+
+            int count = 0;
+            foreach (var group in this.groups)
+            {
+                if (position < count + group.ViewModelCount())
+                {
+                    // it's here somewhere
+                    isHeaderOrFooter = group.IsHeaderOrFooterAtIndex(position - count);
+                    return group.ViewModelAtIndex(position - count);
+                }
+                else
+                {
+                    count += group.ViewModelCount();
+                }
+            }
+
+            throw new ArgumentOutOfRangeException("position");
         }
 
         private void RegisterListView(ListView list)
