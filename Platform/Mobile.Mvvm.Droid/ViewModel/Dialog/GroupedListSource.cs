@@ -184,6 +184,7 @@ namespace Mobile.Mvvm.ViewModel.Dialog
         {
             get
             {
+                // Analysis disable once ConvertClosureToMethodGroup
                 return this.groups.Sum(x => x.ViewModelCount());
             }
         }
