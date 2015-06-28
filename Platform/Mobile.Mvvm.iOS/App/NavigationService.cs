@@ -21,7 +21,7 @@
 namespace Mobile.Mvvm.App
 {
     using System;
-    using MonoTouch.UIKit;
+    using UIKit;
     using Mobile.Utils;
     using System.Collections.Generic;
 
@@ -61,7 +61,7 @@ namespace Mobile.Mvvm.App
 
         public virtual void Pop()
         {
-            this.navController.PopViewControllerAnimated(true);
+            this.navController.PopViewController(true);
         }
 
         public virtual void PresentModal<TViewModel>()

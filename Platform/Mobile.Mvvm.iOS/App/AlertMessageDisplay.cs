@@ -23,7 +23,7 @@ namespace Mobile.Mvvm.App
     using System;
     using System.Threading.Tasks;
     using System.Collections.Generic;
-    using MonoTouch.UIKit;
+    using UIKit;
 
     public class AlertMessageDisplay : MessageDisplay
     {
@@ -72,7 +72,7 @@ namespace Mobile.Mvvm.App
             alert.DismissWithClickedButtonIndex(0, true);
         }
 
-        protected virtual void HandleButtonClicked(MessageDisplayParams messageParams, UIAlertView alert, int buttonIndex)
+        protected virtual void HandleButtonClicked(MessageDisplayParams messageParams, UIAlertView alert, nint buttonIndex)
         {
             switch (buttonIndex)
             {

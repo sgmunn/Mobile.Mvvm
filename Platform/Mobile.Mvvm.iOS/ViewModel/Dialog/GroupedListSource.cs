@@ -23,8 +23,8 @@ namespace Mobile.Mvvm.ViewModel.Dialog
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using MonoTouch.Foundation;
-    using MonoTouch.UIKit;
+    using Foundation;
+    using UIKit;
     using Mobile.Mvvm.DataBinding;
 
     public class GroupedListSource: UITableViewSource, IGroupSource, IBindingContext
@@ -157,27 +157,27 @@ namespace Mobile.Mvvm.ViewModel.Dialog
             this.TableView.DeleteRows(paths, this.RemoveAnimation);
         }
         
-        public override string TitleForHeader(UITableView tableView, int section)
+        public override string TitleForHeader(UITableView tableView, nint section)
         {
-            return this.groups[section].Header != null ? this.groups[section].Header.ToString() : null;
+			return this.groups[(int)section].Header != null ? this.groups[(int)section].Header.ToString() : null;
         }
 
-        public override string TitleForFooter(UITableView tableView, int section)
+        public override string TitleForFooter(UITableView tableView, nint section)
         {
-            return this.groups[section].Footer != null ? this.groups[section].Footer.ToString() : null;
+			return this.groups[(int)section].Footer != null ? this.groups[(int)section].Footer.ToString() : null;
         }
 
-        public override int NumberOfSections(UITableView tableView)
+        public override nint NumberOfSections(UITableView tableView)
         {
             return this.groups.Count;
         }
 
-        public override int RowsInSection(UITableView tableview, int section)
+        public override nint RowsInSection(UITableView tableview, nint section)
         {
-            return this.groups[section].Rows.Count;
+			return this.groups[(int)section].Rows.Count;
         }
 
-        public override UITableViewCell GetCell(UITableView tableView, MonoTouch.Foundation.NSIndexPath indexPath)
+        public override UITableViewCell GetCell(UITableView tableView, NSIndexPath indexPath)
         {
             var row = this.ViewModelForIndexPath(indexPath);
             var cell = (UITableViewCell)row.GetTemplate(this.templates).GetViewForViewModel(this, row, (id) => tableView.DequeueReusableCell((string)id));

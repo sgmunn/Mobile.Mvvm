@@ -21,7 +21,7 @@
 namespace Mobile.Mvvm.ViewModel
 {
     using System;
-    using MonoTouch.UIKit;
+    using UIKit;
 
     public class ViewModelContext : ViewModelContextBase
     {

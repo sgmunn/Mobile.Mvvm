@@ -239,7 +239,6 @@ Global
 		{72B38D4A-74D3-4741-91A3-22D85D84EFB8} = {9110920F-01E3-4A50-AD3E-B74B1435963A}
 	EndGlobalSection
 	GlobalSection(MonoDevelopProperties) = preSolution
-		StartupItem = Playground\Sample.Touch\Sample.Touch.csproj
 		Policies = $0
 		$0.DotNetNamingPolicy = $1
 		$1.DirectoryNamespaceAssociation = PrefixedHierarchical

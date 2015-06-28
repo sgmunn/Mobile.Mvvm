@@ -22,3 +22,4 @@ Base/Mobile.Utils.Droid/bin
 Base/Mobile.Utils.Droid/obj
 Base/Mobile.Utils.iOS/bin
 UnitTests/Mobile.Utils.UnitTests.iOS/bin
+Platform/Mobile.Mvvm.iOS/obj

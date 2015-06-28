@@ -21,7 +21,7 @@
 namespace Mobile.Mvvm.Controls
 {
     using System;
-    using MonoTouch.UIKit;
+    using UIKit;
 
     /// <summary>
     /// Provides a wrapper class for UITableViewCell that can be used in a bound list.
