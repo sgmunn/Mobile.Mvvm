@@ -19,7 +19,7 @@
 // --------------------------------------------------------------------------------------------------------------------
 
 using System;
-using MonoTouch.UIKit;
+using UIKit;
 using Mobile.Mvvm.ViewModel.Dialog;
 using System.Collections.Generic;
 using Mobile.Mvvm;

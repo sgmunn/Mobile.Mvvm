@@ -1,7 +1,7 @@
 using System;
-using System.Drawing;
-using MonoTouch.Foundation;
-using MonoTouch.UIKit;
+using CoreGraphics;
+using Foundation;
+using UIKit;
 
 namespace Sample.Touch.SampleControllers
 {
@@ -11,24 +11,24 @@ namespace Sample.Touch.SampleControllers
         {
         }
 
-        public override int NumberOfSections(UITableView tableView)
+        public override nint NumberOfSections(UITableView tableView)
         {
             // TODO: return the actual number of sections
             return 1;
         }
 
-        public override int RowsInSection(UITableView tableview, int group)
+        public override nint RowsInSection(UITableView tableview, nint group)
         {
             // TODO: return the actual number of items in the group
             return 1;
         }
 
-        public override string TitleForHeader(UITableView tableView, int group)
+        public override string TitleForHeader(UITableView tableView, nint group)
         {
             return "Header";
         }
 
-        public override string TitleForFooter(UITableView tableView, int group)
+        public override string TitleForFooter(UITableView tableView, nint group)
         {
             return "Footer";
         }

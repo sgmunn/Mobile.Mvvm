@@ -17,7 +17,6 @@
 //   IN THE SOFTWARE.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
-using Android.Support.V4.App;
 
 namespace Mobile.Mvvm.App
 {
