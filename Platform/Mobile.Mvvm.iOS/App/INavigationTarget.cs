@@ -25,6 +25,8 @@ namespace Mobile.Mvvm.App
 
     public interface INavigationTarget
     {
+		INavigationService NavigationService { get; set; }
+
         void WillNavigate(IDictionary<string, string> args);
     }
 }

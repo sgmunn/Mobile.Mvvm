@@ -94,6 +94,7 @@ namespace Mobile.Mvvm.App
             var navTarget = controller as INavigationTarget;
             if (navTarget != null)
             {
+				navTarget.NavigationService = this;
                 navTarget.WillNavigate(args);
             }
 
