@@ -21,9 +21,8 @@
 namespace Mobile.Mvvm.DataBinding
 {
     using System;
-    using Mobile.Utils;
-    using Mobile.Utils.Disposables;
-    using Mobile.Utils.Reflection;
+	using Mobile.Mvvm.Disposables;
+	using Mobile.Mvvm.Reflection;
     using System.Reflection;
 
     public interface IBindable : IDisposable

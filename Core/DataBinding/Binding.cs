@@ -22,7 +22,7 @@ namespace Mobile.Mvvm.DataBinding
 {
     using System;
     using System.Globalization;
-    using Mobile.Utils.Reflection;
+	using Mobile.Mvvm.Reflection;
 
     /// <summary>
     /// Defines a binding to a (source) property.

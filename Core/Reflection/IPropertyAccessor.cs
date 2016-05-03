@@ -1,5 +1,5 @@
 //  --------------------------------------------------------------------------------------------------------------------
-//  <copyright file="ILifetime.cs" company="sgmunn">
+//  <copyright file="IPropertyAccessor.cs" company="sgmunn">
 //    (c) sgmunn 2012  
 //
 //    Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated 
@@ -18,13 +18,16 @@
 //  </copyright>
 //  --------------------------------------------------------------------------------------------------------------------
 
-namespace Mobile.Mvvm
+namespace Mobile.Mvvm.Reflection
 {
     using System;
-	using Mobile.Mvvm.Disposables;
 
-    public interface ILifetime
+    public interface IPropertyAccessor
     {
-        CompositeDisposable Lifetime { get; }
+        Type GetPropertyType(object obj);
+        bool CanGetValue(object obj);
+        bool CanSetValue(object obj);
+        object GetValue(object obj);
+        void SetValue(object obj, object value);
     }
 }

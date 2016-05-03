@@ -21,7 +21,7 @@
 namespace Mobile.Mvvm.DataBinding
 {
     using System;
-    using Mobile.Utils.Reflection;
+	using Mobile.Mvvm.Reflection;
 
 //    public interface IPropertyBindingExpression : IBindingExpression
 //    {

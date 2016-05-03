@@ -22,7 +22,7 @@ namespace Mobile.Mvvm.DataBinding
 {
     using System;
     using System.Collections.Generic;
-    using Mobile.Utils.Diagnostics;
+	using Mobile.Mvvm.Diagnostics;
 
     /// <summary>
     /// Parses binding strings into binding expressions

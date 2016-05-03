@@ -3,8 +3,6 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>8.0.30703</ProductVersion>
-    <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{0E78EB4F-B89D-485C-88A0-3B69B232BD36}</ProjectGuid>
     <ProjectTypeGuids>{786C830F-07A1-408B-BD7F-6EE04809D6DB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
@@ -106,6 +104,26 @@
     <Compile Include="App\INavigationService.cs" />
     <Compile Include="DataBinding\IBindingParser.cs" />
     <Compile Include="MvvmCore.cs" />
+    <Compile Include="Disposables\AnonymousDisposable.cs" />
+    <Compile Include="Disposables\CompositeDisposable.cs" />
+    <Compile Include="Actions.cs" />
+    <Compile Include="Contracts.cs" />
+    <Compile Include="Enumeration.cs" />
+    <Compile Include="IPersistentState.cs" />
+    <Compile Include="IStateBundle.cs" />
+    <Compile Include="ListExtensions.cs" />
+    <Compile Include="ObjectExtensions.cs" />
+    <Compile Include="PropertyBag.cs" />
+    <Compile Include="ReflectionExtensions.cs" />
+    <Compile Include="StateBundle.cs" />
+    <Compile Include="StringExtensions.cs" />
+    <Compile Include="Diagnostics\ILog.cs" />
+    <Compile Include="Diagnostics\Log.cs" />
+    <Compile Include="Diagnostics\NullLog.cs" />
+    <Compile Include="Reflection\DelegatePropertyAccessor.cs" />
+    <Compile Include="Reflection\IPropertyAccessor.cs" />
+    <Compile Include="Reflection\ReflectionPropertyAccessor.cs" />
+    <Compile Include="Reflection\ReflectionUtils.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <ItemGroup>
@@ -113,14 +131,11 @@
     <Folder Include="DataBinding\" />
     <Folder Include="ViewModel\Dialog\" />
     <Folder Include="App\" />
+    <Folder Include="Disposables\" />
+    <Folder Include="Diagnostics\" />
+    <Folder Include="Reflection\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Notes.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\mobile.utils\Core\Mobile.Utils.Portable\Mobile.Utils.Portable.csproj">
-      <Project>{502C0CAA-31C1-478F-878A-7002D76FE461}</Project>
-      <Name>Mobile.Utils.Portable</Name>
-    </ProjectReference>
   </ItemGroup>
 </Project>

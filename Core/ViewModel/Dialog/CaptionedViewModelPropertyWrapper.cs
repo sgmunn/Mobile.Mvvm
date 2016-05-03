@@ -21,7 +21,7 @@
 namespace Mobile.Mvvm.ViewModel.Dialog
 {
     using System;
-    using Mobile.Utils.Reflection;
+	using Mobile.Mvvm.Reflection;
 
     public class StringWrapperElementViewModel : CaptionedViewModelPropertyWrapper<string>
     {

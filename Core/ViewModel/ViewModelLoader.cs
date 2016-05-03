@@ -23,7 +23,6 @@ namespace Mobile.Mvvm.ViewModel
     using System;
     using System.Threading;
     using System.Threading.Tasks;
-    using Mobile.Utils;
 
     public class ViewModelLoader<TData>
     {

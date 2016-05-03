@@ -22,7 +22,6 @@ namespace Mobile.Mvvm.ViewModel
 {
     using System;
     using System.Collections.Generic;
-    using Mobile.Utils;
 
     //    this.RegisterTemplate("TableViewCell_IGroupRoot")
     //        .Creates((id) => new TableViewCell(UITableViewCellStyle.Default, id))
