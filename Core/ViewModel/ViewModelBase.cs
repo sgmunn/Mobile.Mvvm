@@ -17,6 +17,7 @@
 //    IN THE SOFTWARE.
 //  </copyright>
 //  --------------------------------------------------------------------------------------------------------------------
+using System.Runtime.CompilerServices;
 
 namespace Mobile.Mvvm.ViewModel
 {
@@ -83,15 +84,15 @@ namespace Mobile.Mvvm.ViewModel
             }
         }
 
-        protected void SetPropertyValue(string propertyName, object value)
-        {
-            this.properties.SetProperty(propertyName, value);
-        }
-        
-        protected T GetPropertyValue<T>(string propertyName, T defaultValue = default(T))
-        {
-            return (T)this.properties.GetProperty(propertyName, defaultValue);
-        }
+		protected void SetProperty (object value, [CallerMemberName] string propertyName = null) 
+		{
+			this.properties.SetProperty(propertyName, value);
+		}
+
+		protected T GetProperty<T> (T defaultValue = default(T), [CallerMemberName] string propertyName = null) 
+		{
+			return (T)this.properties.GetProperty(propertyName, defaultValue);
+		}
 
         protected virtual void NotifyPropertyChanged(string propertyName)
         {
@@ -109,12 +110,12 @@ namespace Mobile.Mvvm.ViewModel
         {
             get
             {
-                return this.GetPropertyValue<bool>("IsLoaded", false);
+                return this.GetProperty<bool>(false);
             }
 
             private set
             {
-                this.SetPropertyValue("IsLoaded", value);
+				this.SetProperty(value);
             }
         }
 

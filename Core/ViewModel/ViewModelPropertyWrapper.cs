@@ -79,7 +79,7 @@ namespace Mobile.Mvvm.ViewModel
                 if (this.accessor.CanSetValue(this.viewModel))
                 {
                     this.accessor.SetValue(this.viewModel, value);
-                    this.SetPropertyValue("Value", value);
+                    this.SetProperty(value);
                 }
             }
         }

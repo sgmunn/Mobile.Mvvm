@@ -33,12 +33,12 @@ namespace Mobile.Mvvm.ViewModel.Dialog
         {
             get
             {
-                return this.GetPropertyValue<string>("Caption");
+                return this.GetProperty<string>();
             }
 
             set
             {
-                this.SetPropertyValue("Caption", value);
+                this.SetProperty(value);
             }
         }
 

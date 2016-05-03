@@ -47,12 +47,12 @@ namespace Mobile.Mvvm.ViewModel.Dialog
         {
             get
             {
-                return this.GetPropertyValue<T>("Value");
+                return this.GetProperty<T>();
             }
 
             set
             {
-                this.SetPropertyValue("Value", value);
+                this.SetProperty(value);
             }
         }
 

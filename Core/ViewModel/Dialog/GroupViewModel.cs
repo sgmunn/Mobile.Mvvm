@@ -35,12 +35,12 @@ namespace Mobile.Mvvm.ViewModel.Dialog
         {
             get
             {
-                return this.GetPropertyValue<IViewModel>("Header");
+                return this.GetProperty<IViewModel>();
             }
 
             set
             {
-                this.SetPropertyValue("Header", value);
+                this.SetProperty(value);
             }
         }
 
@@ -48,12 +48,12 @@ namespace Mobile.Mvvm.ViewModel.Dialog
         {
             get
             {
-                return this.GetPropertyValue<IViewModel>("Footer");
+                return this.GetProperty<IViewModel>();
             }
 
             set
             {
-                this.SetPropertyValue("Footer", value);
+                this.SetProperty(value);
             }
         }
 
